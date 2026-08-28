@@ -142,6 +142,8 @@ a.entry:focus-visible { outline: 1px solid var(--led); outline-offset: -1px; }
   color: var(--ink-faint);
 }
 .entry .desc { font-family: var(--sans); font-size: 13.5px; color: var(--ink-dim); line-height: 1.55; }
+.entry .go { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--led); margin-top: 4px; }
+a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 .entry .state {
   font-family: var(--mono);
   font-size: 10px;
