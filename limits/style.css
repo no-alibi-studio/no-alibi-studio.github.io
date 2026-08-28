@@ -205,6 +205,7 @@ a { color: var(--bone); text-decoration: none; }
 .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
 .img-grid .slot { aspect-ratio: 4 / 3; }
 .img-cell { display: flex; flex-direction: column; }
+.img-cell.wide { grid-column: 1 / -1; }   /* 분할(디프티크) 이미지는 전체 폭 피처 */
 .img-cell > img { border: 1px solid var(--panel-edge); }
 .img-cap { font-family: var(--mono); font-size: 11px; color: var(--bone-dim); letter-spacing: 0.06em; margin-top: 8px; }
 
