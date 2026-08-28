@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>방명록 — 내 세계의 한계</title>
+<meta name="description" content="〈내 세계의 한계〉 방명록 — 의견을 남겨주세요. 채택된 의견은 최종본에 반영되고 이름이 새겨집니다.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="frame">
+
+  <header class="subnav">
+    <a class="home" href="index.html">내 세계의 한계</a>
+    <nav>
+      <a href="about.html">1. 작품</a>
+      <a href="images.html">2. 이미지</a>
+      <a href="videos.html">3. 영상</a>
+      <a href="story.html">4. 스토리</a>
+      <a href="music.html">5. 음악</a>
+      <a class="here" href="guestbook.html">6. 방명록</a>
+      <a href="revenue.html">7. 수익</a>
+      <a href="screening.html">8. 상영</a>
+      <a href="en/guestbook.html">EN</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="gb-topbar">
+      <div class="sec-head"><span class="sec-num">6.</span><h2>방명록</h2></div>
+      <button type="button" class="gb-write-btn" id="gbWriteToggle">방명록 쓰기</button>
+    </div>
+    <p class="sec-sub">Guestbook — 당신의 언어가 이 세계의 한계를 넓힙니다</p>
+
+    <p class="gb-intro">
+      작품에 대해 어떤 말이든 자유롭게 남겨주세요.
+      의견을 남겨주신 모든 분은 아래 <b>Thanks to</b>에 오릅니다.
+    </p>
+
+    <div class="gb-write gb-write-panel" id="gbWrite" hidden>
+      <div id="gbWriteInner"></div>
+      </div>
+
+    <div class="gb-split">
+      <aside class="gb-col gb-thanks-col">
+        <h3>수정에 참여한 사람들</h3>
+        <p class="sub">피드백으로 작품을 함께 고친 분들</p>
+        <div class="thanks-names" id="revisers">
+          <span class="empty">— 아직 없습니다 —</span>
+        </div>
+        <h3 class="thanks-second">Thanks to</h3>
+        <p class="sub">의견을 남겨주신 모든 분들</p>
+        <div class="thanks-names" id="thanks-names">
+          <span class="empty">— 첫 이름을 기다리고 있습니다 —</span>
+        </div>
+      </aside>
+      <section class="gb-col gb-entries-col">
+        <div class="gb-entries-head">
+          <h3>남겨진 말들 <span class="sub-inline">Entries</span></h3>
+          <div class="gb-filter" role="group" aria-label="유형 필터">
+            <button type="button" class="gb-filt on" data-filt="all">전체</button>
+            <button type="button" class="gb-filt" data-filt="guestbook">방명록</button>
+            <button type="button" class="gb-filt" data-filt="feedback">피드백</button>
+          </div>
+        </div>
+        <div class="gb-entries" id="gb-entries"></div>
+        <p class="gb-empty" id="gb-empty">아직 방명록이 비어 있습니다. 첫 번째 말을 남겨주세요.</p>
+      </section>
+    </div>
+
+    <div class="pager">
+      <a href="music.html">← 5. 음악</a>
+      <a href="revenue.html">7. 수익 공개 →</a>
+    </div>
+  </main>
+
+  <footer>
+    <span>© 내 세계의 한계 — no-alibi.com · <a href="mailto:cinmaite0@gmail.com">cinmaite0@gmail.com</a> · <a href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">Instagram 팔로우 ↗</a></span>
+    <span class="power">Power Consumption: +1e12 kWh</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var WORK_ID = '7c9de32b-71d9-4ba4-85e5-6279f3cc73f3';
+  var KO = (document.documentElement.lang || 'ko') !== 'en';
+  var writeInner = document.getElementById('gbWriteInner');
+  var entriesBox = document.getElementById('gb-entries');
+  var empty = document.getElementById('gb-empty');
+  var thanks = document.getElementById('thanks-names');
+  var supa = null;
+
+  var wtBtn = document.getElementById('gbWriteToggle');
+  var wtPanel = document.getElementById('gbWrite');
+  if (wtBtn && wtPanel) wtBtn.addEventListener('click', function () {
+    var op = wtPanel.hidden; wtPanel.hidden = !op; wtBtn.classList.toggle('open', op);
+    if (op) wtPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  function user() { return window.NOALIBI && window.NOALIBI.user; }
+  function login() { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); }
+
+  function renderWrite() {
+    if (!writeInner) return;
+    writeInner.innerHTML = '';
+    if (!user()) {
+      var p = document.createElement('p');
+      p.textContent = KO ? '로그인하면 방명록을 남길 수 있어요 — 남기면 cin 포인트가 쌓입니다.' : 'Log in to leave a note — you earn cin too.';
+      var lb = document.createElement('button'); lb.className = 'gb-btn'; lb.type = 'button';
+      lb.textContent = KO ? '로그인하고 남기기' : 'Log in to write';
+      lb.addEventListener('click', login);
+      writeInner.append(p, lb); return;
+    }
+    var ta = document.createElement('textarea'); ta.className = 'gb-ta'; ta.maxLength = 2000;
+    ta.placeholder = KO ? '작품에 대해 어떤 말이든 자유롭게…' : 'Anything about the work…';
+    var row = document.createElement('div'); row.className = 'gb-submit-row';
+    var sb = document.createElement('button'); sb.className = 'gb-btn'; sb.type = 'button';
+    sb.textContent = KO ? '남기기' : 'Post';
+    var st = document.createElement('span'); st.className = 'gb-status';
+    sb.addEventListener('click', async function () {
+      var body = ta.value.trim(); if (!body) { ta.focus(); return; }
+      sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
+      var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
+      if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
+      st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 cin!' : 'Posted. +10 cin!';
+      ta.value = ''; sb.classList.remove('disabled');
+      document.dispatchEvent(new CustomEvent('noalibi-refresh'));
+      load();
+    });
+    row.append(sb, st); writeInner.append(ta, row);
+  }
+
+  function heart(r, count0, liked0) {
+    var liked = liked0, count = count0;
+    var b = document.createElement('button'); b.className = 'gb-heart'; b.type = 'button';
+    function paint() { b.classList.toggle('liked', liked); b.textContent = (liked ? '♥' : '♡') + ' ' + count; }
+    paint();
+    b.addEventListener('click', async function () {
+      if (!user()) { login(); return; }
+      var was = liked; liked = !liked; count = Math.max(0, count + (liked ? 1 : -1)); paint();
+      if (was) { var d = await supa.from('likes').delete().eq('user_id', user().id).eq('feedback_id', r.id); if (d.error) { liked = was; count = count0; paint(); console.error('[gb] unlike', d.error); } }
+      else { var i = await supa.from('likes').insert({ user_id: user().id, feedback_id: r.id }); if (i.error) { liked = was; count = count0; paint(); console.error('[gb] like', i.error); } }
+    });
+    return b;
+  }
+
+  var allRows = [], nameById = {}, counts = {}, mine = {}, filt = 'all';
+
+  var revisersEl = document.getElementById('revisers');
+  function renderNameList(el, names, emptyText) {
+    if (!el) return;
+    el.innerHTML = '';
+    if (!names.length) { var s = document.createElement('span'); s.className = 'empty'; s.textContent = emptyText; el.appendChild(s); return; }
+    names.sort(function (a, b) { return a.localeCompare(b, 'ko'); }).forEach(function (n) { var sp = document.createElement('span'); sp.textContent = n; el.appendChild(sp); });
+  }
+  function renderThanks() {
+    var all = [], rev = [];
+    allRows.forEach(function (r) {
+      var who = nameById[r.user_id] || (KO ? '익명' : 'anon');
+      if (all.indexOf(who) === -1) all.push(who);
+      if (r.node && rev.indexOf(who) === -1) rev.push(who);
+    });
+    renderNameList(revisersEl, rev, KO ? '— 아직 없습니다 —' : '— none yet —');
+    renderNameList(thanks, all, KO ? '— 첫 이름을 기다리고 있습니다 —' : '— waiting for the first name —');
+  }
+
+  function renderEntries() {
+    var rows = allRows.filter(function (r) {
+      if (filt === 'guestbook') return !r.node;
+      if (filt === 'feedback') return !!r.node;
+      return true;
+    });
+    entriesBox.innerHTML = '';
+    empty.style.display = rows.length ? 'none' : 'block';
+    empty.textContent = filt === 'feedback' ? (KO ? '아직 피드백이 없습니다.' : 'No feedback yet.')
+      : filt === 'guestbook' ? (KO ? '아직 방명록이 없습니다.' : 'No notes yet.')
+      : (KO ? '아직 방명록이 비어 있습니다. 첫 번째 말을 남겨주세요.' : 'Empty — be the first.');
+    rows.forEach(function (r) {
+      var who = nameById[r.user_id] || (KO ? '익명' : 'anon');
+      var div = document.createElement('div'); div.className = 'gb-entry';
+      var whoEl = document.createElement('p'); whoEl.className = 'who'; whoEl.textContent = who;
+      var kind = document.createElement('span'); kind.className = 'gb-kind ' + (r.node ? 'fb' : 'gb');
+      kind.textContent = r.node ? (KO ? '피드백' : 'Feedback') : (KO ? '방명록' : 'Note'); whoEl.appendChild(kind);
+      if (r.node) { var t = document.createElement('span'); t.className = 'node-tag'; t.textContent = r.node; whoEl.appendChild(t); }
+      var w = document.createElement('span'); w.className = 'when'; w.textContent = (r.created_at || '').slice(0, 10); whoEl.appendChild(w);
+      var msgEl = document.createElement('p'); msgEl.className = 'msg'; msgEl.textContent = r.body;
+      div.append(whoEl, msgEl, heart(r, counts[r.id] || 0, !!mine[r.id]));
+      entriesBox.appendChild(div);
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.gb-filt'), function (b) {
+    b.addEventListener('click', function () {
+      filt = b.dataset.filt;
+      Array.prototype.forEach.call(document.querySelectorAll('.gb-filt'), function (x) { x.classList.toggle('on', x === b); });
+      renderEntries();
+    });
+  });
+
+  async function load() {
+    if (!supa) return;
+    var fb = await supa.from('feedback').select('id, body, node, created_at, user_id')
+      .eq('work_id', WORK_ID).eq('approved', true).order('created_at', { ascending: false });
+    if (fb.error) { console.error('[gb] load feedback', fb.error); return; }
+    allRows = fb.data || [];
+    nameById = {}; var ids = [];
+    allRows.forEach(function (r) { if (r.user_id && ids.indexOf(r.user_id) === -1) ids.push(r.user_id); });
+    if (ids.length) {
+      var pr = await supa.from('profiles').select('id, display_name').in('id', ids);
+      if (pr.error) console.warn('[gb] profiles', pr.error);
+      (pr.data || []).forEach(function (p) { nameById[p.id] = p.display_name; });
+    }
+    counts = {}; mine = {};
+    var lk = await supa.from('likes').select('feedback_id, user_id');
+    if (lk.error) console.warn('[gb] likes', lk.error);
+    (lk.data || []).forEach(function (x) {
+      counts[x.feedback_id] = (counts[x.feedback_id] || 0) + 1;
+      if (user() && x.user_id === user().id) mine[x.feedback_id] = 1;
+    });
+    renderThanks();
+    renderEntries();
+  }
+
+  function whenReady(cb) {
+    (function poll() {
+      if (window.NOALIBI && window.NOALIBI.ready) window.NOALIBI.ready.then(cb);
+      else setTimeout(poll, 60);
+    })();
+  }
+  whenReady(function (s) { supa = s; renderWrite(); load(); });
+  document.addEventListener('noalibi-auth', function () { renderWrite(); load(); });
+})();
+</script>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>

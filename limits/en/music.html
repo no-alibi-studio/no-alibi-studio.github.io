@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soundtrack — The Limits of My World</title>
+<meta name="description" content="Original soundtrack — 100% AI-generated selection.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
+<link rel="stylesheet" href="../style.css?v=2">
+</head>
+<body>
+
+<div class="frame">
+
+  <header class="subnav">
+    <a class="home" href="index.html">The Limits of My World</a>
+    <nav>
+      <a  href="about.html">1. About</a>
+      <a  href="images.html">2. Images</a>
+      <a  href="videos.html">3. Videos</a>
+      <a  href="story.html">4. Story</a>
+      <a class="here" href="music.html">5. Music</a>
+      <a  href="guestbook.html">6. Guestbook</a>
+      <a href="../music.html">한국어</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="sec-head"><span class="sec-num">5.</span><h2>Soundtrack</h2></div>
+    <p class="sec-sub">Original Soundtrack — 100% AI-generated · Selection</p>
+    <div class="tracks" id="tracks">
+      <div class="track" data-src="../assets/audio/01-op.mp3">
+        <button class="track-play" aria-label="Play — 01 — Opening">▶</button>
+        <span class="track-name">01 — Opening<small>op · sp-01</small></span>
+        <span class="track-dur">3:06</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/02-summon.mp3">
+        <button class="track-play" aria-label="Play — 02 — Summoning">▶</button>
+        <span class="track-name">02 — Summoning<small>sp-01</small></span>
+        <span class="track-dur">3:19</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/03-run.mp3">
+        <button class="track-play" aria-label="Play — 03 — The Run">▶</button>
+        <span class="track-name">03 — The Run<small>sp-01</small></span>
+        <span class="track-dur">2:59</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/04-overheat.mp3">
+        <button class="track-play" aria-label="Play — 04 — Overheat">▶</button>
+        <span class="track-name">04 — Overheat<small>sp-01</small></span>
+        <span class="track-dur">6:05</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/05-silence.mp3">
+        <button class="track-play" aria-label="Play — 05 — Silence">▶</button>
+        <span class="track-name">05 — Silence<small>sp-02</small></span>
+        <span class="track-dur">1:12</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/06-epitaph.mp3">
+        <button class="track-play" aria-label="Play — 06 — Epitaph">▶</button>
+        <span class="track-name">06 — Epitaph<small>sp-02</small></span>
+        <span class="track-dur">3:49</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/07-ed.mp3">
+        <button class="track-play" aria-label="Play — 07 — Ending">▶</button>
+        <span class="track-name">07 — Ending<small>ed · sp-01</small></span>
+        <span class="track-dur">2:09</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="track" data-src="../assets/audio/08-single.mp3">
+        <button class="track-play" aria-label="Play — 08 — Single Track">▶</button>
+        <span class="track-name">08 — Single Track<small>single-01</small></span>
+        <span class="track-dur">3:12</span>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="pager"><a href="story.html">← 4. Story</a><a href="guestbook.html">6. Guestbook →</a></div>
+  </main>
+
+  <footer>
+    <span>© The Limits of My World — no-alibi.com · <a href="mailto:cinmaite0@gmail.com">cinmaite0@gmail.com</a> · <a href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">Instagram ↗</a></span>
+    <span class="power">Power Consumption: +1e12 kWh</span>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var audio = new Audio();
+  var current = null;
+  var tracks = Array.prototype.slice.call(document.querySelectorAll('#tracks .track'));
+  function stopVisual(t) {
+    if (!t) return;
+    t.classList.remove('playing');
+    t.querySelector('.track-play').textContent = '▶';
+    t.querySelector('.bar').style.width = '0';
+  }
+  tracks.forEach(function (t) {
+    t.querySelector('.track-play').addEventListener('click', function () {
+      if (current === t) { audio.paused ? audio.play() : audio.pause(); return; }
+      stopVisual(current);
+      current = t;
+      audio.src = t.getAttribute('data-src');
+      audio.play();
+    });
+  });
+  audio.addEventListener('play', function () {
+    if (!current) return;
+    current.classList.add('playing');
+    current.querySelector('.track-play').textContent = '❚❚';
+  });
+  audio.addEventListener('pause', function () {
+    if (current) current.querySelector('.track-play').textContent = '▶';
+  });
+  audio.addEventListener('timeupdate', function () {
+    if (current && audio.duration) {
+      current.querySelector('.bar').style.width = (audio.currentTime / audio.duration * 100) + '%';
+    }
+  });
+  audio.addEventListener('ended', function () {
+    var i = tracks.indexOf(current);
+    stopVisual(current); current = null;
+    var next = (i > -1 && i + 1 < tracks.length) ? i + 1 : 0;
+    tracks[next].querySelector('.track-play').click();
+  });
+})();
+</script>
+<script type="module" src="../auth.js"></script>
+</body>
+</html>
