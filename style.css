@@ -207,7 +207,7 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 }
 
 /* ── 함께 만드는 방식 (cin_mAIte 참여 방법) ── */
-.studio-loop { margin: 44px 0 8px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.studio-loop { margin: 26px 0 8px; }
 .sl-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 10px; }
 .sl-lede { max-width: 62ch; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; }
 .sl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -306,18 +306,18 @@ a.frame-card:hover .poster-wrap { box-shadow: 0 10px 26px rgba(0,0,0,0.22); tran
 .frame-card .poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .frame-card .poster-wrap .enter {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  padding: 10px 12px;
-  background: linear-gradient(transparent, rgba(20,18,12,0.82));
-  color: var(--paper);
+  left: 0; right: 0; top: 0;        /* 상단 — 하단은 제목에 가려 안 보임 */
+  padding: 11px 12px;
+  background: linear-gradient(rgba(10,9,7,0.92), rgba(10,9,7,0.55) 60%, transparent);
+  color: #fff;
   font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 1;                      /* 항상 표시 — 터치기기 포함 클릭 어포던스 */
-  transition: padding-bottom 0.18s;
+  transition: padding-top 0.18s;
 }
-a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap .enter { padding-bottom: 16px; }
+a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap .enter { padding-top: 17px; }
 .frame-card.soon .poster-wrap {
   border-style: dashed;
   display: flex;

@@ -91,31 +91,37 @@ a { color: var(--bone); text-decoration: none; }
 }
 
 /* 목차 메뉴 */
-.menu { display: flex; flex-direction: column; margin-top: 48px; }
-.menu a {
-  display: grid;
-  grid-template-columns: 52px 1fr auto;
-  gap: 20px;
-  align-items: baseline;
-  padding: 22px 8px;
-  border-bottom: 1px solid var(--panel-edge);
+/* ── 목차: 3그룹 접이식(아코디언) — 모바일 한눈 ── */
+.menu { display: flex; flex-direction: column; margin-top: 40px; }
+.menu .mg { border-bottom: 1px solid var(--panel-edge); }
+.menu .mg:first-child { border-top: 1px solid var(--panel-edge); }
+.menu .mg > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 15px 8px;
+}
+.menu .mg > summary::-webkit-details-marker { display: none; }
+.menu .mg > summary::after {
+  content: "▸"; margin-left: auto; color: var(--led); font-size: 12px;
+  align-self: center; transition: transform 0.18s;
+}
+.menu .mg[open] > summary::after { transform: rotate(90deg); }
+.menu .mg > summary:hover .mg-t { color: var(--led); }
+.menu .mg-t { font-family: var(--serif); font-size: 20px; letter-spacing: 0.03em; color: var(--bone); }
+.menu .mg-en { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bone-faint); }
+.menu .mg > a {
+  display: grid; grid-template-columns: 34px 1fr auto; gap: 14px; align-items: baseline;
+  padding: 10px 8px 10px 18px;
+  border-top: 1px solid var(--panel-edge);
   transition: background 0.15s, padding-left 0.2s;
 }
-.menu-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--led); margin: 34px 0 0; }
-.menu-cap:first-child { margin-top: 0; }
-.menu-cap + a { border-top: 1px solid var(--panel-edge); }
-.menu a:hover, .menu a:focus-visible { background: var(--panel); padding-left: 16px; }
-.menu a:focus-visible { outline: 1px solid var(--led); outline-offset: -1px; }
-.menu .num { font-family: var(--mono); font-size: 13px; color: var(--led); letter-spacing: 0.1em; }
-.menu .name { font-family: var(--serif); font-size: 24px; letter-spacing: 0.03em; }
-.menu .en {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bone-faint);
-}
-.menu a:hover .en { color: var(--led); }
+.menu .mg > a:hover, .menu .mg > a:focus-visible { background: var(--panel); padding-left: 24px; }
+.menu .mg > a:focus-visible { outline: 1px solid var(--led); outline-offset: -1px; }
+.menu .mg > a:last-child { padding-bottom: 14px; }
+.menu .num { font-family: var(--mono); font-size: 12px; color: var(--led); letter-spacing: 0.1em; }
+.menu .name { font-family: var(--serif); font-size: 18px; letter-spacing: 0.02em; }
+.menu .en { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-faint); }
+.menu .mg > a:hover .en { color: var(--led); }
 
 /* ── 서브페이지 상단 내비 ─────────────── */
 .subnav {
