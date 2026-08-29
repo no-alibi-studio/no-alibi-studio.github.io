@@ -998,6 +998,26 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .hero-cta a.primary { border-color: var(--led); color: var(--led); }
 .hero-cta a.primary:hover { background: var(--led); color: #12100d; }
 .rm-lede { max-width: 60ch; font-size: 13.5px; color: var(--bone-dim); margin: 6px 0 20px; line-height: 1.75; }
+/* 메뉴: '피드백 가능' 표시 */
+.menu .fb-hint { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--led); margin-left: 7px; white-space: nowrap; vertical-align: 1px; }
+/* 메뉴: 프로젝트(단독 항목, 바로 이동) */
+.menu .menu-solo { display: flex; align-items: baseline; gap: 12px; padding: 15px 8px; border-bottom: 1px solid var(--panel-edge); transition: background 0.15s, padding-left 0.2s; }
+.menu .menu-solo:hover, .menu .menu-solo:focus-visible { background: var(--panel); padding-left: 14px; }
+.menu .menu-solo:focus-visible { outline: 1px solid var(--led); outline-offset: -1px; }
+.menu .menu-solo::after { content: "→"; margin-left: auto; color: var(--led); font-size: 13px; align-self: center; }
+/* ── 프로젝트 페이지 ── */
+.proj-title { font-family: var(--serif); font-size: clamp(20px, 3.4vw, 27px); line-height: 1.5; color: var(--bone); max-width: 32ch; margin: 26px 0 24px; letter-spacing: 0.01em; }
+.proj-body { max-width: 66ch; font-size: 15px; line-height: 1.9; color: var(--bone-dim); margin: 0 0 16px; }
+.proj-axes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 34px 0; }
+.pa { display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 20px; border: 1px solid var(--panel-edge); border-top: 2px solid var(--led); border-radius: 4px; background: var(--panel); }
+.pa-t { font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; color: var(--led); }
+.pa-d { font-family: var(--sans); font-size: 13px; color: var(--bone-dim); line-height: 1.6; }
+.dossier-dl { display: flex; flex-direction: column; gap: 5px; padding: 20px 24px; border: 1px solid var(--led); border-radius: 4px; background: var(--panel); max-width: 480px; margin: 6px 0 10px; transition: background 0.15s; }
+.dossier-dl:hover { background: var(--led); }
+.dl-main { font-family: var(--mono); font-size: 15px; letter-spacing: 0.1em; color: var(--led); }
+.dl-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--bone-faint); }
+.dossier-dl:hover .dl-main, .dossier-dl:hover .dl-sub { color: #12100d; }
+@media (max-width: 640px) { .proj-axes { grid-template-columns: 1fr; } }
 .rm-box.rm-open .rm-t { color: var(--bone-faint); }
 
 /* ── 작품소개 비트겐슈타인 인용 (폰트 변형) ── */
