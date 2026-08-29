@@ -217,6 +217,7 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 .sl-steps li small { font-family: var(--sans); font-size: 12px; color: var(--ink-dim); line-height: 1.55; }
 .sl-cert { font-size: 13px; color: var(--ink); margin: 16px 0 0; padding: 12px 16px; border: 1px solid var(--rule); border-left: 2px solid var(--led); border-radius: 2px; background: #FCFAF4; line-height: 1.7; }
 .sl-cert b { color: var(--led); font-weight: 500; }
+.entries.after-loop { margin-top: 34px; border-top: 1px solid var(--rule); }
 @media (max-width: 640px) { .sl-steps { grid-template-columns: 1fr 1fr; } }
 
 /* ── 언어 전환 바 ────────────────────── */
