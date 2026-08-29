@@ -992,11 +992,18 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .lede-record { margin: 30px 0 6px; }
 .lr-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: var(--led); margin: 0 0 14px; }
 .lr-body { max-width: 62ch; font-size: 15px; line-height: 1.85; color: var(--bone-dim); margin: 0 0 14px; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.hero-cta a { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; padding: 10px 18px; border: 1px solid var(--panel-edge); border-radius: 3px; color: var(--bone); transition: border-color 0.15s, color 0.15s, background 0.15s; }
-.hero-cta a:hover, .hero-cta a:focus-visible { border-color: var(--led); color: var(--led); }
-.hero-cta a.primary { border-color: var(--led); color: var(--led); }
-.hero-cta a.primary:hover { background: var(--led); color: #12100d; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; align-items: stretch; }
+.hero-cta > a { display: flex; align-items: center; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; padding: 10px 18px; border: 1px solid var(--panel-edge); border-radius: 3px; color: var(--bone); transition: border-color 0.15s, color 0.15s, background 0.15s; }
+.hero-cta > a:hover, .hero-cta > a:focus-visible { border-color: var(--led); color: var(--led); }
+.hero-cta > a.primary { border-color: var(--led); color: var(--led); }
+.hero-cta > a.primary:hover { background: var(--led); color: #12100d; }
+/* 피드백 남기기: 상단 라벨 + 하단 이미지/영상/스토리 3분할 */
+.cta-fb { display: flex; flex-direction: column; border: 1px solid var(--panel-edge); border-radius: 3px; overflow: hidden; }
+.cta-fb-top { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; color: var(--bone); padding: 9px 18px 7px; text-align: center; }
+.cta-fb-links { display: flex; border-top: 1px solid var(--panel-edge); flex: 1; }
+.cta-fb-links a { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--bone-dim); padding: 8px 14px; border-left: 1px solid var(--panel-edge); transition: background 0.15s, color 0.15s; }
+.cta-fb-links a:first-child { border-left: none; }
+.cta-fb-links a:hover, .cta-fb-links a:focus-visible { background: var(--led); color: #12100d; }
 .rm-lede { max-width: 60ch; font-size: 13.5px; color: var(--bone-dim); margin: 6px 0 20px; line-height: 1.75; }
 /* 메뉴: '피드백 가능' 표시 */
 .menu .fb-hint { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--led); margin-left: 7px; white-space: nowrap; vertical-align: 1px; }
