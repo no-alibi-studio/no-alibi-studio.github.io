@@ -6,6 +6,7 @@ img, video { max-width: 100%; height: auto; }
    film 사이트(먹빛 공포)와 정반대의 밝은 장부 톤.
    공통 서명은 단 하나 — LED 레드(붉은 인장) + no_alibi 워드마크의 깜빡이는 언더스코어. */
 :root {
+  color-scheme: light;   /* 크롬 자동 다크모드 반전 방지 (아이보리 유지) */
   --paper: #ECE8DD;      /* 장부 종이 */
   --paper-edge: #E2DDD0;
   --ink: #191712;        /* 잉크 */
@@ -209,7 +210,8 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 /* ── 함께 만드는 방식 (cin_mAIte 참여 방법) ── */
 .studio-loop { margin: 26px 0 8px; }
 .sl-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 10px; }
-.sl-lede { max-width: 62ch; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; }
+.sl-lede { max-width: 62ch; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; word-break: keep-all; }
+.nb { white-space: nowrap; }
 .sl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 24px; }
 .sl-steps li { display: flex; flex-direction: column; gap: 5px; padding: 13px 2px 0; border-top: 1px solid var(--rule); }
 .sl-n { font-family: var(--mono); font-size: 11px; color: var(--led); letter-spacing: 0.1em; }

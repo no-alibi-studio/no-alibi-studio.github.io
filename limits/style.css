@@ -3,6 +3,7 @@ body { margin: 0; }
 img, video { max-width: 100%; height: auto; }
 
 :root {
+  color-scheme: dark;    /* 이미 어두운 테마 — 브라우저 자동 반전 방지 */
   --void: #0A0A0C;
   --panel: #141417;
   --panel-edge: #26262B;
