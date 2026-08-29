@@ -131,6 +131,13 @@ a { color: var(--bone); text-decoration: none; }
 }
 .menu .submenu-soon .name { font-family: var(--serif); font-size: 15px; color: var(--bone-dim); letter-spacing: 0.02em; }
 .menu .submenu-soon .soon { margin-left: auto; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-faint); align-self: center; }
+/* 링크는 살아있되 준비중 표시 (수익공개·상영전시) */
+.menu .soon-tag {
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bone-faint); border: 1px solid var(--panel-edge); border-radius: 3px;
+  padding: 2px 7px; align-self: center; white-space: nowrap;
+}
+.menu .mg > a:hover .soon-tag { color: var(--led); border-color: var(--led); }
 
 /* ── 서브페이지 상단 내비 ─────────────── */
 .subnav {
