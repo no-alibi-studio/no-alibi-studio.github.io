@@ -210,7 +210,7 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 /* ── 함께 만드는 방식 (cin_mAIte 참여 방법) ── */
 .studio-loop { margin: 26px 0 8px; }
 .sl-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 10px; }
-.sl-lede { max-width: 62ch; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; word-break: keep-all; }
+.sl-lede { max-width: none; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; word-break: keep-all; }
 .nb { white-space: nowrap; }
 .sl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 24px; }
 .sl-steps li { display: flex; flex-direction: column; gap: 5px; padding: 13px 2px 0; border-top: 1px solid var(--rule); }
