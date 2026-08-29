@@ -72,7 +72,6 @@ a { color: var(--bone); text-decoration: none; }
   font-size: 13px;
   color: var(--bone-dim);
   line-height: 2;
-  animation: flicker 7s infinite;
 }
 .epitaph .quote {
   font-family: var(--serif);
