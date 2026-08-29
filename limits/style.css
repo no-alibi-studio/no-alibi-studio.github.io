@@ -987,6 +987,7 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .rm-box.now .rm-t { color: var(--bone); }
 .rm-here { font-family: var(--mono); font-size: 11px; color: var(--led); letter-spacing: 0.08em; margin-left: 10px; }
 .rm-b small { font-family: var(--sans); font-size: 12.5px; color: var(--bone-faint); line-height: 1.6; }
+.rm-hl { color: var(--led); }
 .rm-box.rm-open .rm-t { color: var(--bone-faint); }
 
 /* ── 작품소개 비트겐슈타인 인용 (폰트 변형) ── */
