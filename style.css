@@ -206,6 +206,19 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
   color: var(--ink-faint);
 }
 
+/* ── 함께 만드는 방식 (cin_mAIte 참여 방법) ── */
+.studio-loop { margin: 44px 0 8px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.sl-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 10px; }
+.sl-lede { max-width: 62ch; font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.8; }
+.sl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.sl-steps li { display: flex; flex-direction: column; gap: 6px; padding: 15px 15px 17px; background: #FCFAF4; border: 1px solid var(--rule); border-top: 2px solid var(--led); border-radius: 4px; }
+.sl-n { font-family: var(--mono); font-size: 11px; color: var(--led); letter-spacing: 0.1em; }
+.sl-steps li b { font-family: var(--serif); font-size: 17px; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
+.sl-steps li small { font-family: var(--sans); font-size: 12px; color: var(--ink-dim); line-height: 1.55; }
+.sl-cert { font-size: 13px; color: var(--ink); margin: 16px 0 0; padding: 12px 16px; border: 1px solid var(--rule); border-left: 2px solid var(--led); border-radius: 2px; background: #FCFAF4; line-height: 1.7; }
+.sl-cert b { color: var(--led); font-weight: 500; }
+@media (max-width: 640px) { .sl-steps { grid-template-columns: 1fr 1fr; } }
+
 /* ── 언어 전환 바 ────────────────────── */
 .langbar {
   display: flex;
@@ -300,10 +313,10 @@ a.frame-card:hover .poster-wrap { box-shadow: 0 10px 26px rgba(0,0,0,0.22); tran
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 0.18s;
+  opacity: 1;                      /* 항상 표시 — 터치기기 포함 클릭 어포던스 */
+  transition: padding-bottom 0.18s;
 }
-a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap .enter { opacity: 1; }
+a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap .enter { padding-bottom: 16px; }
 .frame-card.soon .poster-wrap {
   border-style: dashed;
   display: flex;
