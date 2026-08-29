@@ -122,6 +122,15 @@ a { color: var(--bone); text-decoration: none; }
 .menu .name { font-family: var(--serif); font-size: 18px; letter-spacing: 0.02em; }
 .menu .en { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-faint); }
 .menu .mg > a:hover .en { color: var(--led); }
+/* 영상에 종속된 Coming Soon 항목 (비활성) */
+.menu .mg > .submenu-soon {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 9px 8px 11px 40px;
+  border-top: 1px solid var(--panel-edge);
+  opacity: 0.55;
+}
+.menu .submenu-soon .name { font-family: var(--serif); font-size: 15px; color: var(--bone-dim); letter-spacing: 0.02em; }
+.menu .submenu-soon .soon { margin-left: auto; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-faint); align-self: center; }
 
 /* ── 서브페이지 상단 내비 ─────────────── */
 .subnav {
