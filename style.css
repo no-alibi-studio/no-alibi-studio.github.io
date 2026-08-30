@@ -388,3 +388,18 @@ a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap 
 .cb-copy { background: var(--ink); color: var(--paper); border: none; border-radius: 5px; font-family: var(--mono); font-size: 11px; padding: 5px 12px; cursor: pointer; }
 .cb-copy.ok { background: var(--led); }
 .cb-note { font-family: var(--sans); font-size: 12.5px; color: var(--ink-dim); line-height: 1.6; margin: 12px 0 0; }
+
+/* ── 홈: 에피그래프 우측 정렬 ── */
+.epigraph { text-align: right; }
+
+/* ── 홈: 운영 중 작품(no_1_al) 강조 — 검은 카드 ── */
+.entry.hot { background: #14110C; border-radius: 10px; border-bottom: none; padding: 20px 18px; box-shadow: 0 3px 16px rgba(0,0,0,0.16); }
+a.entry.hot:hover, a.entry.hot:focus-visible { background: #000; padding-left: 24px; }
+.entry.hot .no { color: var(--led); }
+.entry.hot .title, .entry.hot .en { color: #EDE6D6; }
+.entry.hot .title .us { color: var(--led); }
+.entry.hot .desc { color: #B4AA95; }
+.entry.hot .go { color: #fff; margin-top: 8px; display: inline-flex; align-items: center; }
+a.entry.hot:hover .go, a.entry.hot:focus-visible .go { text-decoration: none; }
+.entry.hot .state.live { color: var(--led); }
+.go-click { display: inline-block; background: #fff; color: #14110C; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-right: 8px; letter-spacing: 0.12em; font-size: 11px; }
