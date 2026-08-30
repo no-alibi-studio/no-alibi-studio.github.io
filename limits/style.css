@@ -833,9 +833,9 @@ footer a:hover { color: var(--led); }
 /* ── 스토리 형광펜 FAB 피드백 ── */
 .hl-guide { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; color: var(--bone-dim); border-left: 2px solid var(--led); padding: 6px 0 6px 12px; margin: 22px 0 4px; line-height: 1.7; }
 .hl-guide b { color: var(--led); }
-.hl-fab { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 50; width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--led); background: var(--panel); color: var(--led); cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4); transition: background 0.15s, transform 0.15s; display: flex; align-items: center; justify-content: center; }
-.hl-fab:hover { transform: translateY(-50%) scale(1.06); }
-.hl-fab.on { background: var(--led); color: var(--void); }
+.hl-fab { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 50; width: 78px; height: 78px; border-radius: 50%; border: none; background: var(--led); color: #fff; font-family: var(--sans); font-weight: 700; font-size: 13.5px; line-height: 1.25; letter-spacing: 0.01em; text-align: center; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.4); transition: transform 0.15s, filter 0.15s; display: flex; align-items: center; justify-content: center; }
+.hl-fab:hover { transform: translateY(-50%) scale(1.06); filter: brightness(1.06); }
+.hl-fab.on { filter: brightness(1.06); }
 .hl-hint { position: fixed; right: 84px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 8px; padding: 10px 12px; font-family: var(--mono); font-size: 12px; color: var(--bone-dim); box-shadow: 0 4px 16px rgba(0,0,0,0.4); max-width: 260px; }
 .hl-hint b { color: var(--led); }
 .hl-hint-whole { background: none; border: 1px solid var(--led); color: var(--led); border-radius: 5px; padding: 5px 9px; font-family: var(--mono); font-size: 11px; cursor: pointer; white-space: nowrap; }
@@ -849,7 +849,7 @@ footer a:hover { color: var(--led); }
 body.hl-mode .script { cursor: text; }
 mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 @media (max-width: 720px) {
-  .hl-fab { right: 14px; bottom: 20px; top: auto; transform: none; width: 48px; height: 48px; }
+  .hl-fab { right: 14px; bottom: 20px; top: auto; transform: none; width: 70px; height: 70px; font-size: 12.5px; }
   .hl-fab:hover { transform: scale(1.06); }
   .hl-hint { right: 14px; bottom: 78px; top: auto; transform: none; }
 }
