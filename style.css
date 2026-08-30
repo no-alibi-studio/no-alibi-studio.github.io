@@ -403,3 +403,6 @@ a.entry.hot:hover, a.entry.hot:focus-visible { background: #000; padding-left: 2
 a.entry.hot:hover .go, a.entry.hot:focus-visible .go { text-decoration: none; }
 .entry.hot .state.live { color: var(--led); }
 .go-click { display: inline-block; background: #fff; color: #14110C; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-right: 8px; letter-spacing: 0.12em; font-size: 11px; }
+
+/* 홈: 강조 카드 CTA 서브라인 */
+.entry.hot .go-sub { display: block; margin-top: 4px; color: #B4AA95; font-family: var(--serif); font-size: 14px; letter-spacing: 0.01em; }
