@@ -7,6 +7,7 @@
 <meta name="description" content="Leave your thoughts — adopted feedback is written into the living cut, credited by name.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
 <link rel="stylesheet" href="../style.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body>
 
@@ -90,34 +91,90 @@
   function user() { return window.NOALIBI && window.NOALIBI.user; }
   function login() { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); }
 
+  var SITE_KEY = '0x4AAAAAAEh3-RGg1JxNKuyU';
+  var FN_URL = 'https://fdbqilofjmrcqzhcivlg.supabase.co/functions/v1/guestbook-submit';
+  var tsWidget = null;
+
   function renderWrite() {
     if (!writeInner) return;
-    writeInner.innerHTML = '';
-    if (!user()) {
-      var p = document.createElement('p');
-      p.textContent = KO ? '로그인하면 방명록을 남길 수 있어요 — 남기면 cin 포인트가 쌓입니다.' : 'Log in to leave a note — you earn cin too.';
-      var lb = document.createElement('button'); lb.className = 'gb-btn'; lb.type = 'button';
-      lb.textContent = KO ? '로그인하고 남기기' : 'Log in to write';
-      lb.addEventListener('click', login);
-      writeInner.append(p, lb); return;
+    writeInner.innerHTML = ''; tsWidget = null;
+
+    var modes = document.createElement('div'); modes.className = 'gb-modes';
+    modes.innerHTML = KO
+      ? '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>로그인하고 작성</b><small>cin 포인트 — 굿즈·이북·상영전시·제작투자 등에 사용</small></span></label>'
+      + '<label class="gb-mode"><input type="radio" name="gbmode" value="guest"> <span><b>인증 없이 작성</b><small>사람 인증 + 승인 후 게시 · Thanks to에 이름만(포인트 없음)</small></span></label>'
+      : '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>Write with login</b><small>cin points — goods · e-book · screenings · investment</small></span></label>'
+      + '<label class="gb-mode"><input type="radio" name="gbmode" value="guest"> <span><b>Write without login</b><small>human check + posted after review · name only in Thanks to (no points)</small></span></label>';
+    var panel = document.createElement('div'); panel.className = 'gb-mode-panel';
+    writeInner.append(modes, panel);
+
+    function paintLogin() {
+      panel.innerHTML = '';
+      if (!user()) {
+        var p = document.createElement('p'); p.className = 'gb-mode-note';
+        p.textContent = KO ? '로그인하면 cin 포인트가 쌓여요 — 굿즈·이북·상영전시·제작투자 등에 쓸 수 있어요.' : 'Log in and you earn cin points — usable for goods, e-book, screenings, investment.';
+        var lb = document.createElement('button'); lb.className = 'gb-btn'; lb.type = 'button';
+        lb.textContent = KO ? '로그인하고 작성' : 'Log in to write';
+        lb.addEventListener('click', login);
+        panel.append(p, lb); return;
+      }
+      var ta = document.createElement('textarea'); ta.className = 'gb-ta'; ta.maxLength = 2000;
+      ta.placeholder = KO ? '작품에 대해 어떤 말이든 자유롭게…' : 'Anything about the work…';
+      var row = document.createElement('div'); row.className = 'gb-submit-row';
+      var sb = document.createElement('button'); sb.className = 'gb-btn'; sb.type = 'button';
+      sb.textContent = KO ? '남기기' : 'Post';
+      var st = document.createElement('span'); st.className = 'gb-status';
+      sb.addEventListener('click', async function () {
+        var body = ta.value.trim(); if (!body) { ta.focus(); return; }
+        sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
+        var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
+        if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
+        st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 cin!' : 'Posted. +10 cin!';
+        ta.value = ''; sb.classList.remove('disabled');
+        document.dispatchEvent(new CustomEvent('noalibi-refresh'));
+        load();
+      });
+      row.append(sb, st); panel.append(ta, row);
     }
-    var ta = document.createElement('textarea'); ta.className = 'gb-ta'; ta.maxLength = 2000;
-    ta.placeholder = KO ? '작품에 대해 어떤 말이든 자유롭게…' : 'Anything about the work…';
-    var row = document.createElement('div'); row.className = 'gb-submit-row';
-    var sb = document.createElement('button'); sb.className = 'gb-btn'; sb.type = 'button';
-    sb.textContent = KO ? '남기기' : 'Post';
-    var st = document.createElement('span'); st.className = 'gb-status';
-    sb.addEventListener('click', async function () {
-      var body = ta.value.trim(); if (!body) { ta.focus(); return; }
-      sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
-      var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
-      if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
-      st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 cin!' : 'Posted. +10 cin!';
-      ta.value = ''; sb.classList.remove('disabled');
-      document.dispatchEvent(new CustomEvent('noalibi-refresh'));
-      load();
-    });
-    row.append(sb, st); writeInner.append(ta, row);
+
+    function paintGuest() {
+      panel.innerHTML = '';
+      var nm = document.createElement('input'); nm.className = 'gb-name'; nm.type = 'text'; nm.maxLength = 60;
+      nm.placeholder = KO ? '이름 또는 닉네임 (필수)' : 'Name or nickname (required)';
+      var ta = document.createElement('textarea'); ta.className = 'gb-ta'; ta.maxLength = 2000;
+      ta.placeholder = KO ? '작품에 대해 어떤 말이든 자유롭게…' : 'Anything about the work…';
+      var tsBox = document.createElement('div'); tsBox.className = 'gb-turnstile';
+      var row = document.createElement('div'); row.className = 'gb-submit-row';
+      var sb = document.createElement('button'); sb.className = 'gb-btn'; sb.type = 'button';
+      sb.textContent = KO ? '남기기' : 'Post';
+      var st = document.createElement('span'); st.className = 'gb-status';
+      var note = document.createElement('p'); note.className = 'gb-mode-note';
+      note.textContent = KO ? '승인 후 게시됩니다 · 이름만 Thanks to에 기록돼요.' : 'Posted after review · only your name is recorded in Thanks to.';
+      row.append(sb, st); panel.append(nm, ta, tsBox, row, note);
+      (function tryRender() {
+        if (window.turnstile && tsBox.isConnected) { tsWidget = window.turnstile.render(tsBox, { sitekey: SITE_KEY, theme: 'dark' }); }
+        else setTimeout(tryRender, 200);
+      })();
+      sb.addEventListener('click', async function () {
+        var name = nm.value.trim(), body = ta.value.trim();
+        if (!name) { nm.focus(); return; }
+        if (!body) { ta.focus(); return; }
+        var token = (window.turnstile && tsWidget != null) ? window.turnstile.getResponse(tsWidget) : '';
+        if (!token) { st.textContent = KO ? '사람 인증을 완료해주세요.' : 'Complete the human check.'; return; }
+        sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
+        try {
+          var r = await fetch(FN_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: name, body: body, token: token }) });
+          var j = await r.json();
+          if (!r.ok || !j.ok) { st.textContent = (j && j.error) || (KO ? '전송 실패' : 'Failed'); sb.classList.remove('disabled'); if (window.turnstile && tsWidget != null) window.turnstile.reset(tsWidget); return; }
+          st.classList.add('ok'); st.textContent = KO ? '접수됐습니다. 승인 후 게시돼요. 감사합니다.' : 'Received. It will appear after review. Thank you.';
+          nm.value = ''; ta.value = ''; sb.classList.remove('disabled');
+          if (window.turnstile && tsWidget != null) window.turnstile.reset(tsWidget);
+        } catch (e) { st.textContent = KO ? '전송 실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] guest submit', e); }
+      });
+    }
+
+    modes.addEventListener('change', function (e) { if (e.target.value === 'guest') paintGuest(); else paintLogin(); });
+    paintLogin();
   }
 
   function heart(r, count0, liked0) {
@@ -134,47 +191,82 @@
     return b;
   }
 
-  function renderEntries(rows, nameById, counts, mine) {
+  var allRows = [], nameById = {}, counts = {}, mine = {}, filt = 'all';
+  function whoName(r) { return nameById[r.user_id] || r.guest_name || (KO ? '익명' : 'anon'); }
+
+  var revisersEl = document.getElementById('revisers');
+  function renderNameList(el, names, emptyText) {
+    if (!el) return;
+    el.innerHTML = '';
+    if (!names.length) { var s = document.createElement('span'); s.className = 'empty'; s.textContent = emptyText; el.appendChild(s); return; }
+    names.sort(function (a, b) { return a.localeCompare(b, 'ko'); }).forEach(function (n) { var sp = document.createElement('span'); sp.textContent = n; el.appendChild(sp); });
+  }
+  function renderThanks() {
+    var all = [], rev = [];
+    allRows.forEach(function (r) {
+      var who = whoName(r);
+      if (all.indexOf(who) === -1) all.push(who);
+      if (r.node && rev.indexOf(who) === -1) rev.push(who);
+    });
+    renderNameList(revisersEl, rev, KO ? '— 아직 없습니다 —' : '— none yet —');
+    renderNameList(thanks, all, KO ? '— 첫 이름을 기다리고 있습니다 —' : '— waiting for the first name —');
+  }
+
+  function renderEntries() {
+    var rows = allRows.filter(function (r) {
+      if (filt === 'guestbook') return !r.node;
+      if (filt === 'feedback') return !!r.node;
+      return true;
+    });
     entriesBox.innerHTML = '';
     empty.style.display = rows.length ? 'none' : 'block';
-    var names = [];
+    empty.textContent = filt === 'feedback' ? (KO ? '아직 피드백이 없습니다.' : 'No feedback yet.')
+      : filt === 'guestbook' ? (KO ? '아직 방명록이 없습니다.' : 'No notes yet.')
+      : (KO ? '아직 방명록이 비어 있습니다. 첫 번째 말을 남겨주세요.' : 'Empty — be the first.');
     rows.forEach(function (r) {
-      var who = nameById[r.user_id] || (KO ? '익명' : 'anon');
-      if (names.indexOf(who) === -1) names.push(who);
+      var who = whoName(r);
       var div = document.createElement('div'); div.className = 'gb-entry';
       var whoEl = document.createElement('p'); whoEl.className = 'who'; whoEl.textContent = who;
+      var kind = document.createElement('span'); kind.className = 'gb-kind ' + (r.node ? 'fb' : 'gb');
+      kind.textContent = r.node ? (KO ? '피드백' : 'Feedback') : (KO ? '방명록' : 'Note'); whoEl.appendChild(kind);
       if (r.node) { var t = document.createElement('span'); t.className = 'node-tag'; t.textContent = r.node; whoEl.appendChild(t); }
       var w = document.createElement('span'); w.className = 'when'; w.textContent = (r.created_at || '').slice(0, 10); whoEl.appendChild(w);
       var msgEl = document.createElement('p'); msgEl.className = 'msg'; msgEl.textContent = r.body;
       div.append(whoEl, msgEl, heart(r, counts[r.id] || 0, !!mine[r.id]));
       entriesBox.appendChild(div);
     });
-    thanks.innerHTML = '';
-    if (!names.length) { var s0 = document.createElement('span'); s0.className = 'empty'; s0.textContent = KO ? '— 첫 이름을 기다리고 있습니다 —' : '— waiting for the first name —'; thanks.appendChild(s0); }
-    else names.sort(function (a, b) { return a.localeCompare(b, 'ko'); }).forEach(function (n) { var s = document.createElement('span'); s.textContent = n; thanks.appendChild(s); });
   }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.gb-filt'), function (b) {
+    b.addEventListener('click', function () {
+      filt = b.dataset.filt;
+      Array.prototype.forEach.call(document.querySelectorAll('.gb-filt'), function (x) { x.classList.toggle('on', x === b); });
+      renderEntries();
+    });
+  });
 
   async function load() {
     if (!supa) return;
-    var fb = await supa.from('feedback').select('id, body, node, created_at, user_id')
+    var fb = await supa.from('feedback').select('id, body, node, created_at, user_id, guest_name')
       .eq('work_id', WORK_ID).eq('approved', true).order('created_at', { ascending: false });
     if (fb.error) { console.error('[gb] load feedback', fb.error); return; }
-    var rows = fb.data || [];
-    var nameById = {}, ids = [];
-    rows.forEach(function (r) { if (r.user_id && ids.indexOf(r.user_id) === -1) ids.push(r.user_id); });
+    allRows = fb.data || [];
+    nameById = {}; var ids = [];
+    allRows.forEach(function (r) { if (r.user_id && ids.indexOf(r.user_id) === -1) ids.push(r.user_id); });
     if (ids.length) {
       var pr = await supa.from('profiles').select('id, display_name').in('id', ids);
       if (pr.error) console.warn('[gb] profiles', pr.error);
       (pr.data || []).forEach(function (p) { nameById[p.id] = p.display_name; });
     }
-    var counts = {}, mine = {};
+    counts = {}; mine = {};
     var lk = await supa.from('likes').select('feedback_id, user_id');
     if (lk.error) console.warn('[gb] likes', lk.error);
     (lk.data || []).forEach(function (x) {
       counts[x.feedback_id] = (counts[x.feedback_id] || 0) + 1;
       if (user() && x.user_id === user().id) mine[x.feedback_id] = 1;
     });
-    renderEntries(rows, nameById, counts, mine);
+    renderThanks();
+    renderEntries();
   }
 
   function whenReady(cb) {
