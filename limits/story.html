@@ -382,6 +382,7 @@ This film was produced with AI. This film is about AI. But it began as a reflect
     if (!loginNote) return;
     var u = window.NOALIBI && window.NOALIBI.user;
     loginNote.hidden = !!u;
+    tray.classList.toggle('need-login', !u);  // 로그인 전엔 방법 안내 숨김 → 로그인부터
   }
   function hidePop() { pop.hidden = true; curRange = null; curBody = null; updateSelUI(); }
   function clearHighlights() {
@@ -451,9 +452,6 @@ This film was produced with AI. This film is about AI. But it began as a reflect
       updateSelUI();
     }, 180);
   });
-
-  // 스토리 피드백 링크(#feedback)로 들어오면 피드백 모드 자동 켜기
-  if (location.hash === '#feedback') setTimeout(function () { if (!inMode()) setMode(true); }, 350);
 
   function onSelEnd() {
     if (!inMode()) return;
