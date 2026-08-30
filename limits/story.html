@@ -31,16 +31,13 @@
 
   <main>
     <div class="sec-head"><span class="sec-num">4.</span><h2>스토리</h2></div>
-    <div class="story-cta">
-      <button id="ebookBtn" class="ebook-btn" type="button">📖 이북 모드로 읽기</button>
-      <button id="storyFbBtn" class="ebook-btn ebook-btn-alt" type="button">✎ 피드백</button>
-    </div>
+    <button id="ebookBtn" class="ebook-btn" type="button">이북 모드</button>
     <div class="story-fb-panel" id="storyFbPanel" hidden>
       <p class="sfp-cap">피드백 남기는 법</p>
       <ol class="sfp-steps">
-        <li>각 <b>ACT</b>(또는 위 <b>📖 이북 모드</b>) 버튼을 누르면 리더가 열려요.</li>
+        <li>각 <b>ACT</b>(또는 위 <b>이북 모드</b>) 버튼을 누르면 리더가 열려요.</li>
         <li><b>문장에 밑줄을 그으면</b>(폰은 길게 눌러 선택) 그 자리에 바로 의견을 남길 수 있습니다.</li>
-        <li>고칠 부분들을 메모로 모아 <b>한 번에</b> 보낼 수 있어요.</li>
+        <li>밑줄과 메모를 <b>모아보기</b>에서 한 번에 편집할 수 있어요.</li>
       </ol>
       <div class="sfp-login" id="sfpLogin" hidden>
         <p>피드백은 <b>로그인</b> 후 남길 수 있어요 — 채택 시 <b>크레딧·지분(포인트)</b> 정산을 위한 <b>본인 확인</b>용이에요.</p>
@@ -50,7 +47,7 @@
     <p class="sec-sub">The Living Final Cut — 지금도 갱신되는 판본</p>
     <p class="final-note">
       * 이 최종본은 고정된 완성본이 아니라, 채택된 의견과 함께 계속 갱신되는 판본입니다.
-      아래 각 <b>장(ACT)을 누르면</b> 이북 리더로 그 장부터 편하게 이어읽을 수 있어요 — 문장에 <b>밑줄</b>을 그으면 그 자리에 바로 의견을 남길 수 있습니다. (미색 화면은 위 <b>📖 이북 모드</b> 버튼)
+      아래 각 <b>장(ACT)을 누르면</b> 이북 리더로 그 장부터 편하게 이어읽을 수 있어요.
     </p>
 
 
@@ -527,11 +524,12 @@ This film was produced with AI. This film is about AI. But it began as a reflect
   document.addEventListener('noalibi-auth', function () { loadBadges(); updateLogin(); });
 })();
 </script>
+<button id="storyFbFab" class="hl-fab" type="button" aria-label="피드백">피드백</button>
 <script src="ebook.js"></script>
 <script type="module" src="auth.js"></script>
 <script>
 (function () {
-  var btn = document.getElementById('storyFbBtn'), panel = document.getElementById('storyFbPanel');
+  var btn = document.getElementById('storyFbFab'), panel = document.getElementById('storyFbPanel');
   var lg = document.getElementById('sfpLogin'), lb = document.getElementById('sfpLoginBtn');
   function loggedIn() { return !!(window.NOALIBI && window.NOALIBI.user); }
   function upd() { if (lg) lg.hidden = loggedIn(); }
