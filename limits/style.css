@@ -1140,3 +1140,38 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
   .eb-book { padding: 24px 18px 120px; }
   .eb-ch-t { font-size: 22px; }
 }
+
+/* 이북: 밑줄→인라인 메모 + 모아보기 드래그 창 */
+.eb-bar-panel { flex: 0 0 auto; background: #A8432B; color: #F1EAD9; border: none; border-radius: 8px; font-family: var(--mono); font-size: 13px; padding: 10px 15px; cursor: pointer; }
+.eb-bar-panel span { display: inline-block; min-width: 16px; margin-left: 3px; background: #F1EAD9; color: #A8432B; border-radius: 10px; padding: 0 6px; font-size: 11px; }
+.eb-note { max-width: 640px; margin: -6px auto 20px; background: #FBF6EA; border: 1px solid #E0D3B6; border-left: 3px solid #D9A441; border-radius: 8px; padding: 11px 13px; }
+.eb-note-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.eb-note-n { font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; color: #A8432B; }
+.eb-note-x { background: none; border: none; color: #9A8F76; font-family: var(--mono); font-size: 11px; cursor: pointer; }
+.eb-note-x:hover { color: #A8432B; }
+.eb-note-t { width: 100%; min-height: 58px; resize: vertical; background: #FFFDF7; border: 1px solid #DDD1B8; border-radius: 6px; color: #2A2621; font-family: var(--sans); font-size: 13.5px; line-height: 1.6; padding: 8px 10px; box-sizing: border-box; }
+
+.eb-panel { position: fixed; right: 16px; bottom: 74px; z-index: 215; width: min(360px, 92vw); max-height: 66vh; display: flex; flex-direction: column; background: #F5EFE1; border: 1px solid #C9BEA4; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,0.32); overflow: hidden; }
+.eb-panel[hidden] { display: none; }
+.eb-panel-head { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; background: #A8432B; color: #F1EAD9; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; user-select: none; }
+.eb-panel-head button { background: none; border: none; color: #F1EAD9; font-size: 18px; line-height: 1; cursor: pointer; }
+.eb-panel-body { flex: 1 1 auto; overflow-y: auto; padding: 13px 14px; }
+.eb-panel-login { font-family: var(--sans); font-size: 12px; color: #7A3320; background: #F3DFD3; border: 1px solid #C98A6E; border-radius: 7px; padding: 8px 10px; margin: 0 0 11px; line-height: 1.5; }
+.eb-panel-login[hidden] { display: none; }
+.eb-panel-login button { margin-left: 4px; background: #A8432B; color: #F5EFE1; border: none; border-radius: 5px; font-family: var(--mono); font-size: 11px; padding: 4px 11px; cursor: pointer; }
+.eb-whole-l { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: #6E6656; margin: 0 0 6px; }
+.eb-whole-l small { color: #9A8F76; }
+.eb-whole { width: 100%; min-height: 54px; resize: vertical; background: #FFFDF7; border: 1px solid #DDD1B8; border-radius: 7px; color: #2A2621; font-family: var(--sans); font-size: 13px; line-height: 1.55; padding: 8px 10px; box-sizing: border-box; margin-bottom: 14px; }
+.eb-panel-list { display: flex; flex-direction: column; gap: 8px; }
+.eb-panel-empty { font-family: var(--sans); font-size: 12.5px; color: #8B8067; margin: 0; line-height: 1.5; }
+.eb-panel-item { display: flex; flex-direction: column; gap: 3px; padding: 9px 10px; background: #FBF6EA; border: 1px solid #E4D9BF; border-radius: 7px; cursor: pointer; }
+.eb-panel-item:hover { border-color: #D9A441; }
+.eb-pi-n { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: #A8432B; }
+.eb-pi-q { font-family: var(--serif); font-size: 13px; color: #4A4436; line-height: 1.45; }
+.eb-pi-note { font-family: var(--sans); font-size: 12px; color: #2A2621; }
+.eb-pi-empty { font-family: var(--sans); font-size: 11.5px; color: #A99E85; }
+.eb-panel-foot { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-top: 1px solid #E0D6C0; }
+.eb-panel-send { background: #A8432B; color: #F5EFE1; border: none; border-radius: 8px; font-family: var(--mono); font-size: 13.5px; padding: 10px 20px; cursor: pointer; }
+.eb-panel-send:hover { background: #8E3421; }
+.eb-panel-status { font-family: var(--mono); font-size: 11.5px; color: #8A5A3A; }
+@media (max-width: 720px) { .eb-panel { left: 8px; right: 8px; width: auto; bottom: 66px; } }
