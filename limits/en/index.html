@@ -132,6 +132,10 @@
       rec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
+  if (rec && location.hash === '#record') {
+    rec.hidden = false;
+    setTimeout(function () { rec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+  }
 })();
 </script>
 </body>
