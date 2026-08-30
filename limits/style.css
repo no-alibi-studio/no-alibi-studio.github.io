@@ -1006,15 +1006,17 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .lr-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: var(--led); margin: 0 0 14px; }
 .lr-body { max-width: 62ch; font-size: 15px; line-height: 1.85; color: var(--bone-dim); margin: 0 0 14px; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; align-items: stretch; }
-.hero-cta > a { display: flex; align-items: center; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; padding: 10px 18px; border: 1px solid var(--panel-edge); border-radius: 3px; color: var(--bone); transition: border-color 0.15s, color 0.15s, background 0.15s; }
+.hero-cta > a { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; padding: 11px 18px; border: 1px solid var(--panel-edge); border-radius: 6px; background: var(--panel); color: var(--bone); transition: border-color 0.15s, color 0.15s, background 0.15s; }
+.hero-cta > a::after { content: "→"; opacity: 0.5; }
 .hero-cta > a:hover, .hero-cta > a:focus-visible { border-color: var(--led); color: var(--led); }
-.hero-cta > a.primary { border-color: var(--led); color: var(--led); }
+.hero-cta > a:hover::after { opacity: 1; }
+.hero-cta > a.primary { border-color: var(--led); color: var(--led); background: rgba(230,140,60,.08); }
 .hero-cta > a.primary:hover { background: var(--led); color: #12100d; }
-/* 피드백 남기기: 상단 라벨 + 하단 이미지/영상/스토리 3분할 */
-.cta-fb { display: flex; flex-direction: column; border: 1px solid var(--panel-edge); border-radius: 3px; overflow: hidden; }
-.cta-fb-top { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.05em; color: var(--bone); padding: 9px 18px 7px; text-align: center; }
+/* 피드백 남기기: 상단 라벨(비클릭) + 하단 이미지/영상/스토리 3분할(클릭) */
+.cta-fb { display: flex; flex-direction: column; border: 1px solid var(--panel-edge); border-radius: 6px; overflow: hidden; background: var(--panel); }
+.cta-fb-top { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--bone-dim); padding: 8px 18px 6px; text-align: center; }
 .cta-fb-links { display: flex; border-top: 1px solid var(--panel-edge); flex: 1; }
-.cta-fb-links a { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--bone-dim); padding: 8px 14px; border-left: 1px solid var(--panel-edge); transition: background 0.15s, color 0.15s; }
+.cta-fb-links a { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--bone); padding: 9px 14px; border-left: 1px solid var(--panel-edge); transition: background 0.15s, color 0.15s; }
 .cta-fb-links a:first-child { border-left: none; }
 .cta-fb-links a:hover, .cta-fb-links a:focus-visible { background: var(--led); color: #12100d; }
 .rm-lede { max-width: 60ch; font-size: 13.5px; color: var(--bone-dim); margin: 6px 0 20px; line-height: 1.75; }
@@ -1066,8 +1068,7 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .fb-fab[open] { margin: 28px 0; }
 
 /* ══════════ 이북 모드 (라이트 리더) ══════════ */
-.ebook-btn { display: block; width: 100%; margin: 12px 0 18px; padding: 16px 18px; background: var(--led); border: 1px solid var(--led); border-radius: 10px; color: var(--void); font-family: var(--mono); font-size: 15px; letter-spacing: 0.02em; cursor: pointer; text-align: center; transition: filter 0.15s; }
-.ebook-btn small { display: block; margin-top: 4px; font-size: 10.5px; color: rgba(0,0,0,0.62); letter-spacing: 0; }
+.ebook-btn { display: inline-flex; align-items: center; gap: 6px; width: auto; margin: 12px 0 18px; padding: 10px 18px; background: var(--led); border: 1px solid var(--led); border-radius: 8px; color: var(--void); font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: filter 0.15s; }
 .ebook-btn:hover { filter: brightness(0.92); }
 /* 이북 슬러그라인(INT/EXT): 고딕 + 굵게 */
 .eb-p b.eb-slug { font-family: var(--sans); font-weight: 700; color: #7A4A2A; letter-spacing: 0; }
@@ -1265,3 +1266,8 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 /* 로그인 모달 — Kakao OAuth 버튼 */
 .auth-kakao { background: #FEE500; color: #191600; border-color: #FEE500; }
 .auth-kakao:hover { background: #F4DC00; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+
+/* 이미지·영상 피드백 로그인 게이트 */
+.fb-login-gate { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 18px; border: 1px solid var(--panel-edge); border-radius: 8px; background: rgba(230,140,60,.05); }
+.fb-gate-why { margin: 0; line-height: 1.65; color: var(--bone); font-size: 13.5px; }
+.fb-gate-login { align-self: flex-start; }

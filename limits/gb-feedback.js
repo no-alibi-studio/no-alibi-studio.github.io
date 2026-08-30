@@ -1,18 +1,34 @@
-// 이미지·영상 섹션 피드백 폼 — 파일(≤5MB)은 base64로 시트 스크립트에 전달
+// 이미지·영상 섹션 피드백 폼 — 로그인 게이트 + 파일(≤5MB) base64 전달
 (function () {
+  function loggedIn() { return !!(window.NOALIBI && window.NOALIBI.user); }
+
   document.querySelectorAll('form.fb-form').forEach(function (form) {
     var btn = form.querySelector('button[type="submit"]');
     var status = form.querySelector('.gb-status');
     var lang = form.getAttribute('data-lang') || 'ko';
+    var wrap = form.closest('.gb-write') || form.parentElement;
+    var gate = wrap ? wrap.querySelector('.fb-login-gate') : null;
+    var gateBtn = gate ? gate.querySelector('.fb-gate-login') : null;
     var T = lang === 'en'
-      ? { sending: 'Sending…', ok: 'Sent. Thank you.', fail: 'Failed — please retry.', big: 'File exceeds 5MB.', wait: 'Opening soon' }
-      : { sending: '전송 중…', ok: '전달됐습니다. 감사합니다.', fail: '전송 실패 — 다시 시도해주세요.', big: '파일이 5MB를 넘습니다.', wait: '전송 준비 중' };
-    if (!window.GB_API) {
-      btn.classList.add('disabled');
-      status.textContent = T.wait;
+      ? { sending: 'Sending…', ok: 'Sent. Thank you.', fail: 'Failed — please retry.', big: 'File exceeds 5MB.', wait: 'Opening soon', needLogin: 'Log in first to leave feedback.' }
+      : { sending: '전송 중…', ok: '전달됐습니다. 감사합니다.', fail: '전송 실패 — 다시 시도해주세요.', big: '파일이 5MB를 넘습니다.', wait: '전송 준비 중', needLogin: '피드백은 로그인 후 남길 수 있어요.' };
+
+    if (!window.GB_API) { btn.classList.add('disabled'); status.textContent = T.wait; }
+
+    // 로그인 상태에 따라 게이트/폼 토글
+    function syncAuth() {
+      if (!gate) return;
+      if (loggedIn()) { gate.hidden = true; form.style.display = ''; }
+      else { gate.hidden = false; form.style.display = 'none'; }
     }
+    if (gateBtn) gateBtn.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
+    syncAuth();
+    document.addEventListener('noalibi-auth', syncAuth);
+    if (window.NOALIBI && window.NOALIBI.ready && window.NOALIBI.ready.then) window.NOALIBI.ready.then(syncAuth);
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (!loggedIn()) { status.textContent = T.needLogin; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); return; }
       if (!window.GB_API) return;
       var fileInput = form.querySelector('input[type="file"]');
       var file = fileInput && fileInput.files[0];
@@ -32,6 +48,8 @@
         body.append('visible', form.visible.value);
         body.append('crew', form.crew && form.crew.checked ? '지원' : '');
         body.append('news', form.news && form.news.checked ? '수신' : '');
+        var uid = (window.NOALIBI && window.NOALIBI.user && window.NOALIBI.user.id) || '';
+        if (uid) body.append('user_id', uid);
         if (fileData) {
           body.append('fileData', fileData);
           body.append('fileName', fileName);
@@ -51,9 +69,7 @@
       }
       if (file) {
         var reader = new FileReader();
-        reader.onload = function () {
-          send(String(reader.result).split(',')[1], file.name, file.type);
-        };
+        reader.onload = function () { send(String(reader.result).split(',')[1], file.name, file.type); };
         reader.readAsDataURL(file);
       } else send();
     });
