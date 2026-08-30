@@ -1185,3 +1185,11 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
 /* 이북: 시나리오 원본 줄바꿈 보존 */
 .eb-p { white-space: pre-line; }
 .eb-slug { display: inline-block; margin-bottom: 1px; }
+
+/* 이북: 이미지 클릭→의견 */
+.eb-fig-click { cursor: pointer; position: relative; }
+.eb-fig-click::after { content: '✎ 이미지 의견'; position: absolute; top: 8px; right: 8px; background: rgba(42,38,33,0.8); color: #F1EAD9; font-family: var(--mono); font-size: 10px; padding: 4px 8px; border-radius: 5px; pointer-events: none; }
+.eb-fig-click img { transition: outline 0.15s; }
+.eb-fig-click:hover img { outline: 2px solid #D9A441; outline-offset: 1px; }
+.eb-fig-noted::after { content: '✎ 의견 작성 중'; background: #A8432B; }
+.eb-fig-noted img { outline: 2px solid #A8432B; outline-offset: 1px; }

@@ -20,9 +20,10 @@
     return html;
   }
   function fig(im) {
-    var f = document.createElement('figure'); f.className = 'eb-fig';
+    var f = document.createElement('figure'); f.className = 'eb-fig eb-fig-click';
     var img = document.createElement('img'); img.src = im.src; img.alt = im.alt; img.loading = 'lazy'; f.appendChild(img);
     if (im.cap) { var c = document.createElement('figcaption'); c.textContent = im.cap; f.appendChild(c); }
+    f.addEventListener('click', function () { imgMemo(f, im); });
     return f;
   }
 
@@ -168,8 +169,26 @@
     window.getSelection().removeAllRanges(); resetBar();
     setTimeout(function () { ta.focus(); }, 60);
   }
+  function imgMemo(f, im) {
+    if (f.nextSibling && f.nextSibling.classList && f.nextSibling.classList.contains('eb-note')) { f.nextSibling.querySelector('.eb-note-t').focus(); return; }
+    var chEl = f.closest('.eb-ch'); var act = chEl ? (chEl.dataset.act || '스토리') : '스토리';
+    var quote = '[이미지] ' + (im.cap || im.alt || '이미지');
+    f.classList.add('eb-fig-noted');
+    var box = document.createElement('div'); box.className = 'eb-note';
+    box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 이미지/영상에 대한 의견을 적어주세요…" maxlength="1500"></textarea>';
+    f.parentNode.insertBefore(box, f.nextSibling);
+    var memo = { quote: quote, node: act, note: '', mark: f, num: 0, noteEl: box };
+    var ta = box.querySelector('.eb-note-t');
+    ta.addEventListener('input', function () { memo.note = ta.value; refreshPanel(); });
+    box.querySelector('.eb-note-x').addEventListener('click', function () { removeMemo(memo); });
+    memos.push(memo); renumber(); updateCount();
+    setTimeout(function () { ta.focus(); }, 60);
+  }
   function removeMemo(m) {
-    if (m.mark && m.mark.parentNode) { var t = document.createTextNode(m.mark.textContent); m.mark.parentNode.replaceChild(t, m.mark); }
+    if (m.mark) {
+      if (m.mark.tagName === 'MARK' && m.mark.parentNode) { var t = document.createTextNode(m.mark.textContent); m.mark.parentNode.replaceChild(t, m.mark); }
+      else if (m.mark.classList) m.mark.classList.remove('eb-fig-noted');
+    }
     if (m.noteEl && m.noteEl.parentNode) m.noteEl.parentNode.removeChild(m.noteEl);
     var i = memos.indexOf(m); if (i >= 0) memos.splice(i, 1);
     renumber(); updateCount(); refreshPanel();
