@@ -1360,3 +1360,17 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
   .ptile.big .pt-name { font-size: 22px; }
   .pt-name { font-size: 17px; }
 }
+
+/* 스토리: 피드백 버튼 + 방법 패널 */
+.story-cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.ebook-btn-alt { background: transparent; color: var(--led); border: 1px solid var(--led); }
+.ebook-btn-alt:hover { background: var(--led); color: var(--void); filter: none; }
+.story-fb-panel { border: 1px solid var(--panel-edge); border-radius: 10px; padding: 18px 20px; margin: 6px 0 18px; background: var(--panel); }
+.story-fb-panel[hidden] { display: none; }
+.sfp-cap { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--led); margin: 0 0 12px; }
+.sfp-steps { margin: 0; padding-left: 20px; font-family: var(--sans); font-size: 14px; line-height: 1.7; color: var(--bone); }
+.sfp-steps b { color: var(--bone); }
+.sfp-login { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--panel-edge); }
+.sfp-login[hidden] { display: none; }
+.sfp-login p { font-size: 13px; color: var(--bone-dim); line-height: 1.6; margin: 0 0 10px; }
+.sfp-login b { color: var(--bone); }

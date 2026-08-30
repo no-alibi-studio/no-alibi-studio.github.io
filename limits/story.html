@@ -31,7 +31,22 @@
 
   <main>
     <div class="sec-head"><span class="sec-num">4.</span><h2>스토리</h2></div>
-    <button id="ebookBtn" class="ebook-btn" type="button">📖 이북 모드로 읽기</button>
+    <div class="story-cta">
+      <button id="ebookBtn" class="ebook-btn" type="button">📖 이북 모드로 읽기</button>
+      <button id="storyFbBtn" class="ebook-btn ebook-btn-alt" type="button">✎ 피드백</button>
+    </div>
+    <div class="story-fb-panel" id="storyFbPanel" hidden>
+      <p class="sfp-cap">피드백 남기는 법</p>
+      <ol class="sfp-steps">
+        <li>각 <b>ACT</b>(또는 위 <b>📖 이북 모드</b>) 버튼을 누르면 리더가 열려요.</li>
+        <li><b>문장에 밑줄을 그으면</b>(폰은 길게 눌러 선택) 그 자리에 바로 의견을 남길 수 있습니다.</li>
+        <li>고칠 부분들을 메모로 모아 <b>한 번에</b> 보낼 수 있어요.</li>
+      </ol>
+      <div class="sfp-login" id="sfpLogin" hidden>
+        <p>피드백은 <b>로그인</b> 후 남길 수 있어요 — 채택 시 <b>크레딧·지분(포인트)</b> 정산을 위한 <b>본인 확인</b>용이에요.</p>
+        <button type="button" class="gb-btn" id="sfpLoginBtn">로그인</button>
+      </div>
+    </div>
     <p class="sec-sub">The Living Final Cut — 지금도 갱신되는 판본</p>
     <p class="final-note">
       * 이 최종본은 고정된 완성본이 아니라, 채택된 의견과 함께 계속 갱신되는 판본입니다.
@@ -514,5 +529,20 @@ This film was produced with AI. This film is about AI. But it began as a reflect
 </script>
 <script src="ebook.js"></script>
 <script type="module" src="auth.js"></script>
+<script>
+(function () {
+  var btn = document.getElementById('storyFbBtn'), panel = document.getElementById('storyFbPanel');
+  var lg = document.getElementById('sfpLogin'), lb = document.getElementById('sfpLoginBtn');
+  function loggedIn() { return !!(window.NOALIBI && window.NOALIBI.user); }
+  function upd() { if (lg) lg.hidden = loggedIn(); }
+  if (btn) btn.addEventListener('click', function () {
+    panel.hidden = false; upd();
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (!loggedIn() && window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login();  // 로그아웃 → 로그인 안내(모달)
+  });
+  if (lb) lb.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
+  document.addEventListener('noalibi-auth', upd);
+})();
+</script>
 </body>
 </html>
