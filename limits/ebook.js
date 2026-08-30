@@ -7,7 +7,7 @@
   if (!btn) return;
 
   var overlay = null, bookEl = null, panel = null, listEl = null, wholeEl = null, countEl = null;
-  var memos = [], selBusy = false, bmTimer = null, selTimer = null;
+  var memos = [], bmTimer = null, selTimer = null, curRange = null, curBody = null;
   var fs = Math.min(24, Math.max(15, +(localStorage.getItem(FS_KEY) || 19)));
 
   function supa() { return window.NOALIBI && window.NOALIBI.supa; }
@@ -15,8 +15,8 @@
   function esc(s) { return (s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   // INT/EXT/INSERT 슬러그라인(볼드) 다음에 줄바꿈 → 내용은 새 줄에서 시작
   function fmtPara(html) {
-    var m = html.match(/^(\s*<b>)([\s\S]*?)(<\/b>)(\s*)/);
-    if (m && /\b(INT|EXT|INSERT)\b/i.test(m[2])) return '<b class="eb-slug">' + m[2] + '</b><br>' + html.slice(m[0].length);
+    var m = html.match(/^\s*<b>([\s\S]*?)<\/b>/);
+    if (m && /\b(INT|EXT|INSERT)\b/i.test(m[1])) return html.replace(/^(\s*)<b>/, '$1<b class="eb-slug">');
     return html;
   }
   function fig(im) {
@@ -79,7 +79,8 @@
       '</div>' +
       '<div class="eb-scroll" id="ebScroll"></div>' +
       '<div class="eb-bar">' +
-        '<span class="eb-bar-hint">밑줄을 그으면(문장 선택) <b>의견</b>을 남길 수 있어요</span>' +
+        '<span class="eb-bar-hint" id="ebHint">밑줄을 그으면(문장 선택) <b>의견</b>을 남길 수 있어요</span>' +
+        '<button type="button" class="eb-bar-add" id="ebBarAdd" hidden>✎ 여기 메모</button>' +
         '<button type="button" class="eb-bar-panel" id="ebBarPanel">📝 모아보기 <span id="ebCount">0</span></button>' +
       '</div>' +
       '<div class="eb-panel" id="ebPanel" hidden>' +
@@ -110,14 +111,15 @@
     overlay.querySelector('#ebFsm').addEventListener('click', function () { setFs(fs - 1); });
     overlay.querySelector('#ebFsp').addEventListener('click', function () { setFs(fs + 1); });
     overlay.querySelector('#ebBarPanel').addEventListener('click', function () { openPanel(); });
+    overlay.querySelector('#ebBarAdd').addEventListener('click', doAdd);
     overlay.querySelector('#ebPanelX').addEventListener('click', function () { panel.hidden = true; });
     overlay.querySelector('#ebPanelSend').addEventListener('click', send);
     overlay.querySelector('#ebPanelLoginBtn').addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
     wholeEl.addEventListener('input', function () { updateCount(); });
 
     document.addEventListener('selectionchange', function () {
-      if (!overlay || overlay.hidden || selBusy) return;
-      clearTimeout(selTimer); selTimer = setTimeout(onSel, 320);
+      if (!overlay || overlay.hidden) return;
+      clearTimeout(selTimer); selTimer = setTimeout(onSel, 150);
     });
     bookEl.addEventListener('scroll', function () { clearTimeout(bmTimer); bmTimer = setTimeout(saveBm, 400); });
     makeDraggable(overlay.querySelector('#ebPanelHead'), panel);
@@ -127,19 +129,29 @@
 
   // ── 밑줄(선택) → 자동 메모 ──
   function onSel() {
+    var addBtn = overlay.querySelector('#ebBarAdd'), hint = overlay.querySelector('#ebHint');
     var sel = window.getSelection();
-    if (!sel || sel.isCollapsed || !sel.toString().trim()) return;
+    if (!sel || sel.isCollapsed || !sel.toString().trim()) return;  // 빈 선택이면 마지막 선택 유지
     var range = sel.getRangeAt(0);
     var el = range.commonAncestorContainer; if (el.nodeType === 3) el = el.parentElement;
     if (el && el.closest('.eb-mark')) return;               // 이미 밑줄 친 곳
     var para = el && el.closest ? el.closest('.eb-p') : null;
     if (!para) return;                                      // 한 문단 안에서만
-    autoAdd(range, para);
+    curRange = range.cloneRange(); curBody = para;
+    var t = curRange.toString().trim();
+    hint.innerHTML = '선택: 「' + esc(t.slice(0, 32)) + (t.length > 32 ? '…' : '') + '」';
+    hint.classList.add('has'); addBtn.hidden = false;
   }
+  function resetBar() {
+    var addBtn = overlay.querySelector('#ebBarAdd'), hint = overlay.querySelector('#ebHint');
+    if (addBtn) addBtn.hidden = true;
+    if (hint) { hint.innerHTML = '밑줄을 그으면(문장 선택) <b>의견</b>을 남길 수 있어요'; hint.classList.remove('has'); }
+    curRange = null; curBody = null;
+  }
+  function doAdd() { if (curRange && curRange.toString().trim() && curBody) autoAdd(curRange, curBody); }
   function autoAdd(range, para) {
     var quote = range.toString().trim().slice(0, 300);
     if (quote.length < 2) return;
-    selBusy = true;
     var chEl = para.closest('.eb-ch'); var act = chEl ? (chEl.dataset.act || '스토리') : '스토리';
     var mark = null;
     try { mark = document.createElement('mark'); mark.className = 'eb-mark'; range.surroundContents(mark); } catch (e) { mark = null; }
@@ -153,9 +165,8 @@
     box.querySelector('.eb-note-x').addEventListener('click', function () { removeMemo(memo); });
     if (mark) mark.addEventListener('click', function () { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); ta.focus(); });
     memos.push(memo); renumber(); updateCount();
-    window.getSelection().removeAllRanges();
+    window.getSelection().removeAllRanges(); resetBar();
     setTimeout(function () { ta.focus(); }, 60);
-    setTimeout(function () { selBusy = false; }, 500);
   }
   function removeMemo(m) {
     if (m.mark && m.mark.parentNode) { var t = document.createTextNode(m.mark.textContent); m.mark.parentNode.replaceChild(t, m.mark); }
