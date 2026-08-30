@@ -382,8 +382,7 @@ This film was produced with AI. This film is about AI. But it began as a reflect
   function updateLogin() {
     if (!loginNote) return;
     var u = window.NOALIBI && window.NOALIBI.user;
-    loginNote.hidden = !!u;
-    tray.classList.toggle('need-login', !u);  // 로그인 전엔 방법 안내 숨김 → 로그인부터
+    loginNote.hidden = !!u;   // 안내만 표시(방법은 그대로 보임), 로그인은 보낼 때만 — 이북과 동일
   }
   function hidePop() { pop.hidden = true; curRange = null; curBody = null; updateSelUI(); }
   function clearHighlights() {
