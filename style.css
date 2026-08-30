@@ -427,7 +427,7 @@ body { overflow-x: hidden; }
 
 /* POLYPHONY / vers_O = 추상 패턴 배경(영화 이미지 없음) · 좌우 꽉, 상하 짧게 */
 .hub-hero { position: relative; overflow: hidden; color: #EDE6D6; background: #0e0a07; }
-.hub-slide[data-div="cin"] .hub-hero {
+.hub-slide[data-div="vers"] .hub-hero {
   background:
     radial-gradient(130% 100% at 12% 15%, rgba(255,61,46,.26), transparent 55%),
     radial-gradient(120% 90% at 90% 88%, rgba(255,150,60,.17), transparent 55%),
@@ -435,7 +435,7 @@ body { overflow-x: hidden; }
     radial-gradient(120% 120% at 22% 108%, rgba(50,95,150,.18), transparent 55%),
     linear-gradient(135deg, #1c1307, #0e0a07 72%);
 }
-.hub-slide[data-div="vers"] .hub-hero {
+.hub-slide[data-div="cin"] .hub-hero {
   background:
     radial-gradient(130% 100% at 15% 18%, rgba(90,120,235,.24), transparent 55%),
     radial-gradient(120% 90% at 88% 84%, rgba(55,195,185,.17), transparent 55%),
@@ -449,7 +449,8 @@ body { overflow-x: hidden; }
 .hh-in { position: relative; z-index: 1; }
 .hh-in { max-width: 820px; margin: 0 auto; padding: 46px 32px; }
 .hh-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--led); margin: 0 0 12px; }
-.hh-title { font-family: var(--serif); font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: .01em; color: #fff; margin: 0 0 14px; }
+.hh-title { font-family: var(--sans); font-weight: 800; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: .01em; color: #fff; margin: 0 0 14px; }
+.hh-title .us { color: var(--led); }
 .hh-desc { font-family: var(--sans); font-size: clamp(14px, 2.4vw, 16px); line-height: 1.6; color: #CFC6B2; margin: 0 0 20px; max-width: 34em; }
 .hh-desc b { color: #fff; }
 .hh-btn { font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; color: #14110C; background: #fff; border: none; border-radius: 999px; padding: 12px 26px; cursor: pointer; transition: transform .15s, background .15s, color .15s; }
@@ -475,7 +476,7 @@ body { overflow-x: hidden; }
 .hub-works { margin-top: 20px; }
 .hub-works[hidden] { display: none; }
 .work-poster { position: relative; display: block; overflow: hidden; color: #fff; }
-.work-poster img { width: 100%; height: clamp(340px, 60vh, 600px); object-fit: cover; display: block; transition: transform .5s ease; }
+.work-poster img { width: 100%; height: clamp(340px, 46vw, 600px); object-fit: cover; display: block; transition: transform .5s ease; }
 .work-poster:hover img { transform: scale(1.03); }
 .wp-scrim { position: absolute; top: 0; left: 0; right: 0; height: 58%; background: linear-gradient(180deg, rgba(0,0,0,.74), rgba(0,0,0,0)); }
 .wp-top { position: absolute; top: 30px; left: 0; right: 0; }
@@ -492,3 +493,9 @@ body { overflow-x: hidden; }
   .hh-howto > * { padding-left: 20px; padding-right: 20px; }
   .wp-top > * { padding-left: 20px; padding-right: 20px; }
 }
+
+/* POLY_PHONY: 더 알아보기 중앙 */
+.hh-btn { display: block; width: -moz-fit-content; width: fit-content; margin: 8px auto 0; }
+/* 포스터: 제목 볼드 + 참여하기 하단중앙 */
+.wp-title { font-weight: 700; }
+.wp-bottom { position: absolute; left: 0; right: 0; bottom: 26px; text-align: center; z-index: 2; }
