@@ -372,3 +372,19 @@ a.frame-card:hover .poster-wrap .enter, a.frame-card:focus-visible .poster-wrap 
   .entry .state { grid-column: 2; align-self: start; margin-top: 2px; }
   .ledger-meta { text-align: left; }
 }
+
+/* ── 허브: Contact us ── */
+.contact-box { margin: 32px 0 6px; border-top: 1px solid var(--rule); padding-top: 18px; }
+.contact-box > summary { list-style: none; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); display: inline-flex; align-items: center; gap: 8px; }
+.contact-box > summary::-webkit-details-marker { display: none; }
+.contact-box > summary::after { content: "+"; color: var(--led); font-size: 14px; }
+.contact-box[open] > summary::after { content: "−"; }
+.contact-box > summary:hover { color: var(--ink); }
+.cb-body { margin-top: 14px; max-width: 60ch; }
+.cb-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.cb-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); width: 76px; flex: 0 0 auto; }
+.cb-val { font-family: var(--mono); font-size: 14px; color: var(--ink); }
+.cb-link { color: var(--led); }
+.cb-copy { background: var(--ink); color: var(--paper); border: none; border-radius: 5px; font-family: var(--mono); font-size: 11px; padding: 5px 12px; cursor: pointer; }
+.cb-copy.ok { background: var(--led); }
+.cb-note { font-family: var(--sans); font-size: 12.5px; color: var(--ink-dim); line-height: 1.6; margin: 12px 0 0; }

@@ -112,11 +112,21 @@
     </div>
   </div>
 
+  <details class="contact-box">
+    <summary>연락하기 · Contact</summary>
+    <div class="cb-body">
+      <div class="cb-row"><span class="cb-label">Email</span><span class="cb-val">cinmaite0@gmail.com</span><button type="button" class="cb-copy" data-copy="cinmaite0@gmail.com" data-done="복사됨!">복사</button></div>
+      <div class="cb-row"><span class="cb-label">Instagram</span><a class="cb-val cb-link" href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">@thelimitsofmyworld ↗</a></div>
+      <p class="cb-note">현재 1인 운영이라 응답에 시간이 조금 걸릴 수 있어요.</p>
+    </div>
+  </details>
+
   <footer class="foot">
     <span>no_alibi · 존재에는 알리바이가 없다</span>
     <span><a href="cin-maite.html">cin_mAIte ↗</a> · © 2026</span>
   </footer>
 
 </div>
+<script>(function(){document.querySelectorAll(".cb-copy").forEach(function(b){b.addEventListener("click",function(){var v=b.dataset.copy||"";var d=function(){var t=b.textContent;b.textContent=b.dataset.done||"OK";b.classList.add("ok");setTimeout(function(){b.textContent=t;b.classList.remove("ok");},1400);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(d,function(){});}else{var ta=document.createElement("textarea");ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");d();}catch(e){}document.body.removeChild(ta);}});});})();</script>
 </body>
 </html>
