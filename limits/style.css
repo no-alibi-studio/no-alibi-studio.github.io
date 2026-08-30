@@ -1261,3 +1261,7 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
   border: 1px solid var(--panel-edge); border-radius: 6px; font-family: var(--sans); font-size: 14px; }
 .gb-name:focus { outline: none; border-color: var(--led); }
 .gb-turnstile { min-height: 65px; }
+
+/* 로그인 모달 — Kakao OAuth 버튼 */
+.auth-kakao { background: #FEE500; color: #191600; border-color: #FEE500; }
+.auth-kakao:hover { background: #F4DC00; box-shadow: 0 1px 3px rgba(0,0,0,.25); }

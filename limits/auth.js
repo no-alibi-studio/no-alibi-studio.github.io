@@ -18,14 +18,14 @@ const T = KO ? {
   ph: '이메일 주소', sending: '보내는 중…', sent: '메일함(스팸함도)을 확인하세요 — 로그인 링크를 보냈어요.',
   err: '전송 실패 — 잠시 후 다시 시도해주세요.', invalid: '올바른 이메일을 입력해주세요.',
   loading: '로그인 모듈을 불러오는 중… 잠시 후 다시 눌러주세요.', close: '닫기',
-  google: 'Google로 계속하기', or: '또는 이메일로', oauthErr: '로그인 제공자 연결 실패 — 이메일로 시도해주세요.'
+  google: 'Google로 계속하기', kakao: '카카오로 계속하기', or: '또는 이메일로', oauthErr: '로그인 제공자 연결 실패 — 이메일로 시도해주세요.'
 } : {
   login: 'Log in', logout: 'Log out', send: 'Send login link',
   title: 'no-alibi login · sign up', desc: 'We email you a login link — one click, no password. Your cin points accrue to this account.',
   ph: 'Email address', sending: 'Sending…', sent: 'Check your inbox (and spam) — we sent a login link.',
   err: 'Failed — please try again shortly.', invalid: 'Enter a valid email.',
   loading: 'Loading login module… try again in a moment.', close: 'Close',
-  google: 'Continue with Google', or: 'or with email', oauthErr: 'Provider connection failed — try email instead.'
+  google: 'Continue with Google', kakao: 'Continue with Kakao', or: 'or with email', oauthErr: 'Provider connection failed — try email instead.'
 };
 
 // ── 위젯 mount (즉시, Supabase와 무관) ──
@@ -72,6 +72,9 @@ function openModal() {
     '<button type="button" class="auth-oauth auth-google" data-provider="google">' +
       '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.71-1.57 2.68-3.89 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.02-3.7H.96v2.34A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.98 10.72a5.4 5.4 0 0 1 0-3.44V4.94H.96a9 9 0 0 0 0 8.12l3.02-2.34z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.94l3.02 2.34C4.68 5.16 6.66 3.58 9 3.58z"/></svg>' +
       '<span>' + T.google + '</span></button>' +
+    '<button type="button" class="auth-oauth auth-kakao" data-provider="kakao">' +
+      '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#000" d="M9 1.6C4.86 1.6 1.5 4.2 1.5 7.42c0 2.08 1.38 3.9 3.47 4.95-.15.54-.55 2-.63 2.3-.1.39.14.38.3.28.12-.08 2-1.36 2.82-1.92.5.07 1 .11 1.54.11 4.14 0 7.5-2.6 7.5-5.82S13.14 1.6 9 1.6z"/></svg>' +
+      '<span>' + T.kakao + '</span></button>' +
     '<div class="auth-or"><span>' + T.or + '</span></div>' +
     '<form class="auth-form"><input type="email" required placeholder="' + T.ph + '" autocomplete="email">' +
     '<button type="submit" class="auth-send">' + T.send + '</button></form>' +
@@ -81,12 +84,14 @@ function openModal() {
   const input = overlay.querySelector('input');
   const status = overlay.querySelector('.auth-status');
   const sendBtn = overlay.querySelector('.auth-send');
-  overlay.querySelector('.auth-google').addEventListener('click', async () => {
+  const oauth = async (provider) => {
     if (!supa) { status.textContent = T.loading; return; }
     status.classList.remove('ok'); status.textContent = '';
-    const { error } = await supa.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href } });
-    if (error) { status.textContent = T.oauthErr; console.error('[noalibi] oauth google', error); }
-  });
+    const { error } = await supa.auth.signInWithOAuth({ provider, options: { redirectTo: location.href } });
+    if (error) { status.textContent = T.oauthErr; console.error('[noalibi] oauth ' + provider, error); }
+  };
+  overlay.querySelector('.auth-google').addEventListener('click', () => oauth('google'));
+  overlay.querySelector('.auth-kakao').addEventListener('click', () => oauth('kakao'));
   overlay.querySelector('.auth-x').addEventListener('click', closeModal);
   overlay.addEventListener('mousedown', (e) => { if (e.target === overlay) closeModal(); });
   setTimeout(() => input.focus(), 50);
