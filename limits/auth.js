@@ -42,11 +42,8 @@ function mountWidget() {
 const widget = mountWidget();
 
 function renderLoggedOut() {
+  // 헤더 로그인 버튼 제거 — 로그인은 피드백·이북·방명록 흐름(구글/게이트)에서 진행
   widget.innerHTML = '';
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'auth-btn'; b.textContent = T.login;
-  b.addEventListener('click', openModal);
-  widget.appendChild(b);
 }
 function renderLoggedIn(bal, name) {
   widget.innerHTML = '';
