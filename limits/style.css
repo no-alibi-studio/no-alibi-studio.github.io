@@ -1175,3 +1175,8 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
 .eb-panel-send:hover { background: #8E3421; }
 .eb-panel-status { font-family: var(--mono); font-size: 11.5px; color: #8A5A3A; }
 @media (max-width: 720px) { .eb-panel { left: 8px; right: 8px; width: auto; bottom: 66px; } }
+
+/* 이북: 선택색 빨강→연한 앰버(눈 편하게), INT/EXT 슬러그라인 */
+.eb-overlay ::selection { background: #EAD79E; color: #2A2621; }
+.eb-overlay ::-moz-selection { background: #EAD79E; color: #2A2621; }
+.eb-slug { font-weight: 700; color: #7A4A2A; letter-spacing: 0.01em; }

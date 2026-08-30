@@ -13,6 +13,12 @@
   function supa() { return window.NOALIBI && window.NOALIBI.supa; }
   function user() { return window.NOALIBI && window.NOALIBI.user; }
   function esc(s) { return (s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // INT/EXT/INSERT 슬러그라인(볼드) 다음에 줄바꿈 → 내용은 새 줄에서 시작
+  function fmtPara(html) {
+    var m = html.match(/^(\s*<b>)([\s\S]*?)(<\/b>)(\s*)/);
+    if (m && /\b(INT|EXT|INSERT)\b/i.test(m[2])) return '<b class="eb-slug">' + m[2] + '</b><br>' + html.slice(m[0].length);
+    return html;
+  }
   function fig(im) {
     var f = document.createElement('figure'); f.className = 'eb-fig';
     var img = document.createElement('img'); img.src = im.src; img.alt = im.alt; img.loading = 'lazy'; f.appendChild(img);
@@ -53,7 +59,7 @@
       ops.forEach(function (op, idx) {
         if (placed[idx]) ch.appendChild(fig(placed[idx]));
         if (op.t === 'scene') { var s = document.createElement('h3'); s.className = 'eb-scene'; s.textContent = op.text; ch.appendChild(s); }
-        else { var p = document.createElement('p'); p.className = 'eb-p'; p.innerHTML = op.html; ch.appendChild(p); }
+        else { var p = document.createElement('p'); p.className = 'eb-p'; p.innerHTML = fmtPara(op.html); ch.appendChild(p); }
       });
       book.appendChild(ch);
     });
