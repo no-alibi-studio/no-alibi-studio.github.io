@@ -87,7 +87,7 @@
       '<div class="eb-panel" id="ebPanel" hidden>' +
         '<div class="eb-panel-head" id="ebPanelHead"><span>메모 모아보기</span><button type="button" id="ebPanelX" aria-label="닫기">×</button></div>' +
         '<div class="eb-panel-body">' +
-          '<p class="eb-panel-login" id="ebPanelLogin" hidden>보내려면 <b>로그인</b>이 필요해요 — 로그인해야 누구 의견인지 크레딧에 남아요. <button type="button" id="ebPanelLoginBtn">로그인</button></p>' +
+          '<p class="eb-panel-login" id="ebPanelLogin" hidden>보내려면 <b>로그인</b>이 필요해요 — 크레딧·지분(포인트) 정산 시 <b>본인 증명</b>을 위해서예요. <button type="button" id="ebPanelLoginBtn">로그인</button></p>' +
           '<label class="eb-whole-l">이야기 전체 의견 <small>(선택)</small></label>' +
           '<textarea id="ebWhole" class="eb-whole" placeholder="이 이야기 전체에 대한 의견을 자유롭게…" maxlength="2000"></textarea>' +
           '<div class="eb-panel-list" id="ebPanelList"></div>' +
