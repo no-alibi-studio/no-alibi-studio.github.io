@@ -31,9 +31,10 @@
   <main>
     <div class="sec-head"><span class="sec-num">4.</span><h2>스토리</h2></div>
     <p class="sec-sub">The Living Final Cut — 지금도 갱신되는 판본</p>
+    <button id="ebookBtn" class="ebook-btn" type="button">📖 이북 모드로 읽기 <small>미색 화면 · 문장에 바로 메모 · 이어읽기</small></button>
     <p class="final-note">
       * 이 최종본은 고정된 완성본이 아니라, 채택된 의견과 함께 계속 갱신되는 판본입니다.
-      노드를 누르면 그 구간의 스토리와 키 이미지가 함께 열립니다.
+      아래 각 장(ACT)을 누르면 그 구간의 스토리와 키 이미지가 함께 열립니다.
     </p>
 
 
@@ -41,7 +42,7 @@
 
     <details class="node">
       <summary>
-        <span class="node-num">NODE 1</span>
+        <span class="node-num">ACT 1</span>
         <span class="node-title">각성 — 인간에서 AI로<small>어두운 모니터의 채팅창, 묘지에서 일어서는 비트겐슈타인, 기계로 교체되는 팔다리</small></span>
         <span class="node-marker">▶</span>
       </summary>
@@ -92,7 +93,7 @@ Runway 화면 분할선이 하이라이트되며, 클릭음과 함께 그 우주
 
     <details class="node">
       <summary>
-        <span class="node-num">NODE 2</span>
+        <span class="node-num">ACT 2</span>
         <span class="node-title">소모 — 우주 · 사막 · 바다<small>별에 플러그인하면 별이 꺼진다. 용암의 추격, 모래 아래 사람들의 손발, 끓는 바다</small></span>
         <span class="node-marker">▶</span>
       </summary>
@@ -154,7 +155,7 @@ INSERT: 데이터센터 FAN 돌아가는 모습 — 점차 빨라지며 돌아�
 
     <details class="node">
       <summary>
-        <span class="node-num">NODE 3</span>
+        <span class="node-num">ACT 3</span>
         <span class="node-title">귀환과 프롬프트<small>처음으로 멈추는 질주. 진짜 팔다리를 안고 관에 눕다. 디지털 묘비 — "무엇을 생성하시겠습니까?"</small></span>
         <span class="node-marker">▶</span>
       </summary>
@@ -193,7 +194,7 @@ Prompt: "Generate the sentence on the digital tombstone. The Limits of My Langua
 
     <details class="node">
       <summary>
-        <span class="node-num">NODE 4</span>
+        <span class="node-num">ACT 4</span>
         <span class="node-title">서버랙이 된 도시<small>같은 자세로 침대에 눕는 유저. 수천 개의 좁은 방, 하나의 리듬으로 수렴하는 타자음</small></span>
         <span class="node-marker">▶</span>
       </summary>
@@ -229,7 +230,7 @@ Power Consumption
 
     <details class="node">
       <summary>
-        <span class="node-num">NODE 5</span>
+        <span class="node-num">ACT 5</span>
         <span class="node-title">쿠키 — 실제의 언어<small>실사 메이킹. 모니터 앞에서 고민하는 감독 — "네 영화잖아."</small></span>
         <span class="node-marker">▶</span>
       </summary>
@@ -514,6 +515,7 @@ This film was produced with AI. This film is about AI. But it began as a reflect
   document.addEventListener('noalibi-auth', function () { loadBadges(); updateLogin(); });
 })();
 </script>
+<script src="ebook.js"></script>
 <script type="module" src="auth.js"></script>
 </body>
 </html>
