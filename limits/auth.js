@@ -30,13 +30,10 @@ const T = KO ? {
 
 // ── 위젯 mount (즉시, Supabase와 무관) ──
 function mountWidget() {
-  const host = document.querySelector('header.subnav nav')
-    || document.querySelector('.subnav nav')
-    || document.querySelector('.subnav');
+  // 모든 페이지에서 index와 동일 위치(우상단 고정)
   const w = document.createElement('span');
-  w.className = 'authbar';
-  if (host) host.appendChild(w);
-  else { w.classList.add('authbar-fixed'); document.body.appendChild(w); }
+  w.className = 'authbar authbar-fixed';
+  document.body.appendChild(w);
   return w;
 }
 const widget = mountWidget();
