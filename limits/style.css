@@ -1066,10 +1066,11 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .fb-fab[open] { margin: 28px 0; }
 
 /* ══════════ 이북 모드 (라이트 리더) ══════════ */
-.ebook-btn { display: block; width: 100%; margin: 6px 0 18px; padding: 14px 18px; background: var(--panel); border: 1px solid var(--led); border-radius: 10px; color: var(--led); font-family: var(--mono); font-size: 14px; letter-spacing: 0.02em; cursor: pointer; text-align: center; transition: background 0.15s, color 0.15s; }
-.ebook-btn small { display: block; margin-top: 4px; font-size: 10.5px; color: var(--bone-dim); letter-spacing: 0; }
-.ebook-btn:hover { background: var(--led); color: var(--void); }
-.ebook-btn:hover small { color: rgba(0,0,0,0.65); }
+.ebook-btn { display: block; width: 100%; margin: 12px 0 18px; padding: 16px 18px; background: var(--led); border: 1px solid var(--led); border-radius: 10px; color: var(--void); font-family: var(--mono); font-size: 15px; letter-spacing: 0.02em; cursor: pointer; text-align: center; transition: filter 0.15s; }
+.ebook-btn small { display: block; margin-top: 4px; font-size: 10.5px; color: rgba(0,0,0,0.62); letter-spacing: 0; }
+.ebook-btn:hover { filter: brightness(0.92); }
+/* 이북 슬러그라인(INT/EXT): 고딕 + 굵게 */
+.eb-p b.eb-slug { font-family: var(--sans); font-weight: 700; color: #7A4A2A; letter-spacing: 0; }
 body.eb-lock { overflow: hidden; }
 
 .eb-overlay { position: fixed; inset: 0; z-index: 200; background: #F1EAD9; color: #2A2621; display: flex; flex-direction: column; }
