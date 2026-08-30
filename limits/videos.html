@@ -82,7 +82,19 @@
           <label class="gb-check"><input type="checkbox" name="crew" value="지원"> 이 작품의 크루로 함께할 의향이 있어요 — 남긴 피드백을 지원서로도 봐주세요.</label>
         </div>
         <div class="gb-field gb-crew">
-          <label class="gb-check"><input type="checkbox" name="news" value="수신"> 작품 정보 수신 — 이북·영상·전시 등 소식을 받아보실 수 있습니다.</label>
+          <label class="gb-check"><input type="checkbox" name="news" value="수신"> 작품 정보·수익 공지 수신 — 이북·영상·전시 소식과 수익 배당 내역을 이메일로 받아요.</label>
+        </div>
+        <div class="gb-field">
+          <label>기여 보상 수령 방식 <span class="req">*</span></label>
+          <div class="gb-visible-choice gb-reward">
+            <input type="radio" name="reward" id="VID-r-pt" value="포인트" checked>
+            <label for="VID-r-pt">포인트로 받기 <small>(이북·상영·전시·굿즈·차기작)</small></label>
+            <input type="radio" name="reward" id="VID-r-in" value="제작투자">
+            <label for="VID-r-in">제작 투자 <small>(BEP 이후 실제 수익 배당)</small></label>
+            <input type="radio" name="reward" id="VID-r-so" value="사회환원">
+            <label for="VID-r-so">사회 환원 <small>(기부)</small></label>
+          </div>
+          <p class="fb-note">채택되면 지분이 <b>포인트</b>로 적립돼요. 실제 <b>현금 배당</b>을 원하면 ‘제작 투자’ 선택. <a href="revenue.html">→ 보상·포인트 안내</a></p>
         </div>
         <div class="gb-row">
           <div class="gb-field"><label>이름 / 닉네임 <span class="req">*</span></label><input name="name" type="text" required maxlength="40"></div>

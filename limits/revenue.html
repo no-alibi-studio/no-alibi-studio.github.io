@@ -61,6 +61,26 @@
       <p class="table-note">* 지분은 사이트 내 포인트로 전환되어 이북·상영·전시·굿즈·제작 투자(수익 배분)·사회 환원 등에 쓸 수 있습니다.</p>
     </div>
 
+    <div class="thanks reward-guide">
+      <h3>기여 보상 · 포인트 안내</h3>
+      <p class="sub">채택된 기여를 어떻게 돌려드리는지</p>
+      <p class="rg-p">채택된 피드백은 <b>수익 지분</b>으로 기록되고, 그 지분은 <b>사이트 포인트</b>로 돌려드립니다.</p>
+      <ul class="rg-list">
+        <li><b>스토리 기여</b> → 이북 수익 지분</li>
+        <li><b>이미지·영상 기여</b> → 상영·전시 수익 지분</li>
+      </ul>
+      <p class="rg-p">포인트는 이북·상영·전시·굿즈, 그리고 앞으로 이어질 <b>no-alibi.com의 다른 작품</b>에도 쓸 수 있어요. 작품이 저작료로 수익을 내는 한 포인트는 <b>계속 쌓입니다.</b> 포인트는 <b>참여 기본 포인트 + 지분 퍼센티지 포인트</b>로 지급됩니다.</p>
+      <p class="rg-invest"><b>실제 현금 배당을 원하시면 — 피드백을 남길 때 ‘제작 투자’를 선택하세요.</b><br>현금 배당은 이북·상영·전시가 각각 판매를 시작하고, <b>손익분기점(BEP)</b>을 넘긴 실제 수익이 발생해 <b>10원 이상의 유효한 배당</b>이 가능해질 때부터 받을 수 있습니다.</p>
+      <p class="rg-head">수익 공개 일정</p>
+      <p class="rg-p">첫 3년간은 <b>반기별(상·하반기)</b>로 홈페이지에 수익 내역을 공개하고, 이후에는 수익이 발생하는 한 <b>연 1회</b> 공개합니다. 내역이 갱신되면 참여자분들께 <b>이메일·인스타그램</b>으로 알려드려요.</p>
+      <p class="rg-p">공지를 놓치지 않으시려면 <b>이메일 수신 동의</b>(피드백 폼에서 체크) 또는 <b>인스타 팔로우</b>를 부탁드립니다.</p>
+      <div class="ig-follow">
+        <span class="ig-handle">@thelimitsofmyworld</span>
+        <a class="ig-go" href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">팔로우 ↗</a>
+        <button type="button" class="ig-copy" data-ig="thelimitsofmyworld">복사</button>
+      </div>
+    </div>
+
     <div class="thanks">
       <h3>이북 — E-Book</h3>
       <p class="sub">아마존 영문판 · 한국판</p>
@@ -116,6 +136,9 @@
 
 </div>
 
+<script>
+(function(){document.querySelectorAll('.ig-copy').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.ig||'';var done=function(){var t=b.textContent;b.textContent='복사됨!';b.classList.add('ok');setTimeout(function(){b.textContent=t;b.classList.remove('ok');},1500);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(done,function(){});}else{var ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}});});})();
+</script>
 <script type="module" src="auth.js"></script>
 </body>
 </html>

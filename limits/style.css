@@ -1193,3 +1193,17 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
 .eb-fig-click:hover img { outline: 2px solid #D9A441; outline-offset: 1px; }
 .eb-fig-noted::after { content: '✎ 의견 작성 중'; background: #A8432B; }
 .eb-fig-noted img { outline: 2px solid #A8432B; outline-offset: 1px; }
+
+/* 기여 보상 안내 + 인스타 팔로우/복사 */
+.reward-guide .rg-p { color: var(--bone-dim); font-size: 14px; line-height: 1.8; margin: 0 0 12px; }
+.reward-guide .rg-p b { color: var(--bone); }
+.reward-guide .rg-list { margin: 0 0 12px; padding-left: 18px; color: var(--bone-dim); font-size: 14px; line-height: 1.9; }
+.reward-guide .rg-list b { color: var(--led); }
+.reward-guide .rg-invest { background: var(--panel); border: 1px solid var(--led); border-left: 3px solid var(--led); border-radius: 6px; padding: 12px 15px; font-size: 13.5px; line-height: 1.75; color: var(--bone-dim); margin: 0 0 16px; }
+.reward-guide .rg-invest b { color: var(--led); }
+.reward-guide .rg-head { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--led); margin: 18px 0 8px; }
+.ig-follow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 8px; }
+.ig-handle { font-family: var(--mono); font-size: 14px; color: var(--bone); letter-spacing: 0.02em; }
+.ig-go { font-family: var(--mono); font-size: 12px; color: var(--led); }
+.ig-copy { margin-left: auto; background: var(--led); color: var(--void); border: none; border-radius: 6px; font-family: var(--mono); font-size: 12px; padding: 7px 14px; cursor: pointer; }
+.ig-copy.ok { background: var(--bone); }
