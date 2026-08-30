@@ -1214,3 +1214,7 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
 mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 .eb-note.eb-note-sub { margin-left: 20px; border-left-color: #C88F30; background: #FAF3E2; }
 .fb-consent { border-top: 1px solid var(--panel-edge); padding-top: 11px; margin-top: 4px; line-height: 1.65; }
+
+/* 수익: 참여 등급 표 */
+.tier-table td:first-child { white-space: nowrap; font-weight: 600; }
+.tier-table td:nth-child(3) { line-height: 1.55; }
