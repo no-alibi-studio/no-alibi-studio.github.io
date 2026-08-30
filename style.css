@@ -420,7 +420,7 @@ a.entry.hot:hover .go, a.entry.hot:focus-visible .go { text-decoration: none; }
 /* ══ 홈: 부문 히어로 스와이프 + 운영작 포스터 (풀블리드) ══ */
 body { overflow-x: hidden; }
 .hub-divs { margin-top: 44px; }
-.hub-divs, .hub-works { position: relative; width: 100vw; left: 50%; margin-left: -50vw; }
+.hub-divs, .hub-works { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
 .hub-viewport { position: relative; overflow: hidden; touch-action: pan-y; }
 .hub-track { display: flex; transition: transform .42s cubic-bezier(.4,0,.2,1); }
 .hub-slide { min-width: 100%; }
@@ -473,16 +473,17 @@ body { overflow-x: hidden; }
 .hub-dot { width: 9px; height: 9px; border-radius: 50%; border: none; background: var(--rule); cursor: pointer; padding: 0; transition: background .15s, transform .15s; }
 .hub-dot.on { background: var(--led); transform: scale(1.25); }
 
-.hub-works { margin-top: 20px; }
+.hub-works { margin-top: 20px; background: radial-gradient(120% 90% at 50% -12%, #17120c, #0b0908 72%); padding: 44px 0; }
+.work-stage { max-width: 1080px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
 .hub-works[hidden] { display: none; }
-.work-poster { position: relative; display: block; overflow: hidden; color: #fff; }
-.work-poster img { width: 100%; height: clamp(340px, 46vw, 600px); object-fit: cover; display: block; transition: transform .5s ease; }
+.work-poster { position: relative; display: block; overflow: hidden; border-radius: 14px; color: #fff; }
+.work-poster img { width: 100%; height: clamp(300px, 40vw, 520px); object-fit: cover; display: block; transition: transform .5s ease; }
 .work-poster:hover img { transform: scale(1.03); }
 .wp-scrim { position: absolute; top: 0; left: 0; right: 0; height: 58%; background: linear-gradient(180deg, rgba(0,0,0,.74), rgba(0,0,0,0)); }
-.wp-top { position: absolute; top: 30px; left: 0; right: 0; }
+.wp-top { position: absolute; top: 16px; left: 0; right: 0; }
 .wp-top > * { max-width: 820px; margin-left: auto; margin-right: auto; padding-left: 32px; padding-right: 32px; box-sizing: border-box; }
 .wp-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: rgba(255,255,255,.86); margin: 0 0 7px; }
-.wp-title { font-family: var(--serif); font-size: clamp(26px, 5vw, 40px); line-height: 1.1; color: #fff; margin: 0 0 18px; }
+.wp-title { font-family: var(--serif); font-size: clamp(24px, 4.6vw, 38px); line-height: 1.12; color: #fff; margin: 0; }
 .wp-btn { display: inline-block; font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; background: var(--led); color: #fff; border-radius: 999px; padding: 12px 26px; }
 .work-poster:hover .wp-btn { filter: brightness(1.08); }
 .wp-state { position: absolute; bottom: 20px; right: 22px; display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: #fff; background: rgba(0,0,0,.5); border-radius: 999px; padding: 7px 15px; }
@@ -490,6 +491,7 @@ body { overflow-x: hidden; }
 
 @media (max-width: 620px) {
   .hh-in { padding: 34px 20px; }
+  .wp-top { top: 10px; }
   .hh-howto > * { padding-left: 20px; padding-right: 20px; }
   .wp-top > * { padding-left: 20px; padding-right: 20px; }
 }
