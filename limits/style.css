@@ -1343,3 +1343,20 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 .hl-circle.done { background: var(--panel); color: var(--led); border: 1px solid var(--led); box-shadow: none; cursor: default; }
 .hl-sub { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--bone-dim); text-align: center; line-height: 1.6; margin-top: 9px; }
 @media (max-width: 560px) { .hl-circle { width: 78px; height: 78px; font-size: 14px; } .hero-title-row { gap: 22px; } }
+
+/* 인덱스: 벤토 그리드 버튼 (크기 다양) */
+.pgrid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 118px; gap: 12px; margin: 56px 0; }
+.ptile { display: flex; flex-direction: column; justify-content: space-between; padding: 18px 20px; border: 1px solid var(--panel-edge); border-radius: 12px; background: var(--panel); color: var(--bone); transition: border-color .15s, background .15s, transform .15s; }
+.ptile:hover, .ptile:focus-visible { border-color: var(--led); background: rgba(229,52,42,.06); transform: translateY(-2px); }
+.ptile.big { grid-column: span 2; grid-row: span 2; }
+.ptile.wide { grid-column: span 2; }
+.pt-name { font-family: var(--serif); font-size: 19px; line-height: 1.28; }
+.ptile.big .pt-name { font-size: 27px; }
+.pt-go { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--led); align-self: flex-start; }
+@media (max-width: 640px) {
+  .pgrid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 100px; margin: 40px 0; }
+  .ptile.big { grid-column: span 2; grid-row: span 1; }
+  .ptile.wide { grid-column: span 2; }
+  .ptile.big .pt-name { font-size: 22px; }
+  .pt-name { font-size: 17px; }
+}
