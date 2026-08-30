@@ -1209,3 +1209,8 @@ mark.eb-mark { background: #F6E39B; color: inherit; border-bottom: 2px solid #D9
 .ig-copy.ok { background: var(--bone); }
 .reward-guide .rg-legal { display: block; margin-top: 10px; font-size: 12px; line-height: 1.65; color: var(--bone-faint); }
 .reward-guide .rg-legal b { color: var(--bone-dim); }
+
+/* 이북: 하위 메모(1-1) */
+mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
+.eb-note.eb-note-sub { margin-left: 20px; border-left-color: #C88F30; background: #FAF3E2; }
+.fb-consent { border-top: 1px solid var(--panel-edge); padding-top: 11px; margin-top: 4px; line-height: 1.65; }

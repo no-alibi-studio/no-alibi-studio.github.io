@@ -7,7 +7,7 @@
   if (!btn) return;
 
   var overlay = null, bookEl = null, panel = null, listEl = null, wholeEl = null, countEl = null;
-  var memos = [], bmTimer = null, selTimer = null, curRange = null, curBody = null;
+  var memos = [], bmTimer = null, selTimer = null, curRange = null, curBody = null, curParent = null;
   var fs = Math.min(24, Math.max(15, +(localStorage.getItem(FS_KEY) || 19)));
 
   function supa() { return window.NOALIBI && window.NOALIBI.supa; }
@@ -135,29 +135,31 @@
     if (!sel || sel.isCollapsed || !sel.toString().trim()) return;  // 빈 선택이면 마지막 선택 유지
     var range = sel.getRangeAt(0);
     var el = range.commonAncestorContainer; if (el.nodeType === 3) el = el.parentElement;
-    if (el && el.closest('.eb-mark')) return;               // 이미 밑줄 친 곳
+    var pmark = el && el.closest ? el.closest('.eb-mark') : null;   // 이미 밑줄 친 곳 → 하위 메모
+    var parent = pmark ? memoByMark(pmark) : null;
     var para = el && el.closest ? el.closest('.eb-p') : null;
-    if (!para) return;                                      // 한 문단 안에서만
-    curRange = range.cloneRange(); curBody = para;
+    if (!para && !parent) return;                           // 한 문단 안 또는 기존 메모 안
+    curRange = range.cloneRange(); curBody = para || (pmark ? pmark.closest('.eb-p') : null); curParent = parent;
     var t = curRange.toString().trim();
-    hint.innerHTML = '선택: 「' + esc(t.slice(0, 32)) + (t.length > 32 ? '…' : '') + '」';
+    hint.innerHTML = (parent ? '<b>하위 메모</b> · ' : '') + '선택: 「' + esc(t.slice(0, 26)) + (t.length > 26 ? '…' : '') + '」';
     hint.classList.add('has'); addBtn.hidden = false;
   }
+  function memoByMark(mk) { for (var i = 0; i < memos.length; i++) if (memos[i].mark === mk) return memos[i]; return null; }
   function resetBar() {
     var addBtn = overlay.querySelector('#ebBarAdd'), hint = overlay.querySelector('#ebHint');
     if (addBtn) addBtn.hidden = true;
     if (hint) { hint.innerHTML = '밑줄을 그으면(문장 선택) <b>의견</b>을 남길 수 있어요'; hint.classList.remove('has'); }
-    curRange = null; curBody = null;
+    curRange = null; curBody = null; curParent = null;
   }
-  function doAdd() { if (curRange && curRange.toString().trim() && curBody) autoAdd(curRange, curBody); }
-  function autoAdd(range, para) {
+  function doAdd() { if (curRange && curRange.toString().trim() && curBody) autoAdd(curRange, curBody, curParent); }
+  function autoAdd(range, para, parent) {
     var quote = range.toString().trim().slice(0, 300);
     if (quote.length < 2) return;
     var chEl = para.closest('.eb-ch'); var act = chEl ? (chEl.dataset.act || '스토리') : '스토리';
     var mark = null;
-    try { mark = document.createElement('mark'); mark.className = 'eb-mark'; range.surroundContents(mark); } catch (e) { mark = null; }
-    var memo = { quote: quote, node: act, note: '', mark: mark, num: 0, noteEl: null };
-    var box = document.createElement('div'); box.className = 'eb-note';
+    try { mark = document.createElement('mark'); mark.className = 'eb-mark' + (parent ? ' eb-mark-sub' : ''); range.surroundContents(mark); } catch (e) { mark = null; }
+    var memo = { quote: quote, node: act, note: '', mark: mark, num: 0, noteEl: null, parent: parent || null };
+    var box = document.createElement('div'); box.className = 'eb-note' + (parent ? ' eb-note-sub' : '');
     box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 부분에 대한 의견을 적어주세요…" maxlength="1500"></textarea>';
     para.parentNode.insertBefore(box, para.nextSibling);
     memo.noteEl = box;
@@ -185,6 +187,7 @@
     setTimeout(function () { ta.focus(); }, 60);
   }
   function removeMemo(m) {
+    memos.filter(function (x) { return x.parent === m; }).slice().forEach(removeMemo);  // 하위 메모 먼저 제거
     if (m.mark) {
       if (m.mark.tagName === 'MARK' && m.mark.parentNode) { var t = document.createTextNode(m.mark.textContent); m.mark.parentNode.replaceChild(t, m.mark); }
       else if (m.mark.classList) m.mark.classList.remove('eb-fig-noted');
@@ -193,7 +196,14 @@
     var i = memos.indexOf(m); if (i >= 0) memos.splice(i, 1);
     renumber(); updateCount(); refreshPanel();
   }
-  function renumber() { memos.forEach(function (m, i) { m.num = i + 1; if (m.noteEl) m.noteEl.querySelector('.eb-note-n').textContent = '메모 ' + m.num; }); }
+  function renumber() {
+    var topN = 0, cc = {};
+    memos.forEach(function (m) {
+      if (!m.parent) { m.num = String(++topN); }
+      else { var pi = memos.indexOf(m.parent); cc[pi] = (cc[pi] || 0) + 1; m.num = (m.parent.num || '?') + '-' + cc[pi]; }
+      if (m.noteEl) m.noteEl.querySelector('.eb-note-n').textContent = '메모 ' + m.num;
+    });
+  }
   function updateCount() { var n = memos.length; countEl.textContent = n; }
 
   // ── 메모 모아보기 창 ──
