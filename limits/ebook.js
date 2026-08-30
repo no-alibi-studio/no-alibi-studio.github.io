@@ -280,18 +280,44 @@
     else chip.hidden = true;
   }
 
-  function open() {
+  function open(opts) {
+    opts = opts || {};
     if (!overlay) build();
+    overlay.classList.toggle('eb-dark', opts.theme === 'dark');
     memos = []; updateCount();
     bookEl.innerHTML = ''; bookEl.appendChild(buildBook());
     bookEl.querySelector('#ebEndFb').addEventListener('click', function () { openPanel(); setTimeout(function () { wholeEl.focus(); }, 80); });
     document.body.classList.add('eb-lock'); overlay.hidden = false; panel.hidden = true;
-    var splash = overlay.querySelector('#ebSplash'); splash.style.display = 'flex'; splash.style.opacity = '';
-    var go = overlay.querySelector('#ebSplashGo'), done = false;
-    function enter() { if (done) return; done = true; splash.style.opacity = '0'; setTimeout(function () { splash.style.display = 'none'; }, 350); showResume(); }
-    go.onclick = enter; setTimeout(enter, 2500);
+    bookEl.scrollTop = 0;
+    var splash = overlay.querySelector('#ebSplash');
+    if (opts.startAct != null) {
+      // 특정 ACT부터 이어읽기 — 스플래시 생략, 그 장으로 이동
+      splash.style.display = 'none';
+      overlay.querySelector('#ebResume').hidden = true;
+      var chs = bookEl.querySelectorAll('.eb-ch');
+      var t = chs[Math.max(0, Math.min(chs.length - 1, opts.startAct))];
+      if (t) setTimeout(function () { t.scrollIntoView({ block: 'start' }); }, 20);
+    } else {
+      splash.style.display = 'flex'; splash.style.opacity = '';
+      var go = overlay.querySelector('#ebSplashGo'), done = false;
+      var enter = function () { if (done) return; done = true; splash.style.opacity = '0'; setTimeout(function () { splash.style.display = 'none'; }, 350); showResume(); };
+      go.onclick = enter; setTimeout(enter, 2500);
+    }
   }
   function close() { saveBm(); overlay.hidden = true; document.body.classList.remove('eb-lock'); panel.hidden = true; }
 
-  btn.addEventListener('click', open);
+  btn.addEventListener('click', function () { open({ theme: 'cream' }); });
+  window.EBOOK = { open: function (o) { open(o || {}); }, openAt: function (i, theme) { open({ startAct: i, theme: theme || 'dark' }); } };
+
+  // ── 스토리 ACT 아코디언 = 목차 → 클릭 시 다크 리더로 그 장부터 이어읽기 ──
+  Array.prototype.forEach.call(document.querySelectorAll('main details.node'), function (node, i) {
+    node.classList.add('act-toc');
+    var mk = node.querySelector('.node-marker'); if (mk) mk.textContent = '읽기 →';
+    var sum = node.querySelector('summary');
+    if (sum) sum.addEventListener('click', function (e) { e.preventDefault(); open({ startAct: i, theme: 'dark' }); });
+  });
+  // 인라인 형광펜 피드백 → 리더로 일원화 (숨김)
+  ['#hlFab', '#hlPop', '#fbTray', '.hl-fab-label', '.hl-guide'].forEach(function (sel) {
+    var el = document.querySelector(sel); if (el) el.style.display = 'none';
+  });
 })();
