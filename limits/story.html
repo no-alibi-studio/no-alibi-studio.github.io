@@ -498,7 +498,7 @@ This film was produced with AI. This film is about AI. But it began as a reflect
     sendBtn.classList.add('disabled'); status.classList.remove('ok'); status.textContent = '보내는 중…';
     var res = await supa.from('feedback').insert({ user_id: u.id, work_id: WORK_ID, node: nodeField, body: full, passages: passages });
     if (res.error) { status.textContent = '전송 실패 — 잠시 후 다시 시도해주세요.'; sendBtn.classList.remove('disabled'); console.error('[story] insert', res.error); return; }
-    status.classList.add('ok'); status.textContent = '보냈습니다. +10 cin — 감사합니다!';
+    status.classList.add('ok'); status.textContent = '보냈습니다. +10 udb — 감사합니다!';
     form.reset(); sendBtn.classList.remove('disabled');
     document.dispatchEvent(new CustomEvent('noalibi-refresh'));
     loadBadges();

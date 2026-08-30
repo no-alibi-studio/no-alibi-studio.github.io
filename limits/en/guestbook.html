@@ -101,9 +101,9 @@
 
     var modes = document.createElement('div'); modes.className = 'gb-modes';
     modes.innerHTML = KO
-      ? '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>로그인하고 작성</b><small>cin 포인트 — 굿즈·이북·상영전시·제작투자 등에 사용</small></span></label>'
+      ? '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>로그인하고 작성</b><small>udb 포인트 — 굿즈·이북·상영전시·제작투자 등에 사용</small></span></label>'
       + '<label class="gb-mode"><input type="radio" name="gbmode" value="guest"> <span><b>인증 없이 작성</b><small>사람 인증 + 승인 후 게시 · Thanks to에 이름만(포인트 없음)</small></span></label>'
-      : '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>Write with login</b><small>cin points — goods · e-book · screenings · investment</small></span></label>'
+      : '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>Write with login</b><small>udb points — goods · e-book · screenings · investment</small></span></label>'
       + '<label class="gb-mode"><input type="radio" name="gbmode" value="guest"> <span><b>Write without login</b><small>human check + posted after review · name only in Thanks to (no points)</small></span></label>';
     var panel = document.createElement('div'); panel.className = 'gb-mode-panel';
     writeInner.append(modes, panel);
@@ -112,7 +112,7 @@
       panel.innerHTML = '';
       if (!user()) {
         var p = document.createElement('p'); p.className = 'gb-mode-note';
-        p.textContent = KO ? '로그인하면 cin 포인트가 쌓여요 — 굿즈·이북·상영전시·제작투자 등에 쓸 수 있어요.' : 'Log in and you earn cin points — usable for goods, e-book, screenings, investment.';
+        p.textContent = KO ? '로그인하면 udb 포인트가 쌓여요 — 굿즈·이북·상영전시·제작투자 등에 쓸 수 있어요.' : 'Log in and you earn udb points — usable for goods, e-book, screenings, investment.';
         var lb = document.createElement('button'); lb.className = 'gb-btn'; lb.type = 'button';
         lb.textContent = KO ? '로그인하고 작성' : 'Log in to write';
         lb.addEventListener('click', login);
@@ -129,7 +129,7 @@
         sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
         var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
         if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
-        st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 cin!' : 'Posted. +10 cin!';
+        st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 udb!' : 'Posted. +10 udb!';
         ta.value = ''; sb.classList.remove('disabled');
         document.dispatchEvent(new CustomEvent('noalibi-refresh'));
         load();

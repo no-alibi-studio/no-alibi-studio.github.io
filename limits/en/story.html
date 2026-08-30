@@ -452,7 +452,7 @@ This film was produced with AI. This film is about AI. But it began as a reflect
     sendBtn.classList.add('disabled'); status.classList.remove('ok'); status.textContent = 'Sending…';
     var res = await supa.from('feedback').insert({ user_id: u.id, work_id: WORK_ID, node: nodeField, body: full, passages: passages });
     if (res.error) { status.textContent = 'Failed — please try again shortly.'; sendBtn.classList.remove('disabled'); console.error('[story] insert', res.error); return; }
-    status.classList.add('ok'); status.textContent = 'Sent. +10 cin — thank you!';
+    status.classList.add('ok'); status.textContent = 'Sent. +10 udb — thank you!';
     form.reset(); sendBtn.classList.remove('disabled');
     document.dispatchEvent(new CustomEvent('noalibi-refresh'));
     loadBadges();

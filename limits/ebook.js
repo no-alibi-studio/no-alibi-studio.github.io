@@ -254,7 +254,7 @@
     memos.slice().forEach(removeMemo); wholeEl.value = ''; status.textContent = '';
     panel.hidden = true; updateCount();
     document.dispatchEvent(new CustomEvent('noalibi-refresh'));
-    toast('의견을 보냈어요 · +10 cin — 고마워요!');
+    toast('의견을 보냈어요 · +10 udb — 고마워요!');
   }
 
   function toast(msg) {

@@ -1,4 +1,4 @@
-// no-alibi 회원 인증 + cin — 공용 모듈 (매직링크 로그인)
+// no-alibi 회원 인증 + udb — 공용 모듈 (매직링크 로그인)
 // 버튼을 먼저 mount하고 Supabase는 동적 로드(안정 CDN 폴백) → 로드 실패해도 버튼은 뜨고 콘솔에 원인 기록.
 const SUPA_URL = 'https://fdbqilofjmrcqzhcivlg.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkYnFpbG9mam1yY3F6aGNpdmxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNTk2ODYsImV4cCI6MjEwMjYzNTY4Nn0.YyHEcwHGLggZ7nSqY6MjIV0fUg4QiwTKHfbR8UOZYiQ';
@@ -14,14 +14,14 @@ let supa = null;
 const KO = (document.documentElement.lang || 'ko') !== 'en';
 const T = KO ? {
   login: '로그인', logout: '로그아웃', send: '로그인 링크 받기',
-  title: 'no-alibi 로그인 · 가입', desc: '이메일로 로그인 링크를 보내드려요. 비밀번호 없이 클릭 한 번이면 돼요. cin 포인트가 이 계정에 쌓입니다.',
+  title: 'no-alibi 로그인 · 가입', desc: '이메일로 로그인 링크를 보내드려요. 비밀번호 없이 클릭 한 번이면 돼요. udb 포인트가 이 계정에 쌓입니다.',
   ph: '이메일 주소', sending: '보내는 중…', sent: '메일함(스팸함도)을 확인하세요 — 로그인 링크를 보냈어요.',
   err: '전송 실패 — 잠시 후 다시 시도해주세요.', invalid: '올바른 이메일을 입력해주세요.',
   loading: '로그인 모듈을 불러오는 중… 잠시 후 다시 눌러주세요.', close: '닫기',
   google: 'Google로 계속하기', kakao: '카카오로 계속하기', or: '또는 이메일로', oauthErr: '로그인 제공자 연결 실패 — 이메일로 시도해주세요.'
 } : {
   login: 'Log in', logout: 'Log out', send: 'Send login link',
-  title: 'no-alibi login · sign up', desc: 'We email you a login link — one click, no password. Your cin points accrue to this account.',
+  title: 'no-alibi login · sign up', desc: 'We email you a login link — one click, no password. Your udb points accrue to this account.',
   ph: 'Email address', sending: 'Sending…', sent: 'Check your inbox (and spam) — we sent a login link.',
   err: 'Failed — please try again shortly.', invalid: 'Enter a valid email.',
   loading: 'Loading login module… try again in a moment.', close: 'Close',
@@ -48,7 +48,7 @@ function renderLoggedOut() {
 function renderLoggedIn(bal, name) {
   widget.innerHTML = '';
   const cin = document.createElement('span');
-  cin.className = 'auth-cin'; cin.textContent = 'cin ' + bal; cin.title = name || '';
+  cin.className = 'auth-cin'; cin.textContent = 'udb ' + bal; cin.title = name || '';
   const out = document.createElement('button');
   out.type = 'button'; out.className = 'auth-btn'; out.textContent = T.logout;
   out.addEventListener('click', async () => { if (supa) await supa.auth.signOut(); });
