@@ -1231,3 +1231,16 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 }
 .subnav .hub-back:hover, .subnav .hub-back:focus-visible { color: var(--led); }
 .foot-hub { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* 로그인 모달 — Google OAuth 버튼 */
+.auth-oauth {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 11px 14px; margin: 4px 0 2px;
+  background: #fff; color: #1f1f1f; border: 1px solid #dadce0; border-radius: 8px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background .15s, box-shadow .15s;
+}
+.auth-oauth:hover { background: #f7f8f8; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+.auth-oauth svg { flex: 0 0 auto; }
+.auth-or { display: flex; align-items: center; gap: 12px; margin: 14px 0 10px; color: var(--bone-dim); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; }
+.auth-or::before, .auth-or::after { content: ""; flex: 1; height: 1px; background: var(--panel-edge); }
