@@ -71,7 +71,7 @@
   </nav>
 
   <!-- ── Open Production Record (P1-b) ── -->
-  <section class="roadmap" id="record" aria-label="Open production record">
+  <section class="roadmap" id="record" aria-label="Open production record" hidden>
     <p class="eyebrow">Current Stage · 현재 제작 단계</p>
     <p class="rm-lede">The work records not only how it is finished, but which opinions came in and which choices were made.</p>
     <div class="rm-flow">
@@ -133,6 +133,17 @@
   hl.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.user) return; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
   document.addEventListener('noalibi-auth', upd);
   if (window.NOALIBI && window.NOALIBI.ready && window.NOALIBI.ready.then) window.NOALIBI.ready.then(upd); else setTimeout(upd, 400);
+})();
+(function () {
+  var rec = document.getElementById('record');
+  Array.prototype.forEach.call(document.querySelectorAll('a[href="#record"]'), function (a) {
+    a.addEventListener('click', function (e) {
+      if (!rec) return;
+      e.preventDefault();
+      rec.hidden = false;
+      rec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 })();
 </script>
 </body>

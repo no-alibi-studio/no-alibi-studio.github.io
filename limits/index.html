@@ -71,7 +71,7 @@
   </nav>
 
   <!-- ── 공개 제작 기록부 (P1-b) ── -->
-  <section class="roadmap" id="record" aria-label="공개 제작 기록부">
+  <section class="roadmap" id="record" aria-label="공개 제작 기록부" hidden>
     <p class="eyebrow">현재 제작 단계 · Current Stage</p>
     <p class="rm-lede">작품은 완성 과정뿐 아니라, 어떤 의견이 들어오고 어떤 선택이 이루어졌는지도 함께 기록한다.</p>
     <div class="rm-flow">
@@ -133,6 +133,17 @@
   hl.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.user) return; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
   document.addEventListener('noalibi-auth', upd);
   if (window.NOALIBI && window.NOALIBI.ready && window.NOALIBI.ready.then) window.NOALIBI.ready.then(upd); else setTimeout(upd, 400);
+})();
+(function () {
+  var rec = document.getElementById('record');
+  Array.prototype.forEach.call(document.querySelectorAll('a[href="#record"]'), function (a) {
+    a.addEventListener('click', function (e) {
+      if (!rec) return;
+      e.preventDefault();
+      rec.hidden = false;
+      rec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 })();
 </script>
 </body>
