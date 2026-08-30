@@ -50,19 +50,28 @@
       if (script) Array.prototype.forEach.call(script.children, function (el) {
         if (el.tagName === 'H5') ops.push({ t: 'scene', text: el.textContent.trim() });
         else if (el.tagName === 'P') ops.push({ t: 'p', html: el.innerHTML });
+        else if (el.tagName === 'FIGURE') {
+          var fim = el.querySelector('img'), fcp = el.querySelector('figcaption');
+          if (fim) ops.push({ t: 'fig', im: { src: fim.getAttribute('src'), alt: fim.getAttribute('alt') || '', cap: fcp ? fcp.textContent.trim() : '' } });
+        }
       });
-      var placed = {};
-      if (ops.length && imgs.length) imgs.forEach(function (im, k) {
-        var idx = Math.min(ops.length - 1, Math.round(k * ops.length / imgs.length));
-        while (placed[idx] && idx < ops.length - 1) idx++;
-        placed[idx] = im;
-      });
-      if (!ops.length) imgs.forEach(function (im) { ch.appendChild(fig(im)); });
-      ops.forEach(function (op, idx) {
-        if (placed[idx]) ch.appendChild(fig(placed[idx]));
+      function renderOp(op) {
         if (op.t === 'scene') { var s = document.createElement('h3'); s.className = 'eb-scene'; s.textContent = op.text; ch.appendChild(s); }
+        else if (op.t === 'fig') { ch.appendChild(fig(op.im)); }
         else { var p = document.createElement('p'); p.className = 'eb-p'; p.innerHTML = fmtPara(op.html); ch.appendChild(p); }
-      });
+      }
+      if (ops.some(function (o) { return o.t === 'fig'; })) {
+        ops.forEach(renderOp);   // 대본에 명시된 위치대로 이미지 배치
+      } else {
+        var placed = {};         // 구버전: node-imgs 자동(라운드로빈) 배치
+        if (ops.length && imgs.length) imgs.forEach(function (im, k) {
+          var idx = Math.min(ops.length - 1, Math.round(k * ops.length / imgs.length));
+          while (placed[idx] && idx < ops.length - 1) idx++;
+          placed[idx] = im;
+        });
+        if (!ops.length) imgs.forEach(function (im) { ch.appendChild(fig(im)); });
+        ops.forEach(function (op, idx) { if (placed[idx]) ch.appendChild(fig(placed[idx])); renderOp(op); });
+      }
       book.appendChild(ch);
       if (i < _total - 1) {
         var nx = document.createElement('div'); nx.className = 'eb-next';
