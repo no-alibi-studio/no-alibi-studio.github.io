@@ -106,7 +106,8 @@
       : '<label class="gb-mode"><input type="radio" name="gbmode" value="login" checked> <span><b>Write with login</b><small>udb points — goods · e-book · screenings · investment</small></span></label>'
       + '<label class="gb-mode"><input type="radio" name="gbmode" value="guest"> <span><b>Write without login</b><small>human check + posted after review · name only in Thanks to (no points)</small></span></label>';
     var panel = document.createElement('div'); panel.className = 'gb-mode-panel';
-    writeInner.append(modes, panel);
+    if (user()) writeInner.append(panel);          // 이미 로그인 → 모드 선택 없이 바로 작성
+    else writeInner.append(modes, panel);
 
     function paintLogin() {
       panel.innerHTML = '';
