@@ -87,6 +87,26 @@
       <p class="table-note">* Each actual reward given is recorded here.</p>
     </div>
 
+    <div class="thanks reward-guide">
+      <h3>Contribution Rewards · Points</h3>
+      <p class="sub">how adopted contributions come back to you</p>
+      <p class="rg-p">Adopted feedback is recorded as a <b>revenue share</b>, and that share is returned to you as <b>site points</b>.</p>
+      <ul class="rg-list">
+        <li><b>Story contributions</b> → e-book revenue share</li>
+        <li><b>Image / video contributions</b> → screening &amp; exhibition revenue share</li>
+      </ul>
+      <p class="rg-p">Points can be used for the e-book, screenings, exhibitions and goods — and for <b>future works by no-alibi.com</b>. As long as a work earns royalties, points <b>keep accruing</b>. Points are granted as a <b>base participation amount + a share-percentage amount</b>.</p>
+      <p class="rg-invest"><b>If you want an actual cash payout — choose ‘Production investment’ when you leave feedback.</b><br>Cash payouts become available once the e-book, screenings and exhibitions each begin selling and real revenue passes the <b>break-even point (BEP)</b>, when a <b>valid payout of at least ₩10</b> is possible.</p>
+      <p class="rg-head">Disclosure schedule</p>
+      <p class="rg-p">For the first three years we publish the revenue record <b>twice a year</b> on this site; after that, <b>once a year</b> as long as revenue occurs. When it updates, we notify contributors by <b>email and Instagram</b>.</p>
+      <p class="rg-p">To not miss it, please <b>opt in to email</b> (in the feedback form) or <b>follow us on Instagram</b>.</p>
+      <div class="ig-follow">
+        <span class="ig-handle">@thelimitsofmyworld</span>
+        <a class="ig-go" href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">Follow ↗</a>
+        <button type="button" class="ig-copy" data-ig="thelimitsofmyworld">Copy</button>
+      </div>
+    </div>
+
     <div class="pager">
       <a href="guestbook.html">← 6. Guestbook</a>
       <a href="screening.html">8. Screening →</a>
@@ -100,6 +120,9 @@
 
 </div>
 
+<script>
+(function(){document.querySelectorAll('.ig-copy').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.ig||'';var done=function(){var t=b.textContent;b.textContent='Copied!';b.classList.add('ok');setTimeout(function(){b.textContent=t;b.classList.remove('ok');},1500);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(done,function(){});}else{var ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}});});})();
+</script>
 <script type="module" src="../auth.js"></script>
 </body>
 </html>
