@@ -1272,34 +1272,54 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 .fb-gate-why { margin: 0; line-height: 1.65; color: var(--bone); font-size: 13.5px; }
 .fb-gate-login { align-self: flex-start; }
 
-/* ── 이북 다크 테마 — 미색만 다르고 기능/레이아웃 동일 ── */
-.eb-overlay.eb-dark { background: #14120E; color: #E8E0D0; }
-.eb-dark .eb-top { border-bottom-color: #2E2A22; }
-.eb-dark .eb-book { color: #E8E0D0; }
-.eb-dark .eb-ch-h { border-bottom-color: #34301F; }
-.eb-dark .eb-ch-n { color: #D77A4A; }
-.eb-dark .eb-ch-t { color: #F2EADA; }
-.eb-dark .eb-ch-sub { color: #9A9078; }
-.eb-dark .eb-scene { color: #C08A5A; border-top-color: #34301F; }
-.eb-dark .eb-p { color: #E4DCCC; }
+/* ── 이북 다크 테마 — 사이트 먹빛 토큰으로 페이지와 동일하게 ── */
+.eb-overlay.eb-dark { background: var(--void); color: var(--bone); }
+.eb-dark .eb-top { border-bottom-color: var(--panel-edge); }
+.eb-dark .eb-book { color: var(--bone); }
+.eb-dark .eb-ch-h { border-bottom-color: var(--panel-edge); }
+.eb-dark .eb-ch-n { color: var(--led); }
+.eb-dark .eb-ch-t { color: var(--bone); }
+.eb-dark .eb-ch-sub { color: var(--bone-dim); }
+.eb-dark .eb-scene { color: var(--led); border-top-color: var(--panel-edge); }
+.eb-dark .eb-p { color: var(--bone); }
 .eb-dark .eb-p b { color: #FBF4E6; }
-.eb-dark .eb-p b.eb-slug, .eb-dark .eb-slug { color: #D99A6A; }
+.eb-dark .eb-p b.eb-slug, .eb-dark .eb-slug { color: var(--led); }
 .eb-dark mark.eb-mark { background: #E4C24B; color: #1A1710; border-bottom-color: #B98A2E; }
 .eb-dark mark.eb-mark-sub { background: #D9AE3C; border-bottom-color: #A87E28; }
-.eb-dark .eb-bar { background: #1B1810; border-top-color: #2E2A22; }
-.eb-dark .eb-bar-hint { color: #9A9078; }
-.eb-dark .eb-bar-hint.has { color: #E8E0D0; }
-.eb-dark .eb-bar-hint b { color: #D77A4A; }
-.eb-dark .eb-note { background: #201C14; border-color: #3A3426; border-left-color: #D99A46; }
-.eb-dark .eb-note-n { color: #D99A6A; }
-.eb-dark .eb-note-t { background: #17140E; border-color: #3A3426; color: #E8E0D0; }
-.eb-dark .eb-note.eb-note-sub { background: #241F16; border-left-color: #C88F30; }
-.eb-dark .eb-panel { background: #1C1810; border-color: #3A3426; }
-.eb-dark .eb-panel-item { background: #201C14; border-color: #3A3426; }
-.eb-dark .eb-panel-empty, .eb-dark .eb-panel-status { color: #9A9078; }
-.eb-overlay.eb-dark ::selection { background: #6E5A2A; color: #F2EADA; }
-.eb-overlay.eb-dark ::-moz-selection { background: #6E5A2A; color: #F2EADA; }
+.eb-dark .eb-bar { background: var(--panel); border-top-color: var(--panel-edge); }
+.eb-dark .eb-bar-hint { color: var(--bone-dim); }
+.eb-dark .eb-bar-hint.has { color: var(--bone); }
+.eb-dark .eb-bar-hint b { color: var(--led); }
+.eb-dark .eb-note { background: var(--panel); border-color: var(--panel-edge); border-left-color: var(--led); }
+.eb-dark .eb-note-n { color: var(--led); }
+.eb-dark .eb-note-t { background: var(--void); border-color: var(--panel-edge); color: var(--bone); }
+.eb-dark .eb-note.eb-note-sub { background: #17171B; border-left-color: #C88F30; }
+.eb-dark .eb-panel { background: var(--panel); border-color: var(--panel-edge); }
+.eb-dark .eb-panel-item { background: var(--void); border-color: var(--panel-edge); }
+.eb-dark .eb-panel-empty, .eb-dark .eb-panel-status { color: var(--bone-dim); }
+.eb-overlay.eb-dark ::selection { background: var(--led); color: var(--void); }
+.eb-overlay.eb-dark ::-moz-selection { background: var(--led); color: var(--void); }
 
 /* 스토리 ACT = 목차(리더 진입 버튼) */
 .node.act-toc > summary { cursor: pointer; }
 .node.act-toc > summary .node-marker { font-size: 11px; letter-spacing: .04em; }
+
+/* 이북: ACT 이어보기 안내 */
+.eb-next { max-width: 640px; margin: 6px auto 40px; text-align: center; }
+.eb-next-btn { display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid #D9A441; color: #A8432B; border-radius: 999px; font-family: var(--mono); font-size: 13px; padding: 10px 22px; cursor: pointer; transition: background .15s, color .15s; }
+.eb-next-btn:hover { background: #A8432B; color: #F1EAD9; }
+.eb-dark .eb-next-btn { border-color: var(--led); color: var(--led); }
+.eb-dark .eb-next-btn:hover { background: var(--led); color: var(--void); }
+
+/* 이북: 부분 메모 임시 저장 */
+.eb-note-save { margin-top: 8px; background: #A8432B; color: #F1EAD9; border: none; border-radius: 7px; font-family: var(--mono); font-size: 12.5px; padding: 8px 16px; cursor: pointer; }
+.eb-note-save:hover { background: #8E3421; }
+.eb-dark .eb-note-save { background: var(--led); color: var(--void); }
+.eb-note.saved .eb-note-t, .eb-note.saved .eb-note-save { display: none; }
+.eb-note-done { display: none; font-family: var(--mono); font-size: 12px; color: #7A7059; }
+.eb-note.saved .eb-note-done { display: block; }
+.eb-dark .eb-note-done { color: var(--bone-dim); }
+
+/* 이북: 모아보기 버튼 반짝임 */
+@keyframes ebFlash { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217,164,65,0); } 30% { transform: scale(1.12); box-shadow: 0 0 0 6px rgba(217,164,65,.5); } }
+.eb-bar-panel.flash { animation: ebFlash .6s ease; }

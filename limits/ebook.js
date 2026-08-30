@@ -30,7 +30,8 @@
   // ── 스토리 노드 → 이북 챕터 (장면마다 이미지 삽입) ──
   function buildBook() {
     var book = document.createElement('div'); book.className = 'eb-book'; book.style.fontSize = fs + 'px';
-    document.querySelectorAll('main details.node').forEach(function (node, i) {
+    var _nodes = document.querySelectorAll('main details.node'), _total = _nodes.length;
+    Array.prototype.forEach.call(_nodes, function (node, i) {
       var titleEl = node.querySelector('.node-title');
       var title = titleEl && titleEl.childNodes[0] ? titleEl.childNodes[0].textContent.trim() : '';
       var smallEl = titleEl ? titleEl.querySelector('small') : null;
@@ -63,6 +64,13 @@
         else { var p = document.createElement('p'); p.className = 'eb-p'; p.innerHTML = fmtPara(op.html); ch.appendChild(p); }
       });
       book.appendChild(ch);
+      if (i < _total - 1) {
+        var nx = document.createElement('div'); nx.className = 'eb-next';
+        var nb = document.createElement('button'); nb.type = 'button'; nb.className = 'eb-next-btn';
+        nb.textContent = '↓ ACT ' + (i + 2) + ' 이어보기';
+        nb.addEventListener('click', function () { var t = nx.nextElementSibling; if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        nx.appendChild(nb); book.appendChild(nx);
+      }
     });
     var end = document.createElement('div'); end.className = 'eb-end';
     end.innerHTML = '<p>여기까지 읽어주셔서 고마워요.</p><button type="button" id="ebEndFb" class="eb-allfb">✎ 의견 남기기</button>';
@@ -82,7 +90,7 @@
       '<div class="eb-bar">' +
         '<span class="eb-bar-hint" id="ebHint">밑줄을 그으면(문장 선택) <b>의견</b>을 남길 수 있어요</span>' +
         '<button type="button" class="eb-bar-add" id="ebBarAdd" hidden>✎ 여기 메모</button>' +
-        '<button type="button" class="eb-bar-panel" id="ebBarPanel">📝 모아보기 <span id="ebCount">0</span></button>' +
+        '<button type="button" class="eb-bar-panel" id="ebBarPanel">메모 모아보기 <span id="ebCount">0</span></button>' +
       '</div>' +
       '<div class="eb-panel" id="ebPanel" hidden>' +
         '<div class="eb-panel-head" id="ebPanelHead"><span>메모 모아보기</span><button type="button" id="ebPanelX" aria-label="닫기">×</button></div>' +
@@ -160,29 +168,31 @@
     try { mark = document.createElement('mark'); mark.className = 'eb-mark' + (parent ? ' eb-mark-sub' : ''); range.surroundContents(mark); } catch (e) { mark = null; }
     var memo = { quote: quote, node: act, note: '', mark: mark, num: 0, noteEl: null, parent: parent || null };
     var box = document.createElement('div'); box.className = 'eb-note' + (parent ? ' eb-note-sub' : '');
-    box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 부분에 대한 의견을 적어주세요…" maxlength="1500"></textarea>';
+    box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 부분에 대한 의견을 적어주세요…" maxlength="1500"></textarea><button type="button" class="eb-note-save">임시 저장</button><span class="eb-note-done">✓ 담겼어요 — 밑줄을 누르면 다시 수정</span>';
     para.parentNode.insertBefore(box, para.nextSibling);
     memo.noteEl = box;
     var ta = box.querySelector('.eb-note-t');
     ta.addEventListener('input', function () { memo.note = ta.value; refreshPanel(); });
     box.querySelector('.eb-note-x').addEventListener('click', function () { removeMemo(memo); });
-    if (mark) mark.addEventListener('click', function () { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); ta.focus(); });
+    box.querySelector('.eb-note-save').addEventListener('click', function () { box.classList.add('saved'); flashPanel(); });
+    if (mark) mark.addEventListener('click', function () { box.classList.remove('saved'); box.scrollIntoView({ behavior: 'smooth', block: 'center' }); ta.focus(); });
     memos.push(memo); renumber(); updateCount();
     window.getSelection().removeAllRanges(); resetBar();
     setTimeout(function () { ta.focus(); }, 60);
   }
   function imgMemo(f, im) {
-    if (f.nextSibling && f.nextSibling.classList && f.nextSibling.classList.contains('eb-note')) { f.nextSibling.querySelector('.eb-note-t').focus(); return; }
+    if (f.nextSibling && f.nextSibling.classList && f.nextSibling.classList.contains('eb-note')) { f.nextSibling.classList.remove('saved'); f.nextSibling.querySelector('.eb-note-t').focus(); return; }
     var chEl = f.closest('.eb-ch'); var act = chEl ? (chEl.dataset.act || '스토리') : '스토리';
     var quote = '[이미지] ' + (im.cap || im.alt || '이미지');
     f.classList.add('eb-fig-noted');
     var box = document.createElement('div'); box.className = 'eb-note';
-    box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 이미지/영상에 대한 의견을 적어주세요…" maxlength="1500"></textarea>';
+    box.innerHTML = '<div class="eb-note-h"><span class="eb-note-n"></span><button type="button" class="eb-note-x">삭제</button></div><textarea class="eb-note-t" placeholder="이 이미지/영상에 대한 의견을 적어주세요…" maxlength="1500"></textarea><button type="button" class="eb-note-save">임시 저장</button><span class="eb-note-done">✓ 담겼어요 — 이미지를 누르면 다시 수정</span>';
     f.parentNode.insertBefore(box, f.nextSibling);
     var memo = { quote: quote, node: act, note: '', mark: f, num: 0, noteEl: box };
     var ta = box.querySelector('.eb-note-t');
     ta.addEventListener('input', function () { memo.note = ta.value; refreshPanel(); });
     box.querySelector('.eb-note-x').addEventListener('click', function () { removeMemo(memo); });
+    box.querySelector('.eb-note-save').addEventListener('click', function () { box.classList.add('saved'); flashPanel(); });
     memos.push(memo); renumber(); updateCount();
     setTimeout(function () { ta.focus(); }, 60);
   }
@@ -205,6 +215,7 @@
     });
   }
   function updateCount() { var n = memos.length; countEl.textContent = n; }
+  function flashPanel() { var b = overlay.querySelector('#ebBarPanel'); if (!b) return; b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); setTimeout(function () { b.classList.remove('flash'); }, 700); }
 
   // ── 메모 모아보기 창 ──
   function openPanel() {
