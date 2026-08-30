@@ -19,7 +19,14 @@
 
   <header class="hero">
     <p class="eyebrow">AI Short Film · SF Horror · 15 min · in production — <a href="../index.html">한국어 ↩</a> · <a href="/">no-alibi.com ↗</a></p>
-    <h1>The Limits<br>of My World<span class="cursor" aria-hidden="true"></span></h1>
+    <div class="hero-title-row">
+      <h1>The Limits<br>of My World<span class="cursor" aria-hidden="true"></span></h1>
+      <div class="hero-login">
+        <span class="hl-top">For feedback</span>
+        <button type="button" class="hl-circle" id="heroLogin">Log in</button>
+        <span class="hl-sub">revenue share<br>credit record</span>
+      </div>
+    </div>
     <div class="epitaphs">
       <div class="epitaph">
         Ludwig Wittgenstein<br>
@@ -126,5 +133,15 @@
 
 </div>
 
+<script type="module" src="auth.js"></script>
+<script>
+(function () {
+  var hl = document.getElementById('heroLogin'); if (!hl) return;
+  function upd() { var u = window.NOALIBI && window.NOALIBI.user; hl.textContent = u ? 'Logged in' : 'Log in'; hl.classList.toggle('done', !!u); }
+  hl.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.user) return; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
+  document.addEventListener('noalibi-auth', upd);
+  if (window.NOALIBI && window.NOALIBI.ready && window.NOALIBI.ready.then) window.NOALIBI.ready.then(upd); else setTimeout(upd, 400);
+})();
+</script>
 </body>
 </html>

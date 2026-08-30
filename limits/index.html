@@ -19,7 +19,14 @@
 
   <header class="hero">
     <p class="eyebrow">AI 단편영화 · SF 호러 · 15분 · 제작 중 — <a href="en/index.html">English ↗</a> · <a href="/">no-alibi.com ↗</a></p>
-    <h1>내 세계의<br>한계<span class="cursor" aria-hidden="true"></span></h1>
+    <div class="hero-title-row">
+      <h1>내 세계의<br>한계<span class="cursor" aria-hidden="true"></span></h1>
+      <div class="hero-login">
+        <span class="hl-top">피드백을 위한</span>
+        <button type="button" class="hl-circle" id="heroLogin">로그인</button>
+        <span class="hl-sub">지분 쉐어<br>크레딧 기록</span>
+      </div>
+    </div>
     <div class="epitaphs">
       <div class="epitaph">
         Ludwig Wittgenstein<br>
@@ -126,5 +133,15 @@
 
 </div>
 
+<script type="module" src="auth.js"></script>
+<script>
+(function () {
+  var hl = document.getElementById('heroLogin'); if (!hl) return;
+  function upd() { var u = window.NOALIBI && window.NOALIBI.user; hl.textContent = u ? '로그인됨' : '로그인'; hl.classList.toggle('done', !!u); }
+  hl.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.user) return; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
+  document.addEventListener('noalibi-auth', upd);
+  if (window.NOALIBI && window.NOALIBI.ready && window.NOALIBI.ready.then) window.NOALIBI.ready.then(upd); else setTimeout(upd, 400);
+})();
+</script>
 </body>
 </html>
