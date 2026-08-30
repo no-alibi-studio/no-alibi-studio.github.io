@@ -406,3 +406,13 @@ a.entry.hot:hover .go, a.entry.hot:focus-visible .go { text-decoration: none; }
 
 /* 홈: 강조 카드 CTA 서브라인 */
 .entry.hot .go-sub { display: block; margin-top: 4px; color: #B4AA95; font-family: var(--serif); font-size: 14px; letter-spacing: 0.01em; }
+
+/* 홈: 강조 카드 CTA 3단 행 */
+.entry.hot .go { display: block; margin-top: 12px; }
+.entry.hot .go-click { margin-bottom: 2px; }
+.entry.hot .go-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: 10px; }
+.entry.hot .go-cta { font-family: var(--sans); font-weight: 700; font-size: 15.5px; line-height: 1.25; color: #fff; }
+.entry.hot .go-work { font-family: var(--serif); font-size: 14px; line-height: 1.32; color: #CFC6B2; }
+.entry.hot .go-work small { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: #B4AA95; }
+.entry.hot .go-state { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--led); white-space: nowrap; }
+.entry.hot .go-state::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--led); }
