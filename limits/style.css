@@ -1336,10 +1336,10 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 
 /* 인덱스: 피드백 로그인 동그라미 버튼 */
 .hero-title-row { display: flex; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
-.hero-login { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 8px; }
-.hl-top { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--bone-dim); }
+.hero-login { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 8px; margin-left: auto; }
+.hl-top { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--bone-dim); margin-bottom: 4px; }
 .hl-circle { width: 90px; height: 90px; border-radius: 50%; background: var(--led); color: var(--void); border: none; font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: .02em; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.35); transition: transform .15s, filter .15s; }
 .hl-circle:hover { transform: scale(1.06); filter: brightness(1.06); }
 .hl-circle.done { background: var(--panel); color: var(--led); border: 1px solid var(--led); box-shadow: none; cursor: default; }
-.hl-sub { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--bone-dim); text-align: center; line-height: 1.6; }
+.hl-sub { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--bone-dim); text-align: center; line-height: 1.6; margin-top: 9px; }
 @media (max-width: 560px) { .hl-circle { width: 78px; height: 78px; font-size: 14px; } .hero-title-row { gap: 22px; } }
