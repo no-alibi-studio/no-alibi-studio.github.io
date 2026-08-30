@@ -416,3 +416,48 @@ a.entry.hot:hover .go, a.entry.hot:focus-visible .go { text-decoration: none; }
 .entry.hot .go-work small { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: #B4AA95; }
 .entry.hot .go-state { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--led); white-space: nowrap; }
 .entry.hot .go-state::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--led); }
+
+/* ══ 홈: 부문 히어로 스와이프 + 운영작 포스터 (Apple/Samsung 레퍼런스) ══ */
+.hub-divs { margin-top: 44px; }
+.hub-viewport { overflow: hidden; border-radius: 16px; touch-action: pan-y; }
+.hub-track { display: flex; transition: transform .42s cubic-bezier(.4,0,.2,1); }
+.hub-slide { min-width: 100%; }
+
+.hub-hero { display: flex; flex-direction: column; background: #14110C; color: #EDE6D6; }
+.hh-in { padding: 36px 32px 24px; }
+.hh-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--led); margin: 0 0 12px; }
+.hh-title { font-family: var(--serif); font-size: clamp(30px, 6vw, 46px); line-height: 1.05; letter-spacing: .01em; color: #fff; margin: 0 0 14px; }
+.hh-desc { font-family: var(--sans); font-size: clamp(14px, 2.4vw, 16px); line-height: 1.6; color: #CFC6B2; margin: 0 0 20px; max-width: 34em; }
+.hh-desc b { color: #fff; }
+.hh-btn { font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; color: #14110C; background: #fff; border: none; border-radius: 999px; padding: 12px 26px; cursor: pointer; transition: transform .15s, background .15s, color .15s; }
+.hh-btn:hover { transform: translateY(-1px); background: var(--led); color: #fff; }
+.hh-media { width: 100%; height: clamp(240px, 42vh, 440px); object-fit: cover; display: block; }
+.hh-media-ph { width: 100%; height: clamp(240px, 42vh, 440px); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 22px; letter-spacing: .3em; color: #4a4437; background: repeating-linear-gradient(135deg,#1a1710,#1a1710 15px,#161310 15px,#161310 30px); }
+.hh-soon { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--led); border: 1px solid var(--led); border-radius: 999px; padding: 9px 20px; }
+
+.hh-howto { background: #fff; border: 1px solid var(--rule); border-top: none; border-radius: 0 0 16px 16px; padding: 30px 32px; }
+.hh-howto[hidden] { display: none; }
+
+.hub-nav { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
+.hub-dot { width: 9px; height: 9px; border-radius: 50%; border: none; background: var(--rule); cursor: pointer; padding: 0; transition: background .15s, transform .15s; }
+.hub-dot.on { background: var(--led); transform: scale(1.25); }
+
+.hub-works { margin-top: 22px; }
+.hub-works[hidden] { display: none; }
+.work-poster { position: relative; display: block; border-radius: 16px; overflow: hidden; color: #fff; }
+.work-poster img { width: 100%; height: clamp(380px, 68vh, 640px); object-fit: cover; display: block; transition: transform .5s ease; }
+.work-poster:hover img { transform: scale(1.03); }
+.wp-scrim { position: absolute; top: 0; left: 0; right: 0; height: 56%; background: linear-gradient(180deg, rgba(0,0,0,.74), rgba(0,0,0,0)); }
+.wp-top { position: absolute; top: 28px; left: 28px; right: 28px; }
+.wp-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: rgba(255,255,255,.86); margin: 0 0 7px; }
+.wp-title { font-family: var(--serif); font-size: clamp(26px, 5vw, 40px); line-height: 1.1; color: #fff; margin: 0 0 18px; }
+.wp-btn { display: inline-block; font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; background: var(--led); color: #fff; border-radius: 999px; padding: 12px 26px; }
+.work-poster:hover .wp-btn { filter: brightness(1.08); }
+.wp-state { position: absolute; bottom: 20px; right: 20px; display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: #fff; background: rgba(0,0,0,.5); border-radius: 999px; padding: 7px 15px; }
+.wp-state::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--led); }
+
+@media (max-width: 620px) {
+  .hh-in { padding: 26px 20px 20px; }
+  .hh-howto { padding: 22px 20px; }
+  .wp-top { top: 20px; left: 20px; right: 20px; }
+}
