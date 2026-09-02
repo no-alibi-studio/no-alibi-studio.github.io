@@ -1374,3 +1374,13 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 .sfp-login[hidden] { display: none; }
 .sfp-login p { font-size: 13px; color: var(--bone-dim); line-height: 1.6; margin: 0 0 10px; }
 .sfp-login b { color: var(--bone); }
+
+/* 스토리 아카이브 — 판본 전문 접기 */
+details.row-fold > summary { list-style: none; cursor: pointer; }
+details.row-fold > summary::-webkit-details-marker { display: none; }
+details.row-fold[open] > summary .chip { color: var(--led); border-color: var(--led); }
+.row-script { padding: 20px 22px 28px; border-bottom: 1px solid var(--panel-edge); background: var(--panel); }
+.row-script h5 { font-size: 13.5px; margin: 24px 0 6px; color: var(--bone); letter-spacing: .02em; }
+.row-script h5:first-child { margin-top: 0; }
+.row-script p { white-space: pre-line; color: var(--bone-dim); font-size: 14px; line-height: 1.85; margin: 0 0 1.1em; max-width: 70ch; }
+.row-script p b { color: var(--bone); }
