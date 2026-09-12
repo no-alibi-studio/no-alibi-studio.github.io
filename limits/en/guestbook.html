@@ -152,7 +152,7 @@
         var body = ta.value.trim(); if (!body) { ta.focus(); return; }
         if (needConsent(cs, st)) return;
         sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
-        var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
+        var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body, privacy_consent: true, privacy_version: PRIVACY_VERSION, consented_at: new Date().toISOString() });
         if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
         st.classList.add('ok'); st.textContent = KO ? '남겨졌습니다. +10 udb!' : 'Posted. +10 udb!';
         ta.value = ''; sb.classList.remove('disabled');
