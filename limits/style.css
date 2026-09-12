@@ -1358,6 +1358,8 @@ mark.eb-mark-sub { background: #F0D98A; border-bottom: 2px solid #C88F30; }
 .pt-name { font-family: var(--serif); font-size: 19px; line-height: 1.28; }
 .ptile.big .pt-name { font-size: 27px; }
 .pt-go { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--led); align-self: flex-start; }
+/* 피드백 받는 타일 표시 — 이름 옆 작은 붉은 네모 */
+.pt-fb { display: inline-block; vertical-align: middle; margin-left: 16px; padding: 3px 6px; border-radius: 2px; background: var(--led); color: #fff; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; line-height: 1; white-space: nowrap; }
 @media (max-width: 640px) {
   .pgrid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 100px; margin: 40px 0; }
   .ptile.big { grid-column: span 2; grid-row: span 1; }
