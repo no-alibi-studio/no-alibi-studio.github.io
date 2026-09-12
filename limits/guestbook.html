@@ -233,6 +233,24 @@
     return b;
   }
 
+  function delBtn(r) {
+    var b = document.createElement('button'); b.className = 'gb-del'; b.type = 'button';
+    b.textContent = KO ? '삭제' : 'Delete';
+    b.title = KO ? '내 글 삭제 (받은 udb 회수)' : 'Delete my note (udb earned is taken back)';
+    b.addEventListener('click', async function () {
+      var msg = KO
+        ? '이 글을 삭제하면 이 글로 받은 udb 포인트도 함께 회수됩니다.\n(작성 +10 · 채택됐다면 +50 · 받은 좋아요 +1씩)\n\n그래도 삭제할까요?'
+        : 'Deleting this note also takes back the udb points it earned.\n(+10 for writing · +50 if adopted · +1 per like received)\n\nDelete anyway?';
+      if (!window.confirm(msg)) return;
+      b.disabled = true;
+      var d = await supa.from('feedback').delete().eq('id', r.id).eq('user_id', user().id);
+      if (d.error) { b.disabled = false; window.alert(KO ? '삭제하지 못했어요 — 잠시 후 다시 시도해주세요.' : 'Could not delete — please try again.'); console.error('[gb] delete', d.error); return; }
+      document.dispatchEvent(new Event('noalibi-refresh'));
+      load();
+    });
+    return b;
+  }
+
   var allRows = [], nameById = {}, counts = {}, mine = {}, filt = 'all';
   function whoName(r) { return nameById[r.user_id] || r.guest_name || (KO ? '익명' : 'anon'); }
 
@@ -273,6 +291,7 @@
       kind.textContent = r.node ? (KO ? '피드백' : 'Feedback') : (KO ? '방명록' : 'Note'); whoEl.appendChild(kind);
       if (r.node) { var t = document.createElement('span'); t.className = 'node-tag'; t.textContent = r.node; whoEl.appendChild(t); }
       var w = document.createElement('span'); w.className = 'when'; w.textContent = (r.created_at || '').slice(0, 10); whoEl.appendChild(w);
+      if (user() && r.user_id === user().id) whoEl.appendChild(delBtn(r));
       var msgEl = document.createElement('p'); msgEl.className = 'msg'; msgEl.textContent = r.body;
       div.append(whoEl, msgEl, heart(r, counts[r.id] || 0, !!mine[r.id]));
       entriesBox.appendChild(div);

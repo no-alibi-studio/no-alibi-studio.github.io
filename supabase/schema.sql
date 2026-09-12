@@ -177,6 +177,34 @@ drop trigger if exists trg_like_revoke on public.likes;
 create trigger trg_like_revoke after delete on public.likes
   for each row execute function public.on_like_delete();
 
+-- 피드백 삭제 → 그 글로 받은 cin 회수
+-- 회수 대상: 작성 +10 · 채택 +50 (ref_type='feedback', ref_id=글id)
+--          + 받은 좋아요 +1 (reason='like_received', ref_id='좋아요누른uuid:글id')
+-- likes 행 자체는 FK cascade로 지워지는데, 그 시점엔 feedback 행이 이미 없어
+-- trg_like_revoke의 author 조회가 null→skip 되므로 여기서 like_received까지 한 번에 회수한다(이중 차감 없음).
+create or replace function public.on_feedback_delete() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare _sum int;
+begin
+  if old.user_id is not null then
+    with gone as (
+      delete from cin_ledger
+       where user_id = old.user_id
+         and ( (ref_type = 'feedback' and ref_id = old.id::text)
+            or (reason = 'like_received' and split_part(ref_id, ':', 2) = old.id::text) )
+      returning amount
+    )
+    select coalesce(sum(amount), 0) into _sum from gone;
+    if _sum <> 0 then
+      update profiles set cin_balance = cin_balance - _sum where id = old.user_id;
+    end if;
+  end if;
+  return old;
+end;$$;
+drop trigger if exists trg_feedback_revoke on public.feedback;
+create trigger trg_feedback_revoke before delete on public.feedback
+  for each row execute function public.on_feedback_delete();
+
 -- ══════════════ RLS (행 수준 보안) ══════════════
 alter table public.works      enable row level security;
 alter table public.profiles   enable row level security;
@@ -194,11 +222,12 @@ create policy profiles_update_self on public.profiles for update using (auth.uid
 -- cin_ledger: 본인 내역만 열람 (적립/차감은 트리거만 — 클라 insert 불가)
 create policy ledger_read_self on public.cin_ledger for select using (auth.uid() = user_id);
 
--- feedback: 공개글 읽기 / 로그인 사용자가 본인 글 작성 / 관리자만 수정(채택·숨김)
+-- feedback: 공개글 읽기 / 로그인 사용자가 본인 글 작성·삭제 / 관리자만 수정(채택·숨김)
 create policy feedback_read        on public.feedback for select using (approved);
 create policy feedback_insert_auth on public.feedback for insert with check (auth.uid() = user_id);
 create policy feedback_admin_update on public.feedback for update using (
   exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin));
+create policy feedback_delete_self on public.feedback for delete using (auth.uid() = user_id);
 
 -- likes: 집계는 누구나 읽기 / 로그인 본인 좋아요만 추가·삭제
 create policy likes_read        on public.likes for select using (true);
@@ -215,3 +244,4 @@ revoke execute on function public.on_feedback_insert() from public, anon, authen
 revoke execute on function public.on_feedback_adopted() from public, anon, authenticated;
 revoke execute on function public.on_like_insert() from public, anon, authenticated;
 revoke execute on function public.on_like_delete() from public, anon, authenticated;
+revoke execute on function public.on_feedback_delete() from public, anon, authenticated;

@@ -911,6 +911,11 @@ mark.hl { background: rgba(255,61,46,0.28); color: inherit; padding: 0 1px; }
 .gb-heart:hover { border-color: var(--led); color: var(--led); }
 .gb-heart.liked { color: var(--led); border-color: var(--led); background: rgba(255,61,46,0.08); }
 
+/* ── 내 글 삭제 ── */
+.gb-del { margin-left: 10px; background: none; border: 1px solid var(--panel-edge); border-radius: 20px; color: var(--bone-faint); font-family: var(--mono); font-size: 11px; padding: 2px 9px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.gb-del:hover { border-color: var(--led); color: var(--led); }
+.gb-del:disabled { opacity: 0.5; cursor: default; }
+
 
 /* ── 방명록 상단바: 제목 좌 · 쓰기 버튼 우 ── */
 .gb-topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
