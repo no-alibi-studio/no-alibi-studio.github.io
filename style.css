@@ -535,6 +535,13 @@ body { overflow-x: hidden; }
 .hub-mast .ledger-meta { color: #4A463E; }
 .hub-mast .epigraph { font-weight: 700; }
 .hub-mast .epigraph cite { color: #55504A; }
+/* 소개문: 바흐친 인용과 크게 떨어뜨리고(84px), 라벨은 인용의 우측 정렬을 이어받아 붉게, 본문은 왼쪽으로 내려와 '새 목소리'로 */
+.hub-mast .mast-intro { margin: 84px 0 6px; }
+.hub-mast .mast-intro p { margin: 0; font-family: var(--sans); color: #3A3630; }
+.hub-mast .mast-intro .mi-label { text-align: right; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; color: var(--led); margin-bottom: 26px; }
+.hub-mast .mast-intro .mi-body { max-width: 34em; text-align: left; font-size: clamp(14px, 2.3vw, 15.5px); line-height: 1.75; }
+.hub-mast .mast-intro .mi-last { margin-top: 12px; font-size: clamp(14px, 2.3vw, 15.5px); font-weight: 700; color: var(--ink); }
+@media (max-width: 620px) { .hub-mast .mast-intro { margin-top: 60px; } .hub-mast .mast-intro .mi-label { margin-bottom: 20px; } }
 /* 푸터 연도: 뒷줄 우측 */
 .foot-year { text-align: right; }
 
