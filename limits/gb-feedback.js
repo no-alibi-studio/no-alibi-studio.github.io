@@ -10,8 +10,11 @@
     var gate = wrap ? wrap.querySelector('.fb-login-gate') : null;
     var gateBtn = gate ? gate.querySelector('.fb-gate-login') : null;
     var T = lang === 'en'
-      ? { sending: 'Sending…', ok: 'Sent. Thank you.', fail: 'Failed — please retry.', big: 'File exceeds 5MB.', wait: 'Opening soon', needLogin: 'Log in first to leave feedback.' }
-      : { sending: '전송 중…', ok: '전달됐습니다. 감사합니다.', fail: '전송 실패 — 다시 시도해주세요.', big: '파일이 5MB를 넘습니다.', wait: '전송 준비 중', needLogin: '피드백은 로그인 후 남길 수 있어요.' };
+      ? { sending: 'Sending…', ok: 'Sent. Thank you.', fail: 'Failed — please retry.', big: 'File exceeds 5MB.', wait: 'Opening soon', needLogin: 'Log in first to leave feedback.', needPrivacy: 'Please agree to the collection and use of your personal data.' }
+      : { sending: '전송 중…', ok: '전달됐습니다. 감사합니다.', fail: '전송 실패 — 다시 시도해주세요.', big: '파일이 5MB를 넘습니다.', wait: '전송 준비 중', needLogin: '피드백은 로그인 후 남길 수 있어요.', needPrivacy: '개인정보 수집·이용에 동의해주세요.' };
+
+    // 동의 문구 버전 — privacy.html 개정 시 함께 올릴 것
+    var PRIVACY_VERSION = '1.0';
 
     if (!window.GB_API) { btn.classList.add('disabled'); status.textContent = T.wait; }
 
@@ -29,6 +32,14 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!loggedIn()) { status.textContent = T.needLogin; if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); return; }
+      // 개인정보 수집·이용 동의는 명시적 체크가 있어야만 전송한다 (묵시적 동의 불가)
+      var privacyBox = form.querySelector('input[name="privacy"]');
+      if (privacyBox && !privacyBox.checked) {
+        status.classList.remove('ok');
+        status.textContent = T.needPrivacy;
+        privacyBox.focus();
+        return;
+      }
       if (!window.GB_API) return;
       var fileInput = form.querySelector('input[type="file"]');
       var file = fileInput && fileInput.files[0];
@@ -48,6 +59,10 @@
         body.append('visible', form.visible.value);
         body.append('crew', form.crew && form.crew.checked ? '지원' : '');
         body.append('news', form.news && form.news.checked ? '수신' : '');
+        // 동의 증빙 — 무엇에, 언제 동의했는지 함께 남긴다
+        body.append('privacy_consent', privacyBox && privacyBox.checked ? '동의' : '');
+        body.append('privacy_version', PRIVACY_VERSION);
+        body.append('consented_at', new Date().toISOString());
         var uid = (window.NOALIBI && window.NOALIBI.user && window.NOALIBI.user.id) || '';
         if (uid) body.append('user_id', uid);
         if (fileData) {

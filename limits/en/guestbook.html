@@ -66,7 +66,7 @@
   </main>
 
   <footer>
-    <span>© The Limits of My World — <a class="foot-hub" href="/">no-alibi.com</a> · <a href="mailto:cinmaite0@gmail.com">cinmaite0@gmail.com</a> · <a href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">Instagram ↗</a></span>
+    <span>© The Limits of My World — <a class="foot-hub" href="/">no-alibi.com</a> · <a href="mailto:cinmaite0@gmail.com">cinmaite0@gmail.com</a> · <a class="foot-privacy" href="privacy.html">Privacy</a> · <a href="https://www.instagram.com/thelimitsofmyworld/" target="_blank" rel="noopener">Instagram ↗</a></span>
     <span class="power">ENERGY LEDGER · methodology in development</span>
   </footer>
 
@@ -95,6 +95,27 @@
   var SITE_KEY = '0x4AAAAAAEh3-RGg1JxNKuyU';
   var FN_URL = 'https://fdbqilofjmrcqzhcivlg.supabase.co/functions/v1/guestbook-submit';
   var tsWidget = null;
+
+  // Explicit privacy consent â required before anything is sent (implied consent is not valid)
+  var PRIVACY_VERSION = '1.0';
+  function consentBlock() {
+    var wrap = document.createElement('label');
+    wrap.className = 'gb-check gb-consent-inline';
+    var cb = document.createElement('input'); cb.type = 'checkbox';
+    var txt = document.createElement('span');
+    txt.innerHTML = KO
+      ? '<b>개인정보 수집·이용에 동의합니다</b> <span class="req">*</span><br><small>이름/닉네임과 남기신 글을 방명록 게시·Thanks to 표기·포인트 적립에 씁니다. <a href="privacy.html" target="_blank" rel="noopener">→ 처리방침</a></small>'
+      : '<b>I consent to the collection and use of my personal data</b> <span class="req">*</span><br><small>Your name and message are used for the guestbook, the Thanks&nbsp;to credit, and point accrual. Kept until you close your account. <a href="privacy.html" target="_blank" rel="noopener">→ Policy</a></small>';
+    wrap.append(cb, txt);
+    return { el: wrap, box: cb };
+  }
+  function needConsent(cs, st) {
+    if (cs.box.checked) return false;
+    st.classList.remove('ok');
+    st.textContent = KO ? '개인정보 수집·이용에 동의해주세요.' : 'Please agree to the collection and use of your personal data.';
+    cs.box.focus();
+    return true;
+  }
 
   function renderWrite() {
     if (!writeInner) return;
@@ -126,8 +147,10 @@
       var sb = document.createElement('button'); sb.className = 'gb-btn'; sb.type = 'button';
       sb.textContent = KO ? '남기기' : 'Post';
       var st = document.createElement('span'); st.className = 'gb-status';
+      var cs = consentBlock();
       sb.addEventListener('click', async function () {
         var body = ta.value.trim(); if (!body) { ta.focus(); return; }
+        if (needConsent(cs, st)) return;
         sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
         var res = await supa.from('feedback').insert({ user_id: user().id, work_id: WORK_ID, node: null, body: body });
         if (res.error) { st.textContent = KO ? '실패 — 잠시 후 다시' : 'Failed — try again'; sb.classList.remove('disabled'); console.error('[gb] insert', res.error); return; }
@@ -136,7 +159,7 @@
         document.dispatchEvent(new CustomEvent('noalibi-refresh'));
         load();
       });
-      row.append(sb, st); panel.append(ta, row);
+      row.append(sb, st); panel.append(ta, cs.el, row);
     }
 
     function paintGuest() {
@@ -152,7 +175,8 @@
       var st = document.createElement('span'); st.className = 'gb-status';
       var note = document.createElement('p'); note.className = 'gb-mode-note';
       note.textContent = KO ? '승인 후 게시됩니다 · 이름만 Thanks to에 기록돼요.' : 'Posted after review · only your name is recorded in Thanks to.';
-      row.append(sb, st); panel.append(nm, ta, tsBox, row, note);
+      var cs = consentBlock();
+      row.append(sb, st); panel.append(nm, ta, cs.el, tsBox, row, note);
       (function tryRender() {
         if (window.turnstile && tsBox.isConnected) { tsWidget = window.turnstile.render(tsBox, { sitekey: SITE_KEY, theme: 'dark' }); }
         else setTimeout(tryRender, 200);
@@ -161,11 +185,12 @@
         var name = nm.value.trim(), body = ta.value.trim();
         if (!name) { nm.focus(); return; }
         if (!body) { ta.focus(); return; }
+        if (needConsent(cs, st)) return;
         var token = (window.turnstile && tsWidget != null) ? window.turnstile.getResponse(tsWidget) : '';
         if (!token) { st.textContent = KO ? '사람 인증을 완료해주세요.' : 'Complete the human check.'; return; }
         sb.classList.add('disabled'); st.classList.remove('ok'); st.textContent = KO ? '전송 중…' : 'Posting…';
         try {
-          var r = await fetch(FN_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: name, body: body, token: token }) });
+          var r = await fetch(FN_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: name, body: body, token: token, privacy_consent: true, privacy_version: PRIVACY_VERSION, consented_at: new Date().toISOString() }) });
           var j = await r.json();
           if (!r.ok || !j.ok) { st.textContent = (j && j.error) || (KO ? '전송 실패' : 'Failed'); sb.classList.remove('disabled'); if (window.turnstile && tsWidget != null) window.turnstile.reset(tsWidget); return; }
           st.classList.add('ok'); st.textContent = KO ? '접수됐습니다. 승인 후 게시돼요. 감사합니다.' : 'Received. It will appear after review. Thank you.';

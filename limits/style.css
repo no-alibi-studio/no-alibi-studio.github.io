@@ -1384,3 +1384,20 @@ details.row-fold[open] > summary .chip { color: var(--led); border-color: var(--
 .row-script h5:first-child { margin-top: 0; }
 .row-script p { white-space: pre-line; color: var(--bone-dim); font-size: 14px; line-height: 1.85; margin: 0 0 1.1em; max-width: 70ch; }
 .row-script p b { color: var(--bone); }
+
+/* ── 개인정보 동의 · 처리방침 (2026-09-10) ────────────── */
+.gb-consent-box{
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:6px;
+  padding:.7rem .8rem;
+  background:rgba(255,255,255,.03);
+}
+.gb-consent-box .gb-check{font-weight:600}
+.gb-consent-box .fb-note{margin-top:.45rem}
+.gb-consent-box .req{color:#e0564a}
+.pv-eff{
+  font-size:.82em;
+  opacity:.6;
+  letter-spacing:.02em;
+}
+.foot-privacy{white-space:nowrap}
