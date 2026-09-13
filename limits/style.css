@@ -1519,3 +1519,9 @@ body.pm-open { overflow: hidden; }
   .pm-opt { grid-template-columns: 28px 1fr 16px; }
   .pm-rule { grid-template-columns: 1fr; gap: 6px; }
 }
+
+/* 홈 상단바 목차 — 하위 페이지 .subnav nav 와 같은 모양 */
+.topbar nav { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; }
+.topbar nav a { color: var(--bone-dim); transition: color .15s; }
+.topbar nav a:hover, .topbar nav a:focus-visible { color: var(--led); }
+@media (max-width: 720px) { .topbar nav { width: 100%; order: 4; } }
