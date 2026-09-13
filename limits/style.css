@@ -1698,3 +1698,17 @@ body.pm-open { overflow: hidden; }
   .eb-cr { grid-template-columns: 1fr; gap: 2px; }
   .eb-cr-name { padding-left: 16px; }   /* 폰: 역할 아래 이름을 살짝 들여쓴다 */
 }
+
+/* 스토리 시트 · 문장별 메모 / 목록 · 문장별 메모 */
+.pf-chips.eb-picks { flex-direction: column; align-items: stretch; gap: 10px; }
+.eb-pick { display: flex; flex-direction: column; gap: 6px; }
+.eb-pick .pf-chip { align-self: flex-start; }
+.pf-note-ta { width: 100%; min-height: 44px; resize: vertical; background: var(--pf-in); border: 1px solid var(--pf-edge); border-radius: 7px; color: var(--pf-fg); font-family: var(--sans); font-size: 13.5px; line-height: 1.55; padding: 8px 10px; box-sizing: border-box; }
+.pf-note-ta:focus { outline: none; border-color: var(--pf-acc); }
+.fl-note { margin: 8px 0 0 0; padding-left: 12px; border-left: 2px solid var(--panel-edge); }
+.fl-note .fl-chip { margin-bottom: 4px; }
+.fl-note-t { margin: 2px 0 0; font-size: 14px; color: var(--bone); line-height: 1.7; white-space: pre-wrap; max-width: 68ch; }
+.fl-note + .fl-note { margin-top: 10px; }
+.fl-body + .fl-note { margin-top: 12px; }
+.eb-overlay:not(.eb-dark) .fl-note { border-left-color: #DED2B8; }
+.eb-overlay:not(.eb-dark) .fl-note-t { color: #2A2621; }

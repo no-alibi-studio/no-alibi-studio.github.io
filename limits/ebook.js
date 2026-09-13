@@ -13,6 +13,7 @@
     exit: '← 나가기', resume: '🔖 이어읽기', next: '↓ ACT {n} 이어보기', thanks: '여기까지 읽어주셔서 고마워요.',
     participate: '참여하기', picked: '담긴 문장', hint: '문장을 <b>길게 누르면</b> 참여 창에 담겨요', hintDesk: '문장을 <b>길게 누르면</b>(마우스 꾹) 참여 창에 담겨요',
     added: '담겼어요', removed: '뺐어요', sheetTitle: '참여하기', sheetWhole: '담은 문장이 없으면 이야기 전체에 대한 참여예요',
+    notePh: '이 문장에 대한 메모…', overallPh: '이야기 전체에 대한 의견 (선택)', needAny: '문장 메모나 전체 의견 중 하나는 적어주세요.',
     sent: '참여가 기록됐어요 · +10 udb — 고마워요!', listTitle: '이 이야기에 남겨진 참여',
     splashK: 'E-BOOK', splashTitle: '내 세계의 한계',
     splash: ['📖 눈이 편한 화면으로 읽어요', '✎ 문장을 <b>길게 누르면</b> 그 문장에 참여', '🔖 <b>언제든 이어읽기</b> — 읽던 곳을 기억해요'],
@@ -21,6 +22,7 @@
     exit: '← Exit', resume: '🔖 Resume', next: '↓ Continue to ACT {n}', thanks: 'Thank you for reading this far.',
     participate: 'Participate', picked: 'picked', hint: '<b>Press and hold</b> a line to pick it', hintDesk: '<b>Press and hold</b> a line (hold the mouse) to pick it',
     added: 'Picked', removed: 'Removed', sheetTitle: 'Participate', sheetWhole: 'With no lines picked, this is about the whole story',
+    notePh: 'A note on this line…', overallPh: 'About the story as a whole (optional)', needAny: 'Write a note on a line, or about the whole story.',
     sent: 'Recorded · +10 udb — thank you!', listTitle: 'Participation on this story',
     splashK: 'E-BOOK', splashTitle: 'The Limits of My World',
     splash: ['📖 An easy-on-the-eyes reader', '✎ <b>Press and hold</b> a line to participate on it', '🔖 <b>Resume anytime</b> — we remember where you were'],
@@ -186,10 +188,18 @@
       form = F.buildForm({
         channel: 'story', compact: true,
         renderChips: renderChips,
-        getTarget: function () {
-          var ps = picked.map(function (p) { return { act: p.act, idx: p.idx, head: p.head }; });
-          var acts = []; picked.forEach(function (p) { if (acts.indexOf(p.act) === -1) acts.push(p.act); });
-          return { target_type: ps.length ? 'story_node' : 'work', target_ref: acts.length ? acts.join(', ') : null, passages: ps };
+        getTarget: function (overall) {
+          // 문장별 메모는 passages 에, 읽기용 합본은 body 에. 전체 의견은 {whole:true} 항목으로도 넣어 목록에서 따로 그린다.
+          var acts = [], lines = [], ps = [], anyNote = false;
+          picked.forEach(function (p) {
+            if (acts.indexOf(p.act) === -1) acts.push(p.act);
+            var note = (p.note || '').trim(); if (note) anyNote = true;
+            var e = { act: p.act, idx: p.idx, head: p.head }; if (note) e.note = note; ps.push(e);
+          });
+          if (overall) lines.push(overall);
+          ps.forEach(function (e) { if (e.note) lines.push('[' + e.act + ' · ' + T.sentence + ' ' + (e.idx + 1) + ' 「' + e.head + '…」] ' + e.note); });
+          if (anyNote && overall) ps.unshift({ whole: true, note: overall });
+          return { target_type: picked.length ? 'story_node' : 'work', target_ref: acts.length ? acts.join(', ') : null, passages: ps, body: lines.join('\n'), needBodyMsg: picked.length ? T.needAny : null };
         },
         onSent: function () { clearPicked(); toggleSheet(false); toast(T.sent); if (listApi) listApi.reload(); if (window.EBOOK && EBOOK.onSent) EBOOK.onSent(); }
       });
@@ -220,7 +230,7 @@
     var i = findPick(el);
     if (i >= 0) { picked.splice(i, 1); el.classList.remove('picked'); toast(T.removed + ' · ' + picked.length); }
     else {
-      picked.push({ act: el.dataset.act, idx: +el.dataset.i, head: headOf(el), el: el });
+      picked.push({ act: el.dataset.act, idx: +el.dataset.i, head: headOf(el), el: el, note: '' });
       picked.sort(function (a, b) { return a.act === b.act ? a.idx - b.idx : a.act.localeCompare(b.act); });
       el.classList.add('picked'); toast(T.added + ' · ' + picked.length);
       if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
@@ -235,14 +245,21 @@
     if (form) form.refreshChips();
   }
   function renderChips(c) {
+    if (form && form.ta) form.ta.placeholder = picked.length ? T.overallPh : (F.T.ph.story || '');
     if (!picked.length) { c.appendChild(chipEl(T.wholeStory, 'tg dim')); return; }
+    c.classList.add('eb-picks');
     picked.forEach(function (p) {
+      var row = document.createElement('div'); row.className = 'eb-pick';
       var ch = chipEl(p.act + ' · ' + T.sentence + ' ' + (p.idx + 1) + ' 「' + p.head + '…」', 'tg');
       ch.title = p.head; ch.classList.add('go');
       ch.addEventListener('click', function () { jumpTo(p.act, p.idx); });
       var x = document.createElement('button'); x.type = 'button'; x.className = 'pf-chip-x'; x.textContent = '×';
       x.addEventListener('click', function (e) { e.stopPropagation(); togglePick(p.el); });
-      ch.appendChild(x); c.appendChild(ch);
+      ch.appendChild(x);
+      var ta = document.createElement('textarea'); ta.className = 'pf-note-ta'; ta.maxLength = 600; ta.rows = 2;
+      ta.placeholder = T.notePh; ta.value = p.note || '';
+      ta.addEventListener('input', function () { p.note = ta.value; });
+      row.appendChild(ch); row.appendChild(ta); c.appendChild(row);
     });
   }
   function chipEl(label, cls) { var s = document.createElement('span'); s.className = 'pf-chip ' + (cls || ''); s.textContent = label; return s; }
@@ -257,7 +274,7 @@
     if (on == null) on = sheet.hidden;
     sheet.hidden = !on;
     barBtn.classList.toggle('on', on);
-    if (on) { updateCount(); setTimeout(function () { if (form) form.focus(); }, 60); }
+    if (on) { updateCount(); setTimeout(function () { var first = sheet.querySelector('.pf-note-ta'); if (first) first.focus(); else if (form) form.focus(); }, 60); }
   }
   function toast(msg) {
     var t = document.createElement('div'); t.className = 'eb-toast'; t.textContent = msg;

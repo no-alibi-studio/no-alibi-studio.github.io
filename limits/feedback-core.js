@@ -13,7 +13,7 @@
   var T = KO ? {
     gate: '로그인을 하면 참여가 가능해집니다.', login: '로그인', logout: '로그아웃',
     submit: '참여하기', sending: '보내는 중…', sent: '참여가 기록됐어요 · +10 udb', failed: '전송 실패 — 잠시 후 다시 시도해주세요.',
-    attachFail: '참여는 기록됐지만 첨부는 올리지 못했어요.', needBody: '내용을 적어주세요.',
+    attachFail: '참여는 기록됐지만 첨부는 올리지 못했어요.', needBody: '내용을 적어주세요.', tooLong: '글이 너무 길어요 — 4000자 이내로 줄여주세요.',
     ph: { media: '이 장면에 대한 의견 · 레퍼런스 · 제안을 자유롭게…', story: '담은 문장, 또는 이야기 전체에 대한 의견을…', guestbook: '작품에 대해 어떤 말이든 자유롭게…' },
     catNone: '종류 (선택)', cats: ['레퍼런스 추천', '연출 피드백', '디자인 피드백', '기타'],
     linkPh: '참고 링크 (선택) https://…', attach: '이미지·영상 첨부', attachHint: '5MB 이하 · 작가만 봅니다',
@@ -37,7 +37,7 @@
   } : {
     gate: 'Log in to participate.', login: 'Log in', logout: 'Log out',
     submit: 'Participate', sending: 'Sending…', sent: 'Recorded · +10 udb', failed: 'Failed — please try again shortly.',
-    attachFail: 'Your comment was recorded, but the attachment failed to upload.', needBody: 'Please write something.',
+    attachFail: 'Your comment was recorded, but the attachment failed to upload.', needBody: 'Please write something.', tooLong: 'Too long — please keep it under 4000 characters.',
     ph: { media: 'Your thoughts, references, or suggestions for this scene…', story: 'About the sentences you picked, or the story as a whole…', guestbook: 'Anything about the work…' },
     catNone: 'Type (optional)', cats: ['Reference', 'Direction', 'Design', 'Other'],
     linkPh: 'Reference link (optional) https://…', attach: 'Attach image · video', attachHint: 'up to 5MB · seen by the author only',
@@ -172,10 +172,12 @@
     api.submit = async function () {
       if (!user()) { login(); return; }
       if (opts.canSend && !opts.canSend()) return;
-      var body = (api.ta.value || '').trim();
-      if (!body) { setStatus(T.needBody); api.ta.focus(); return; }
+      var overall = (api.ta.value || '').trim();
+      var tg = (opts.getTarget && opts.getTarget(overall)) || {};
+      var body = (tg.body != null ? tg.body : overall).trim();      // 페이지가 본문을 조립할 수 있다 (스토리: 전체 의견 + 문장별 메모)
+      if (!body) { setStatus(tg.needBodyMsg || T.needBody); api.ta.focus(); return; }
+      if (body.length > 4000) { setStatus(T.tooLong); return; }
       if (!conC.box.checked) { setStatus(T.needConsent); conC.box.focus(); return; }
-      var tg = (opts.getTarget && opts.getTarget()) || {};
       var link = linkIn ? linkIn.value.trim() : '';
       if (link && !/^https?:\/\//i.test(link)) link = 'https://' + link;
       sendBtn.classList.add('disabled'); setStatus(T.sending);
@@ -357,19 +359,32 @@
         var item = el('div', 'fl-item' + (r.adopted ? ' adopted' : ''));
         var who = el('p', 'fl-who');
         who.appendChild(el('span', 'fl-name', esc(whoName(r, names))));
-        (opts.chips ? opts.chips(r) : defaultChips(r)).forEach(function (c) {
+        var allChips = opts.chips ? opts.chips(r) : defaultChips(r);
+        var ps = Array.isArray(r.passages) ? r.passages : [];
+        var noted = ps.some(function (p) { return p && p.note; });   // 문장별 메모 형식
+        function chipEl(c) {
           var chip;
           if (c.href) { chip = el('a', 'fl-chip ' + (c.cls || ''), esc(c.label)); chip.href = c.href; chip.target = '_blank'; chip.rel = 'noopener'; }
           else { chip = el('span', 'fl-chip ' + (c.cls || ''), esc(c.label)); if (c.onClick) { chip.classList.add('go'); chip.addEventListener('click', c.onClick); } }
-          who.appendChild(chip);
-        });
+          return chip;
+        }
+        allChips.forEach(function (c) { if (noted && c.passage) return; who.appendChild(chipEl(c)); });
         who.appendChild(el('span', 'fl-when', esc(fmtDate(r.created_at))));
         if (r.adopted) who.appendChild(el('span', 'fl-badge adopted', esc(T.adopted)));
         if (!r.approved) who.appendChild(el('span', 'fl-badge pend', esc(T.pending)));
         if (!r.is_public) who.appendChild(el('span', 'fl-badge priv', esc(T.priv)));
         if (user() && r.user_id === user().id) who.appendChild(delBtn(r, load));
         item.appendChild(who);
-        item.appendChild(el('p', 'fl-body', esc(r.body)));
+        if (noted) {
+          ps.forEach(function (p) {
+            if (p.whole) { if (p.note) item.appendChild(el('p', 'fl-body', esc(p.note))); return; }
+            var c = null; allChips.forEach(function (x) { if (x.passage && x.passage.act === (p.act || '') && x.passage.idx === p.idx) c = x; });
+            var blk = el('div', 'fl-note');
+            if (c) blk.appendChild(chipEl(c));
+            if (p.note) blk.appendChild(el('p', 'fl-note-t', esc(p.note)));
+            item.appendChild(blk);
+          });
+        } else item.appendChild(el('p', 'fl-body', esc(r.body)));
         var act = el('div', 'fl-actions');
         act.appendChild(heart(r, likes.counts[r.id] || 0, !!likes.mine[r.id]));
         act.appendChild(adminButtons(r, load));
