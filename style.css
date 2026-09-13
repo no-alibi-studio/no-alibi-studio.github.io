@@ -555,3 +555,11 @@ body { overflow-x: hidden; }
 /* 함께 만드는 방식: 마감 압박 문구 */
 .sl-deadline { font-family: var(--sans); font-size: 13.5px; line-height: 1.7; color: var(--ink); background: rgba(229,52,42,.06); border-left: 3px solid var(--led); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 0 0 14px; }
 .sl-deadline b { color: var(--led); }
+
+/* ── 허브: POLY_PHONY 카드 안의 작품 한 줄 (프로젝트 ⊃ 작품) ── */
+.hh-work { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; margin: 16px 0 14px; padding-top: 12px; border-top: 1px dashed rgba(237,230,214,.35); font-size: 14px; color: #EDE6D6; }
+.hh-work .no { font-family: var(--mono); font-size: 10.5px; color: var(--led); letter-spacing: .12em; white-space: nowrap; }
+.hh-work .wt { border-bottom: 1px solid transparent; }
+.hh-work:hover .wt { border-color: var(--led); color: var(--led); }
+.hh-work .st { font-family: var(--mono); font-size: 10px; color: rgba(237,230,214,.6); letter-spacing: .1em; margin-left: auto; white-space: nowrap; }
+.hh-work .st i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--led); margin-right: 5px; vertical-align: 1px; }
