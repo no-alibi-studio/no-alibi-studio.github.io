@@ -1434,7 +1434,7 @@ img:not(.allow-save), video, audio { -webkit-touch-callout: none; -webkit-user-d
 .topbar .tb-lang:hover { color: var(--led); }
 .hl-pill { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--bone); background: transparent; border: 1px solid var(--bone-faint); border-radius: 999px; padding: 5px 13px; cursor: pointer; transition: border-color .15s, color .15s; }
 .hl-pill:hover { border-color: var(--led); color: var(--led); }
-.hl-pill.done { color: var(--led); border-color: var(--led); cursor: default; }
+.hl-pill.done { display: none; }   /* 로그인 뒤엔 auth.js 의 계정 위젯(udb · 로그아웃)이 대신 보임 — 중복 표시 방지 */
 
 .hero.v2 { min-height: 0; justify-content: flex-start; gap: 22px; padding: 44px 0 34px; }
 .hero.v2 .eyebrow { letter-spacing: 0.14em; text-transform: none; margin: 0; }
