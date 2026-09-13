@@ -310,6 +310,7 @@
     return box;
   }
 
+  function legacyAct(node) { var m = /(\d+)/.exec(node || ''); return m ? 'ACT ' + m[1] : null; }   // 'NODE 1' → 'ACT 1'
   // 칩: 페이지가 targetChips(row) 를 주면 그걸 쓰고, 없으면 기본 규칙
   function defaultChips(r) {
     var out = [];
@@ -318,7 +319,13 @@
     else if (r.target_type === 'image') out.push({ label: T.image + (r.target_ref ? ' · ' + r.target_ref : ''), cls: 'tg', ref: r.target_ref });
     else if (r.source_channel === 'story') {
       var ps = Array.isArray(r.passages) ? r.passages : [];
-      if (ps.length) ps.forEach(function (p) { out.push({ label: (p.act || T.act) + ' · ' + T.sentence + ' ' + (p.idx + 1) + (p.head ? ' 「' + p.head + '…」' : ''), cls: 'tg', passage: p }); });
+      if (ps.length) ps.forEach(function (p) {
+        // 구형 passages({node, quote}) 도 읽는다: NODE n → ACT n, 인용은 앞 14자만
+        var act = p.act || legacyAct(p.node) || T.act;
+        var head = p.head || (p.quote ? String(p.quote).trim().slice(0, 14) : '');
+        var num = (typeof p.idx === 'number') ? ' · ' + T.sentence + ' ' + (p.idx + 1) : '';
+        out.push({ label: act + num + (head ? ' 「' + head + '…」' : ''), cls: 'tg', passage: { act: act, idx: p.idx, head: head } });
+      });
       else out.push({ label: T.wholeStory, cls: 'tg dim' });
     }
     if (r.link) out.push({ label: T.link, cls: 'lnk', href: r.link });
@@ -381,8 +388,8 @@
     rows.forEach(function (r) {
       if (r.source_channel !== 'story') return;
       var acts = [];
-      if (Array.isArray(r.passages)) r.passages.forEach(function (p) { if (p.act && acts.indexOf(p.act) === -1) acts.push(p.act); });
-      if (!acts.length && r.target_ref) r.target_ref.split(',').forEach(function (a) { a = a.trim(); if (a && acts.indexOf(a) === -1) acts.push(a); });
+      if (Array.isArray(r.passages)) r.passages.forEach(function (p) { var a = p.act || legacyAct(p.node); if (a && acts.indexOf(a) === -1) acts.push(a); });
+      if (!acts.length && r.target_ref) r.target_ref.split(',').forEach(function (a) { a = a.trim(); if (/^NODE/i.test(a)) a = legacyAct(a) || a; if (a && acts.indexOf(a) === -1) acts.push(a); });
       var who = r.user_id || ('g:' + (r.guest_name || '')) ;
       acts.forEach(function (a) { byAct[a] = byAct[a] || {}; byAct[a][who] = 1; });
     });
