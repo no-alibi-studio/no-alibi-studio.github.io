@@ -12,3 +12,9 @@
   ! X-Robots-Tag
 /limits/assets/poster-portrait.jpg
   ! X-Robots-Tag
+
+/*.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.js
+  Cache-Control: public, max-age=0, must-revalidate
