@@ -26,10 +26,10 @@
 /limits/protect.js
   Cache-Control: public, max-age=0, must-revalidate
 
-/limits/gb-feedback.js
+/limits/feedback-core.js
   Cache-Control: public, max-age=0, must-revalidate
 
-/limits/gb-config.js
+/limits/media.js
   Cache-Control: public, max-age=0, must-revalidate
 
 /limits/ebook.js

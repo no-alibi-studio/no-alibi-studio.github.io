@@ -6,7 +6,7 @@
 <title>개인정보 처리방침 — 내 세계의 한계</title>
 <meta name="description" content="〈내 세계의 한계〉 개인정보 처리방침 — 무엇을 받고, 왜 받고, 얼마나 갖고 있다가, 언제 지우는지.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
-<link rel="stylesheet" href="style.css?v=20260913">
+<link rel="stylesheet" href="style.css?v=20260914">
 </head>
 <body>
 
@@ -16,11 +16,10 @@
     <a class="sign" href="/" aria-label="no-alibi.com">no<span class="us">_</span>alibi</a>
 <span class="path"><a href="/#polyphony">POLY_PHONY</a><span class="sep" aria-hidden="true">/</span><a class="home" href="index.html">내 세계의 한계</a></span>
     <nav>
-<a href="videos.html">영상</a>
+<a href="videos.html">영상 · 이미지</a>
 <a href="story.html">스토리</a>
 <a href="screening.html">전시</a>
 <a href="about.html">작품 소개</a>
-<a href="images.html">이미지</a>
 <a href="music.html">음악</a>
 <a href="guestbook.html">방명록</a>
 <a href="index.html#record">제작 단계</a>
@@ -39,7 +38,7 @@
         이 사이트는 수익과 배분을 공개하는 것을 원칙으로 합니다.
         같은 이유로, <b>여러분의 정보를 어떻게 다루는지도 공개합니다.</b>
       </p>
-      <p class="pv-eff">시행일 2026년 9월 10일 · 최종 개정 2026년 9월 10일</p>
+      <p class="pv-eff">시행일 2026년 9월 14일 · 최종 개정 2026년 9월 14일 (v1.1)</p>
     </div>
 
     <!-- 0. 계정 -->
@@ -55,6 +54,7 @@
         <li>남긴 피드백·방명록과 그 채택 여부</li>
         <li>적립된 포인트와 수익 지분 기록</li>
         <li>크레딧 표기 방식 선택</li>
+        <li>크루 참여 의향, 소식 수신 여부 <small>(프로필에서 직접 켜고 끕니다)</small></li>
       </ul>
       <p class="rg-p">
         <b>즉 로그인은 단순 인증이 아니라 회원가입입니다.</b>
@@ -72,10 +72,10 @@
           <thead><tr><th>언제</th><th>항목</th><th>필수 여부</th></tr></thead>
           <tbody>
             <tr><td>로그인</td><td>이메일 주소, 로그인 식별자(구글 계정 고유값)</td><td>필수</td></tr>
-            <tr><td>피드백 작성</td><td>이름/닉네임, 이메일, 피드백 내용, 대상 구간, 분류, 크레딧 표기 방식, 공개 여부</td><td>필수</td></tr>
-            <tr><td>피드백 작성</td><td>인스타그램 계정, 참고 링크, 첨부 파일(5MB 이하)</td><td>선택</td></tr>
-            <tr><td>피드백 작성</td><td>보상 방식 선택(포인트·사회환원), 크루 지원 의향</td><td>선택</td></tr>
-            <tr><td>피드백 작성</td><td>공지·수익 보고 이메일 수신 동의</td><td>선택</td></tr>
+            <tr><td>참여(댓글)</td><td>내용, 대상(문장 위치·장면·영상 시간), 공개 여부, 동의 시각</td><td>필수</td></tr>
+            <tr><td>참여(댓글)</td><td>분류, 참고 링크, 첨부 파일(5MB 이하 · 작가만 열람)</td><td>선택</td></tr>
+            <tr><td>프로필</td><td>표시 이름, 인스타그램 계정, 크레딧 표기 방식, 크루 참여 의향</td><td>선택</td></tr>
+            <tr><td>프로필</td><td>공지·수익 보고 이메일 수신 동의</td><td>선택</td></tr>
             <tr><td>방명록</td><td>이름/닉네임, 방명록 내용</td><td>필수</td></tr>
             <tr><td>자동 수집</td><td>작성 시각, 좋아요 기록</td><td>—</td></tr>
           </tbody>
@@ -175,14 +175,14 @@
         <table>
           <thead><tr><th>업체</th><th>맡기는 일</th><th>맡기는 정보</th><th>보관 위치</th></tr></thead>
           <tbody>
-            <tr><td>Supabase</td><td>로그인 처리, 방명록·피드백 저장</td><td>이메일, 로그인 식별자, 표시 이름, 작성 내용</td><td><b>대한민국</b> <small>(서울 리전)</small></td></tr>
-            <tr><td>Google <small>(Apps Script · Sheets)</small></td><td>이미지·영상 섹션 피드백 접수·보관</td><td>이름, 이메일, 인스타그램, 피드백 내용, 첨부</td><td>국외 <small>(구글 정책에 따름)</small></td></tr>
-            <tr><td>GitHub <small>(Pages)</small></td><td>사이트 호스팅</td><td>접속 기록 <small>(별도 저장 안 함)</small></td><td>국외 <small>(미국 등)</small></td></tr>
+            <tr><td>Supabase</td><td>로그인 처리, 참여(댓글)·방명록·첨부 파일 저장</td><td>이메일, 로그인 식별자, 프로필, 작성 내용, 첨부</td><td><b>대한민국</b> <small>(서울 리전)</small></td></tr>
+            <tr><td>Cloudflare <small>(Pages)</small></td><td>사이트 호스팅, 방문 통계</td><td>접속 기록 <small>(통계는 익명 집계, 별도 저장 안 함)</small></td><td>국외 <small>(미국 등 전 세계 엣지)</small></td></tr>
           </tbody>
         </table>
       </div>
       <p class="table-note">* <b>로그인 정보와 방명록·피드백 본문은 대한민국(서울) 서버에 저장됩니다.</b> 국외로 나가지 않습니다.</p>
-      <p class="table-note">* 이미지·영상 섹션 피드백은 구글 서비스를 거치며, 사이트 호스팅은 GitHub을 씁니다. 이 둘은 <b>국외 서버를 포함할 수 있습니다.</b></p>
+      <p class="table-note">* 사이트 호스팅과 방문 통계는 Cloudflare를 씁니다. 페이지 파일과 접속 기록은 <b>국외 서버를 거칠 수 있지만</b>, 여러분이 남긴 글과 계정 정보는 그쪽으로 가지 않습니다.</p>
+      <p class="table-note">* 2026년 9월 14일 이전에 이미지·영상 페이지의 폼으로 남긴 피드백은 Google(Apps Script · Sheets)에 접수됐습니다. 이 기록은 서울 서버로 옮긴 뒤 구글 쪽 사본을 삭제합니다.</p>
       <p class="table-note">* 위탁받은 업체는 <b>맡긴 일 외의 목적으로 정보를 쓸 수 없습니다.</b></p>
     </div>
 
@@ -233,6 +233,7 @@
         <table>
           <thead><tr><th>버전</th><th>시행일</th><th>내용</th></tr></thead>
           <tbody>
+            <tr><td class="mono">v1.1</td><td class="mono">2026-09-14</td><td>참여(댓글) 접수를 Supabase(서울)로 일원화 · 이미지·영상 피드백의 구글 경유 종료 · 호스팅 GitHub → Cloudflare · 프로필 항목(크루 의향·소식 수신) 정리</td></tr>
             <tr><td class="mono">v1.0</td><td class="mono">2026-09-10</td><td>최초 제정</td></tr>
           </tbody>
         </table>

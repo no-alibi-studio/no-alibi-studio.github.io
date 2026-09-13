@@ -107,7 +107,8 @@ async function refresh() {
   if (user) {
     let bal = 0, name = (user.email || '').split('@')[0];
     try {
-      const { data } = await supa.from('profiles').select('cin_balance, display_name').eq('id', user.id).maybeSingle();
+      // 전체 컬럼: is_admin(관리자 버튼) · insta/credit_pref/crew_intent/news_opt_in(프로필 창) — feedback-core.js 가 쓴다
+      const { data } = await supa.from('profiles').select('*').eq('id', user.id).maybeSingle();
       if (data) { bal = data.cin_balance; if (data.display_name) name = data.display_name; window.NOALIBI.profile = data; }
     } catch (e) { console.warn('[noalibi] profile fetch', e); }
     renderLoggedIn(bal, name);

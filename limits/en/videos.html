@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, noimageindex">
-<title>Videos — The Limits of My World</title>
-<meta name="description" content="Trailer and making-of videos of The Limits of My World.">
+<title>Video · Images — The Limits of My World</title>
+<meta name="description" content="Trailer and key images of The Limits of My World — participate scene by scene.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
-<link rel="stylesheet" href="../style.css?v=20260913">
+<link rel="stylesheet" href="../style.css?v=20260914">
 </head>
 <body>
 
@@ -17,11 +17,10 @@
     <a class="sign" href="/" aria-label="no-alibi.com">no<span class="us">_</span>alibi</a>
 <span class="path"><a href="/#polyphony">POLY_PHONY</a><span class="sep" aria-hidden="true">/</span><a class="home" href="index.html">The Limits of My World</a></span>
     <nav>
-<a class="here" href="videos.html">Video</a>
+<a class="here" href="videos.html">Video · Images</a>
 <a href="story.html">Story</a>
 <a href="screening.html">Screening</a>
 <a href="about.html">About</a>
-<a href="images.html">Images</a>
 <a href="music.html">Music</a>
 <a href="guestbook.html">Guestbook</a>
 <a href="index.html#record">Progress</a>
@@ -32,97 +31,47 @@
   </header>
 
   <main>
-    <div class="sec-head"><span class="sec-num">3.</span><h2>Videos</h2></div>
-    <p class="sec-sub">영상</p>
-    <div class="video-list">
-      <figure class="video-item">
-        <video src="../assets/video/trailer.mp4" poster="../assets/video/trailer-poster.jpg" controls preload="metadata" playsinline></video>
-        <figcaption>30-second Trailer <small>2027</small></figcaption>
-      </figure>
-      <div class="slot">STANDBY<small>coming — making-of / per-node videos</small></div>
-    </div>
+    <div class="sec-head"><span class="sec-num">3.</span><h2>Video · Images</h2></div>
+    <p class="sec-sub">FILM — a world executed · pick a scene and participate</p>
 
-    <details class="fb-collapse fb-fab" id="feedback">
-      <summary class="fb-btn"><svg class="fb-pen" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Feedback</summary>
-      <div class="gb-write">
-      <p>Reference suggestions, directing and design feedback are all welcome. You can attach a reference image (≤5MB) or a link.
-      Attached images and links are <b>private by default</b> and shown on the site only if you allow it. Email is always private.</p>
-      <div class="fb-login-gate" hidden>
-        <p class="fb-gate-why"><b>Feedback requires a login.</b> So we can verify <b>who left it</b> and credit you accurately — with <b>credit and revenue-share points</b> — if it's adopted. Login is just that identity check.</p>
-        <button type="button" class="gb-btn fb-gate-login">Log in &amp; give feedback</button>
+    <section class="media-sec" id="video">
+      <div class="video-list">
+        <figure class="video-item">
+          <video id="mainVideo" data-ref="trailer" src="../assets/video/trailer.mp4" poster="../assets/video/trailer-poster.jpg" controls preload="metadata" playsinline></video>
+          <figcaption>30-second Trailer <small>2027</small></figcaption>
+        </figure>
       </div>
-      <form class="gb-form fb-form" data-node="VIDEOS" data-lang="en">
-        <div class="gb-row">
-          <div class="gb-field">
-            <label>Type of feedback <span class="req">*</span></label>
-            <select name="category">
-              <option value="레퍼런스 추천">Reference suggestion</option>
-              <option value="연출 피드백">Directing feedback</option>
-              <option value="디자인 피드백">Design feedback</option>
-              <option value="기타">Other</option>
-            </select>
-          </div>
-          <div class="gb-field">
-            <label>Reference link <small>(optional — video/reference URL)</small></label>
-            <input name="link" type="url" placeholder="https://…">
-          </div>
-        </div>
-        <div class="gb-field">
-          <label>Your feedback / proposal <span class="req">*</span></label>
-          <textarea name="msg" required maxlength="2000"></textarea>
-        </div>
-        <div class="gb-field">
-          <label>Attach image <small>(optional, ≤5MB)</small></label>
-          <input type="file" accept="image/*">
-        </div>
-        <div class="gb-field">
-          <label>Visibility of attachment/link <span class="req">*</span></label>
-          <div class="gb-visible-choice">
-            <input type="radio" name="visible" id="VIDEOS-en-v-no" value="비공개" checked>
-            <label for="VIDEOS-en-v-no">Private (default)</label>
-            <input type="radio" name="visible" id="VIDEOS-en-v-yes" value="공개">
-            <label for="VIDEOS-en-v-yes">OK to publish</label>
-          </div>
-          <p class="fb-note">* Private by default to protect personal IP. Shown on the site only if you choose to publish.</p>
-        </div>
-        <div class="gb-field gb-crew">
-          <label class="gb-check"><input type="checkbox" name="crew" value="지원"> I'm open to joining the crew of this work — please also read my feedback as an application.</label>
-          <p class="fb-note">Crew recruitment happens at <b>production time</b>. This is currently a low-budget, self-funded project applying to grants; if you signal interest, we&rsquo;ll email the <b>exact terms and a contract</b> before production (you re-confirm then). Even if you don&rsquo;t sign on, if your submitted materials are used in the final work you receive <b>points like any contributor</b> — and can choose how you&rsquo;d like your revenue share.</p>
-        </div>
-        <div class="gb-field gb-crew">
-          <label class="gb-check"><input type="checkbox" name="news" value="수신"> Receive project & revenue news — e-book, film, exhibition updates and revenue-share notices by email.</label>
-        </div>
-        <div class="gb-field">
-          <label>How you want your contribution returned <span class="req">*</span></label>
-          <div class="gb-visible-choice gb-reward">
-            <input type="radio" name="reward" id="VID-r-pt" value="포인트" checked>
-            <label for="VID-r-pt">Site points <small>(e-book · screenings · goods · future works)</small></label>
-            <input type="radio" name="reward" id="VID-r-so" value="사회환원">
-            <label for="VID-r-so">Giving back <small>(donation)</small></label>
-          </div>
-          <p class="fb-note">Adopted feedback accrues as <b>contribution points</b>. <a href="revenue.html">&rarr; Rewards &amp; points</a></p>
-        </div>
-        <div class="gb-row">
-          <div class="gb-field"><label>Name / nickname <span class="req">*</span></label><input name="name" type="text" required maxlength="40"></div>
-          <div class="gb-field"><label>Email <span class="req">*</span> <small>(private)</small></label><input name="email" type="email" required></div>
-        </div>
-        <div class="gb-row">
-          <div class="gb-field"><label>Instagram <small>(optional)</small></label><input name="insta" type="text" placeholder="@youraccount" maxlength="40"></div>
-          <div class="gb-field"><label>Credit as <span class="req">*</span></label><select name="credit">
-            <option value="이름">Name / nickname</option><option value="이메일 아이디">Email handle</option><option value="인스타그램">Instagram</option>
-          </select></div>
-        </div>
-        <p class="fb-note fb-consent"><b>Participation &amp; publication</b> — what you send is <b>kept and shown on this site as a record</b>, and may be used in the e-book, the film, its credits, and screenings or exhibitions. Once posted it <b>cannot be edited or deleted</b> (you can add a follow-up instead). Publishing an <b>image or video you attach is optional</b> and defaults to <b>private</b>.</p>
-        <div class="gb-field gb-consent-box">
-          <label class="gb-check"><input type="checkbox" name="privacy" value="agreed" required> <b>I consent to the collection and use of my personal data</b> <span class="req">*</span></label>
-          <p class="fb-note"><b>Collected</b> name/nickname, email, Instagram handle (optional), feedback text · <b>Purpose</b> reviewing feedback for the work, crediting, recording and paying points and revenue shares, sending announcements · <b>Retention</b> until you close your account (payment records kept 5 years as required by law)<br>You may decline, but crediting and reward payment then become impossible, so feedback cannot be accepted. <a href="privacy.html">→ Privacy policy</a></p>
-        </div>
-        <div class="gb-submit-row"><button class="gb-btn" type="submit">Send</button><span class="gb-status"></span></div>
-      </form>
-    </div>
-    </details>
+      <p class="media-how"><b>How</b> · pause the video and press <b>⏱ Pin current time</b> — that point becomes a chip. Send without a time to comment on the whole video.</p>
+      <div class="media-form" id="videoForm"></div>
+      <div class="slot">STANDBY<small>Feature / making-of — coming</small></div>
+    </section>
 
-    <div class="pager"><a href="images.html">← 2. Key Images</a><a href="story.html">4. Story →</a></div>
+    <section class="media-sec" id="images">
+      <h3 class="media-h">Key Images <small>키 이미지</small></h3>
+      <p class="media-how"><b>How</b> · click an image — the participation form opens right there.</p>
+      <div class="img-grid" id="imgGrid">
+        <div class="img-cell" data-ref="n1-opening" data-label="2.1 Opening — Wittgenstein v.4.5"><img src="../assets/n1-opening.jpg" alt="opening — coffin in a foggy cemetery" loading="lazy"><p class="img-cap">2.1 &nbsp;Opening — Wittgenstein v.4.5</p></div>
+        <div class="img-cell" data-ref="n1-awakening" data-label="2.2 Awakening — the flickering epitaph"><img src="../assets/n1-awakening.jpg" alt="awakening — the corpse with blue electronic eyes" loading="lazy"><p class="img-cap">2.2 &nbsp;Awakening — the flickering epitaph</p></div>
+        <div class="img-cell" data-ref="n1-transform" data-label="2.3 Transformation into the machine body"><img src="../assets/n1-transform.jpg" alt="development — a limb falling in the cemetery" loading="lazy"><p class="img-cap">2.3 &nbsp;Transformation into the machine body</p></div>
+        <div class="img-cell" data-ref="n2-space" data-label="2.4 Space — extracting the stars"><img src="../assets/n2-space.jpg" alt="space — energy extraction" loading="lazy"><p class="img-cap">2.4 &nbsp;Space — extracting the stars</p></div>
+        <div class="img-cell" data-ref="n2-desert" data-label="2.5 Desert — the pursuit of heat"><img src="../assets/n2-desert.jpg" alt="desert — the pursuit of heat" loading="lazy"><p class="img-cap">2.5 &nbsp;Desert — the pursuit of heat</p></div>
+        <div class="img-cell" data-ref="n2-sea" data-label="2.6 Sea — cooling sacrifice"><img src="../assets/n2-sea.jpg" alt="sea — whale and diver" loading="lazy"><p class="img-cap">2.6 &nbsp;Sea — cooling sacrifice</p></div>
+        <div class="img-cell" data-ref="n3-return" data-label="2.7 The Return and the Prompt"><img src="../assets/n3-return.jpg" alt="the return — lying in the grave" loading="lazy"><p class="img-cap">2.7 &nbsp;The Return and the Prompt</p></div>
+        <div class="img-cell" data-ref="n3-prompt" data-label="2.8 The Prompt — the changed epitaph"><img src="../assets/n3-prompt.jpg" alt="digital tombstone — the changed epitaph" loading="lazy"><p class="img-cap">2.8 &nbsp;The Prompt — the changed epitaph</p></div>
+        <div class="img-cell" data-ref="n4-serverrack" data-label="2.9 The City Become a Server Rack"><img src="../assets/n4-serverrack.jpg" alt="the city become a server rack" loading="lazy"><p class="img-cap">2.9 &nbsp;The City Become a Server Rack</p></div>
+      </div>
+    </section>
+
+    <section class="media-sec" id="participation">
+      <h3 class="media-h">Participation <small>남겨진 참여</small></h3>
+      <p class="media-how">What people left on the video and images. Click a chip to jump to that scene. Adopted participation goes into the work and into the credits.</p>
+      <div class="fl" id="mediaList"></div>
+    </section>
+
+    <div class="pager">
+      <a href="about.html">← 1. About</a>
+      <a href="story.html">4. Story →</a>
+    </div>
   </main>
 
   <footer>
@@ -132,12 +81,9 @@
 
 </div>
 
-<script src="../gb-config.js"></script>
-<script src="../gb-feedback.js"></script>
 <script type="module" src="../auth.js"></script>
-<button id="fbFab" class="hl-fab" type="button" aria-label="Feedback">Feedback</button>
-<script>(function(){var f=document.getElementById('fbFab'),d=document.getElementById('feedback');if(f&&d)f.addEventListener('click',function(){d.open=true;d.scrollIntoView({behavior:'smooth',block:'center'});});})();</script>
-
+<script src="../feedback-core.js?v=20260914"></script>
+<script src="../media.js?v=20260914"></script>
 <script src="../protect.js" defer></script>
 </body>
 </html>

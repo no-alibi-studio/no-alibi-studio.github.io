@@ -6,7 +6,7 @@
 <title>Privacy Policy — The Limits of My World</title>
 <meta name="description" content="Privacy policy for The Limits of My World — what we collect, why, how long we keep it, and when we delete it.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
-<link rel="stylesheet" href="../style.css?v=20260913">
+<link rel="stylesheet" href="../style.css?v=20260914">
 </head>
 <body>
 
@@ -16,11 +16,10 @@
     <a class="sign" href="/" aria-label="no-alibi.com">no<span class="us">_</span>alibi</a>
 <span class="path"><a href="/#polyphony">POLY_PHONY</a><span class="sep" aria-hidden="true">/</span><a class="home" href="index.html">The Limits of My World</a></span>
     <nav>
-<a href="videos.html">Video</a>
+<a href="videos.html">Video · Images</a>
 <a href="story.html">Story</a>
 <a href="screening.html">Screening</a>
 <a href="about.html">About</a>
-<a href="images.html">Images</a>
 <a href="music.html">Music</a>
 <a href="guestbook.html">Guestbook</a>
 <a href="index.html#record">Progress</a>
@@ -39,7 +38,7 @@
         This site publishes its revenue and how that revenue is shared.
         For the same reason, <b>we publish how we handle your information.</b>
       </p>
-      <p class="pv-eff">Effective 10 September 2026 · Last revised 10 September 2026</p>
+      <p class="pv-eff">Effective 14 September 2026 · Last revised 14 September 2026 (v1.1)</p>
     </div>
 
     <div class="thanks">
@@ -54,6 +53,7 @@
         <li>the feedback and guestbook entries you leave, and whether they were adopted</li>
         <li>your accrued points and revenue shares</li>
         <li>your choice of how you want to be credited</li>
+        <li>crew interest and email opt-in <small>(you switch these yourself in your profile)</small></li>
       </ul>
       <p class="rg-p">
         <b>So logging in is not merely authentication — it is registration.</b>
@@ -70,10 +70,10 @@
           <thead><tr><th>When</th><th>What</th><th>Required</th></tr></thead>
           <tbody>
             <tr><td>Login</td><td>Email address, login identifier (Google account ID)</td><td>Required</td></tr>
-            <tr><td>Feedback</td><td>Name/nickname, email, feedback text, target section, category, credit preference, visibility choice</td><td>Required</td></tr>
-            <tr><td>Feedback</td><td>Instagram handle, reference link, attachment (max 5MB)</td><td>Optional</td></tr>
-            <tr><td>Feedback</td><td>Reward choice (points · investment · donation), interest in joining the crew</td><td>Optional</td></tr>
-            <tr><td>Feedback</td><td>Consent to receive announcement and revenue-report email</td><td>Optional</td></tr>
+            <tr><td>Participation (comments)</td><td>Text, target (line position · scene · video time), visibility choice, time of consent</td><td>Required</td></tr>
+            <tr><td>Participation (comments)</td><td>Category, reference link, attachment (max 5MB · seen by the author only)</td><td>Optional</td></tr>
+            <tr><td>Profile</td><td>Display name, Instagram handle, credit preference, interest in joining the crew</td><td>Optional</td></tr>
+            <tr><td>Profile</td><td>Consent to receive announcement and revenue-report email</td><td>Optional</td></tr>
             <tr><td>Guestbook</td><td>Name/nickname, message</td><td>Required</td></tr>
             <tr><td>Automatic</td><td>Timestamp, likes</td><td>—</td></tr>
           </tbody>
@@ -169,14 +169,14 @@
         <table>
           <thead><tr><th>Provider</th><th>Role</th><th>Data</th><th>Stored in</th></tr></thead>
           <tbody>
-            <tr><td>Supabase</td><td>Login, guestbook and feedback storage</td><td>Email, login identifier, display name, submitted text</td><td><b>South Korea</b> <small>(Seoul region)</small></td></tr>
-            <tr><td>Google <small>(Apps Script · Sheets)</small></td><td>Receiving and storing image/video feedback</td><td>Name, email, Instagram handle, feedback text, attachments</td><td>Outside Korea <small>(per Google)</small></td></tr>
-            <tr><td>GitHub <small>(Pages)</small></td><td>Site hosting</td><td>Access logs <small>(not separately retained by us)</small></td><td>Outside Korea <small>(US etc.)</small></td></tr>
+            <tr><td>Supabase</td><td>Login; storage of participation (comments), guestbook and attachments</td><td>Email, login identifier, profile, submitted text, attachments</td><td><b>South Korea</b> <small>(Seoul region)</small></td></tr>
+            <tr><td>Cloudflare <small>(Pages)</small></td><td>Site hosting, visit statistics</td><td>Access logs <small>(anonymous aggregates; not separately retained by us)</small></td><td>Outside Korea <small>(US and global edge)</small></td></tr>
           </tbody>
         </table>
       </div>
       <p class="table-note">* <b>Login data and guestbook/feedback text are stored on servers in South Korea (Seoul).</b> They do not leave the country.</p>
-      <p class="table-note">* Image/video feedback passes through Google services, and the site is hosted on GitHub. Those two <b>may involve servers outside Korea.</b></p>
+      <p class="table-note">* Hosting and visit statistics run on Cloudflare. Page files and access logs <b>may pass through servers outside Korea</b>; what you write and your account data do not go there.</p>
+      <p class="table-note">* Feedback left through the image/video page forms before 14 September 2026 was received by Google (Apps Script · Sheets). Those records are being moved to the Seoul server, after which the Google copy is deleted.</p>
       <p class="table-note">* Providers may not use the data for any purpose beyond the role entrusted to them.</p>
     </div>
 
@@ -222,6 +222,7 @@
         <table>
           <thead><tr><th>Version</th><th>Effective</th><th>Change</th></tr></thead>
           <tbody>
+            <tr><td class="mono">v1.1</td><td class="mono">2026-09-14</td><td>Participation (comments) now received only by Supabase (Seoul) · image/video feedback no longer passes through Google · hosting GitHub → Cloudflare · profile items (crew interest, email opt-in) clarified</td></tr>
             <tr><td class="mono">v1.0</td><td class="mono">2026-09-10</td><td>First issue</td></tr>
           </tbody>
         </table>

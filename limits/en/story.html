@@ -7,7 +7,7 @@
 <title>Story — The Limits of My World</title>
 <meta name="description" content="The Limits of My World — the living final cut, updated with adopted feedback, and an archive of every version.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
-<link rel="stylesheet" href="../style.css?v=20260913">
+<link rel="stylesheet" href="../style.css?v=20260914">
 </head>
 <body>
 
@@ -17,11 +17,10 @@
     <a class="sign" href="/" aria-label="no-alibi.com">no<span class="us">_</span>alibi</a>
 <span class="path"><a href="/#polyphony">POLY_PHONY</a><span class="sep" aria-hidden="true">/</span><a class="home" href="index.html">The Limits of My World</a></span>
     <nav>
-<a href="videos.html">Video</a>
+<a href="videos.html">Video · Images</a>
 <a class="here" href="story.html">Story</a>
 <a href="screening.html">Screening</a>
 <a href="about.html">About</a>
-<a href="images.html">Images</a>
 <a href="music.html">Music</a>
 <a href="guestbook.html">Guestbook</a>
 <a href="index.html#record">Progress</a>
@@ -36,11 +35,18 @@
     <p class="sec-sub">The Living Final Cut — a version that keeps being revised</p>
     <p class="final-note">
       * This is not a fixed, finished text. It is a living version, updated together with adopted feedback.
-      Open a node and its script appears alongside that section's key images. Select any passage to leave a note on it.
+      Tap an <b>ACT</b> to open the reader from that act. <b>Press and hold</b> a line to pick it for participation.
     </p>
 
-
-    <p class="hl-guide" id="feedback">✎ Tap the <b>highlighter button</b> to turn on feedback mode. Send as-is for <b>whole-story feedback</b>; <b>drag</b> a passage for <b>partial feedback</b> — connect several passages as ideas and send them together.</p>
+    <div class="story-fb-panel" id="storyFbPanel">
+      <p class="sfp-cap">How to participate</p>
+      <ol class="sfp-steps">
+        <li>Tap an <b>ACT</b> below to open the reader from that act.</li>
+        <li><b>Press and hold</b> a line and it is picked into the participation form — pick as many as you like.</li>
+        <li>Send from the <b>Participate</b> form at the bottom. With no lines picked, it is about the whole story.</li>
+      </ol>
+      <p class="sfp-note">The text cannot be copied or selected (to protect the work). Adopted participation goes into the next version and into the credits.</p>
+    </div>
 
     <details class="node">
       <summary>
@@ -309,6 +315,9 @@ This film was produced with AI. This film is about AI. But it began as a reflect
       </div>
     </details>
 
+    <h3 class="story-subhead" id="participation">Participation on this story <small>click a line chip to jump there in the reader</small></h3>
+    <div class="fl" id="storyList"></div>
+
     <details class="archive-fold">
       <summary><span class="fold-marker">＋</span> Story Archive — every version this story has passed through</summary>
       <p class="archive-note">* The versions that led to the living final cut.</p>
@@ -496,7 +505,7 @@ End music — its beat carries into the accelerating keystrokes of the film's fi
     </div>
 
     <div class="pager">
-      <a href="videos.html">← 3. Videos</a>
+      <a href="videos.html">← 3. Video · Images</a>
       <a href="music.html">5. Music →</a>
     </div>
   </main>
@@ -508,163 +517,11 @@ End music — its beat carries into the accelerating keystrokes of the film's fi
 
 </div>
 
-<button id="hlFab" class="hl-fab" type="button" title="Leave feedback with the highlighter" aria-label="feedback mode"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
-<div id="hlPop" class="hl-pop" hidden><button type="button" data-act="add">＋ Collect as idea</button></div>
-
-<aside id="fbTray" class="fb-tray" hidden>
-  <div class="fb-tray-head"><span>Feedback mode</span><button type="button" id="fbExit" class="fb-tray-x">× Close</button></div>
-  <p class="fb-tray-hint"><b>Send without dragging = whole-story feedback</b>. <b>Drag a passage = partial feedback</b> — each drag stacks up as Idea 1, Idea 2 … and you can keep <b>connecting</b> passages to send at once. All ideas are gathered into <b>one person’s feedback</b>.</p>
-  <div class="fb-items" id="fbItems"><p class="fb-items-empty" id="fbItemsEmpty">No ideas yet — send as-is for <b>whole-story feedback</b>, or drag passages to connect them.</p></div>
-  <form id="fbForm" class="fb-tray-form">
-    <textarea id="fbMsg" name="msg" placeholder="Your feedback on the collected passages or the whole story…" maxlength="2000"></textarea>
-    <div class="fb-tray-submit"><button type="submit" id="fbSend" class="fb-send">Send feedback</button><span id="fbStatus" class="fb-tray-status"></span></div>
-  </form>
-</aside>
-
-<script>
-(function () {
-  var supa = null;
-  var WORK_ID = '7c9de32b-71d9-4ba4-85e5-6279f3cc73f3';
-
-  async function loadBadges() {
-    if (!supa) return;
-    var res = await supa.from('feedback').select('node, user_id').eq('work_id', WORK_ID).eq('approved', true);
-    if (res.error) { console.warn('[story] badges', res.error); return; }
-    var byNode = {};
-    (res.data || []).forEach(function (e) { if (!e.node || !e.user_id) return; byNode[e.node] = byNode[e.node] || {}; byNode[e.node][e.user_id] = 1; });
-    document.querySelectorAll('.node-count').forEach(function (x) { x.remove(); });
-    document.querySelectorAll('details.node').forEach(function (node) {
-      var num = node.querySelector('.node-num'); if (!num) return;
-      var m = byNode[num.textContent.trim()];
-      var n = m ? Object.keys(m).length : 0; if (!n) return;
-      var b = document.createElement('span'); b.className = 'node-count';
-      b.textContent = n + (n === 1 ? ' person' : ' people') + ' gave feedback';
-      node.querySelector('.node-title').appendChild(b);
-    });
-  }
-
-  var fab = document.getElementById('hlFab');
-  var pop = document.getElementById('hlPop');
-  var tray = document.getElementById('fbTray');
-  var itemsBox = document.getElementById('fbItems');
-  var itemsEmpty = document.getElementById('fbItemsEmpty');
-  var form = document.getElementById('fbForm');
-  var status = document.getElementById('fbStatus');
-  var sendBtn = document.getElementById('fbSend');
-  var collected = [];
-  var curRange = null, curBody = null;
-
-  function inMode() { return document.body.classList.contains('hl-mode'); }
-  function hidePop() { pop.hidden = true; curRange = null; curBody = null; }
-  function clearHighlights() {
-    document.querySelectorAll('mark.hl').forEach(function (m) {
-      var t = document.createTextNode(m.textContent);
-      m.parentNode.replaceChild(t, m);
-    });
-  }
-  function setMode(on) {
-    document.body.classList.toggle('hl-mode', on);
-    fab.classList.toggle('on', on);
-    tray.hidden = !on;
-    if (!on) { hidePop(); clearHighlights(); collected = []; render(); }
-  }
-  function render() {
-    itemsBox.querySelectorAll('.fb-item').forEach(function (n) { n.remove(); });
-    itemsEmpty.style.display = collected.length ? 'none' : 'block';
-    collected.forEach(function (c, i) {
-      var row = document.createElement('div'); row.className = 'fb-item';
-      var q = document.createElement('span'); q.className = 'fb-item-q';
-      q.textContent = 'Idea ' + (i + 1) + ' · “' + c.quote.slice(0, 80) + (c.quote.length > 80 ? '…' : '') + '”';
-      q.addEventListener('click', function () { if (c.mark) c.mark.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
-      var nd = document.createElement('span'); nd.className = 'fb-item-node'; nd.textContent = c.node;
-      var x = document.createElement('button'); x.type = 'button'; x.className = 'fb-item-x'; x.textContent = '×';
-      x.addEventListener('click', function () {
-        if (c.mark) { var t = document.createTextNode(c.mark.textContent); c.mark.parentNode.replaceChild(t, c.mark); }
-        collected.splice(i, 1); render();
-      });
-      row.appendChild(q); row.appendChild(nd); row.appendChild(x);
-      itemsBox.appendChild(row);
-    });
-  }
-  function addPassage() {
-    if (!curRange || !curBody) return;
-    var quote = curRange.toString().trim().slice(0, 300);
-    if (!quote) return;
-    var nodeEl = curBody.closest ? curBody.closest('details.node') : null;
-    var nm = nodeEl && nodeEl.querySelector('.node-num');
-    var mark = null;
-    try { mark = document.createElement('mark'); mark.className = 'hl'; curRange.surroundContents(mark); } catch (e) { mark = null; }
-    collected.push({ quote: quote, node: nm ? nm.textContent.trim() : 'Story', mark: mark });
-    render();
-    window.getSelection().removeAllRanges();
-    hidePop();
-  }
-
-  fab.addEventListener('click', function () { setMode(!inMode()); });
-  document.getElementById('fbExit').addEventListener('click', function () { setMode(false); });
-
-  function onSelEnd() {
-    if (!inMode()) return;
-    setTimeout(function () {
-      var sel = window.getSelection();
-      if (!sel || sel.isCollapsed || !sel.toString().trim()) { hidePop(); return; }
-      var range = sel.getRangeAt(0);
-      var el = range.commonAncestorContainer;
-      if (el.nodeType === 3) el = el.parentElement;
-      var body = el.closest ? el.closest('.node-body') : null;
-      if (!body) { hidePop(); return; }
-      curRange = range.cloneRange(); curBody = body;
-      var rect = range.getBoundingClientRect();
-      pop.hidden = false;
-      pop.firstElementChild.textContent = '＋ Add as idea ' + (collected.length + 1);
-      pop.style.left = Math.max(12, window.scrollX + rect.left + rect.width / 2 - pop.offsetWidth / 2) + 'px';
-      pop.style.top = (window.scrollY + rect.bottom + 10) + 'px';
-    }, 10);
-  }
-  document.addEventListener('mouseup', onSelEnd);
-  document.addEventListener('touchend', onSelEnd);
-  document.addEventListener('mousedown', function (e) {
-    if (!pop.contains(e.target) && e.target !== fab && !tray.contains(e.target)) hidePop();
-  });
-  pop.addEventListener('click', function (e) {
-    if (e.target.closest('button')) addPassage();
-  });
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    var u = window.NOALIBI && window.NOALIBI.user;
-    if (!u) { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); status.textContent = 'Please log in first, then send again.'; return; }
-    if (!supa) { status.textContent = 'One moment — try again.'; return; }
-    var note = form.msg.value.trim();
-    if (!collected.length && !note) { status.textContent = 'Write feedback or collect a passage first.'; return; }
-    var parts = collected.map(function (c, i) { return (i + 1) + '. 「' + c.quote + '」[' + c.node + ']'; }).join('\n');
-    var full = (parts ? '[Passages]\n' + parts + '\n\n' : '') + (note ? '[Feedback]\n' + note : '');
-    var nodes = [];
-    collected.forEach(function (c) { if (nodes.indexOf(c.node) === -1) nodes.push(c.node); });
-    var nodeField = collected.length ? (nodes.length === 1 ? nodes[0] : 'Multiple nodes') : 'Whole story';
-    var passages = collected.map(function (c) { return { quote: c.quote, node: c.node }; });
-    sendBtn.classList.add('disabled'); status.classList.remove('ok'); status.textContent = 'Sending…';
-    var res = await supa.from('feedback').insert({ user_id: u.id, work_id: WORK_ID, node: nodeField, body: full, passages: passages });
-    if (res.error) { status.textContent = 'Failed — please try again shortly.'; sendBtn.classList.remove('disabled'); console.error('[story] insert', res.error); return; }
-    status.classList.add('ok'); status.textContent = 'Sent. +10 udb — thank you!';
-    form.reset(); sendBtn.classList.remove('disabled');
-    document.dispatchEvent(new CustomEvent('noalibi-refresh'));
-    loadBadges();
-    setTimeout(function () { setMode(false); }, 1600);
-  });
-
-  function whenReady(cb) {
-    (function poll() {
-      if (window.NOALIBI && window.NOALIBI.ready) window.NOALIBI.ready.then(cb);
-      else setTimeout(poll, 60);
-    })();
-  }
-  whenReady(function (s) { supa = s; loadBadges(); });
-  document.addEventListener('noalibi-auth', function () { loadBadges(); });
-})();
-</script>
-
+<button id="storyFab" class="hl-fab" type="button" aria-label="Participate">Participate</button>
 <script type="module" src="../auth.js"></script>
+<script src="../feedback-core.js?v=20260914"></script>
+<script src="../ebook.js?v=20260914"></script>
+<script>document.getElementById('storyFab').addEventListener('click', function () { if (window.EBOOK) EBOOK.openAt(0, 'dark', true); });</script>
 <script src="../protect.js" defer></script>
 </body>
 </html>

@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://no-alibi.com/limits/">
 <meta property="og:image" content="https://no-alibi.com/limits/assets/poster.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
-<link rel="stylesheet" href="style.css?v=20260913b">
+<link rel="stylesheet" href="style.css?v=20260914">
 </head>
 <body>
 
@@ -21,11 +21,10 @@
     <a class="sign" href="/" aria-label="no-alibi.com">no<span class="us">_</span>alibi</a>
     <span class="path"><a href="/#polyphony">POLY_PHONY</a><span class="sep" aria-hidden="true">/</span><span class="here">내 세계의 한계</span></span>
     <nav>
-    <a href="videos.html">영상</a>
+    <a href="videos.html">영상 · 이미지</a>
     <a href="story.html">스토리</a>
     <a href="screening.html">전시</a>
     <a href="about.html">작품 소개</a>
-    <a href="images.html">이미지</a>
     <a href="music.html">음악</a>
     <a href="guestbook.html">방명록</a>
     <a href="#record">제작 단계</a>
@@ -112,7 +111,7 @@
   <div class="contact">
     <span class="c-label">Contact</span>
     <p class="c-main">no-alibi.com — <a href="mailto:cinmaite0@gmail.com">cinmaite0@gmail.com</a></p>
-    <p class="c-sub">투자 · 협업 · 상영 문의 환영 &nbsp;·&nbsp; <a href="images.html#feedback">아트 디렉터 모집 중 →</a></p>
+    <p class="c-sub">투자 · 협업 · 상영 문의 환영 &nbsp;·&nbsp; <a href="#crew">아트 디렉터 · 크루 모집 중 →</a></p>
   </div>
 
   <section class="colophon" aria-label="판권">
@@ -138,10 +137,10 @@
     <p class="pm-lede">당신의 모든 참여가 기록됩니다.</p>
     <div class="pm-opt">
       <span class="on">01</span>
-      <span class="ot">작품에 댓글 남기기<span class="od">스토리 · 이미지 · 영상의 한 지점에, 또는 전체에</span>
-        <span class="pm-sub"><a href="story.html">스토리 →</a><a href="images.html">이미지 →</a><a href="videos.html">영상 →</a></span></span>
+      <span class="ot">작품에 댓글 남기기<span class="od">문장 · 장면 · 영상의 한 지점에, 또는 전체에</span>
+        <span class="pm-sub"><a href="story.html">스토리 →</a><a href="videos.html">영상 · 이미지 →</a></span></span>
     </div>
-    <a class="pm-opt" href="images.html#feedback"><span class="on">02</span><span class="ot">제작 크루 의향 남기기<span class="od">본 제작 시 조건과 계약을 다시 확인 — 댓글 폼의 크루 체크로</span></span><span class="arr" aria-hidden="true">→</span></a>
+    <a class="pm-opt" href="#crew" data-crew><span class="on">02</span><span class="ot">제작 크루 의향 남기기<span class="od">로그인 후 내 프로필에서 체크 한 번 — 본 제작 시 조건·계약을 다시 확인</span></span><span class="arr" aria-hidden="true">→</span></a>
     <a class="pm-opt" href="guestbook.html"><span class="on">03</span><span class="ot">다녀간 흔적만 남기기<span class="od">작품을 바꾸지 않아도 크레딧에 존재</span></span><span class="arr" aria-hidden="true">→</span></a>
     <p class="pm-rule"><span class="rk">POLY_PHONY 규칙</span>댓글은 투표가 아니다. 채택은 작가(작품 설계자)가 판단하며, 제안과 선택의 흔적은 모두 기록된다.</p>
   </div>
@@ -156,10 +155,14 @@
   Array.prototype.forEach.call(m.querySelectorAll('[data-close]'), function (b) { b.addEventListener('click', close); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) close(); });
   if (location.hash === '#participate') open();
+  // 02 크루 의향 → 프로필 창 (로그아웃이면 로그인 → #crew 로 돌아와 다시 열림)
+  var cw = m.querySelector('[data-crew]');
+  if (cw) cw.addEventListener('click', function (e) { e.preventDefault(); close(); if (window.FEEDBACK) { location.hash = '#crew'; FEEDBACK.openProfile({ focus: 'crew' }); } });
 })();
 </script>
 
 <script type="module" src="auth.js"></script>
+<script src="feedback-core.js?v=20260914"></script>
 <script>
 (function () {
   var hl = document.getElementById('heroLogin'); if (!hl) return;
