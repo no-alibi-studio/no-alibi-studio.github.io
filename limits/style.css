@@ -478,6 +478,9 @@ details.archive-fold[open] > summary { border-bottom: none; }
   transition: background 0.15s, color 0.15s;
 }
 .gb-btn:hover { background: var(--led); color: var(--void); }
+.gb-btn { background: transparent; }  /* UA 기본 회색 버튼 배경 제거 — 붉은 글자가 회색 위에서 1.4:1로 비활성처럼 보이던 문제 */
+.gb-form button[type="submit"].gb-btn, .fb-form button[type="submit"].gb-btn { background: var(--led); color: var(--void); font-weight: 700; border-color: var(--led); }
+.gb-form button[type="submit"].gb-btn:hover, .fb-form button[type="submit"].gb-btn:hover { background: #ff5a4c; }
 .gb-btn.disabled { border-color: var(--panel-edge); color: var(--bone-faint); pointer-events: none; }
 .thanks {
   margin: 64px 0 0;
