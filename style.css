@@ -219,8 +219,7 @@ a.entry:hover .go, a.entry:focus-visible .go { text-decoration: underline; }
 .sl-n { font-family: var(--mono); font-size: 11px; color: var(--led); letter-spacing: 0.1em; }
 .sl-steps li b { font-family: var(--serif); font-size: 17px; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
 .sl-steps li small { font-family: var(--sans); font-size: 12px; color: var(--ink-dim); line-height: 1.55; }
-.sl-cert { font-size: 13px; color: var(--ink); margin: 16px 0 0; padding: 12px 16px; border: 1px solid var(--rule); border-left: 2px solid var(--led); border-radius: 2px; background: #FCFAF4; line-height: 1.7; }
-.sl-cert b { color: var(--led); font-weight: 500; }
+.sl-cert b { color: var(--led); }   /* 확인서 줄의 상자 스타일은 아래 .hh-howto .sl-deadline, .hh-howto .sl-cert 에서 함께 */
 .entries.after-loop { margin-top: 34px; border-top: 1px solid var(--rule); }
 @media (max-width: 640px) { .sl-steps { grid-template-columns: 1fr 1fr; } }
 
@@ -555,7 +554,9 @@ html[lang="ko"] .hub-mast .mast-intro .mi-body { word-break: keep-all; }   /* �
 .hh-ch-sep { color: var(--led); font-family: var(--mono); font-size: 13px; padding: 0 6px; }
 
 /* 함께 만드는 방식: 마감 압박 문구 */
-.sl-deadline { font-family: var(--sans); font-size: 13.5px; line-height: 1.7; color: var(--ink); background: rgba(229,52,42,.06); border-left: 3px solid var(--led); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 0 0 14px; }
+/* 마감 줄 · 확인서 줄 — 같은 붉은 하이라이터. .hh-howto > * 보다 우선하도록 선택자를 올림. 단 폭(820−양옆 32)에 맞춰 가운데 */
+.hh-howto .sl-deadline, .hh-howto .sl-cert { font-family: var(--sans); font-size: 13.5px; line-height: 1.7; color: var(--ink); background: rgba(229,52,42,.06); border-left: 3px solid var(--led); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 0 auto 14px; max-width: 756px; }
+@media (max-width: 640px) { .hh-howto .sl-deadline, .hh-howto .sl-cert { margin-left: 20px; margin-right: 20px; } }
 .sl-deadline b { color: var(--led); }
 
 /* ── 허브: POLY_PHONY 카드 안의 작품 한 줄 (프로젝트 ⊃ 작품) ── */
@@ -565,20 +566,3 @@ html[lang="ko"] .hub-mast .mast-intro .mi-body { word-break: keep-all; }   /* �
 .hh-work:hover .wt { border-color: var(--led); color: var(--led); }
 .hh-work .st { font-family: var(--mono); font-size: 10px; color: rgba(237,230,214,.6); letter-spacing: .1em; margin-left: auto; white-space: nowrap; }
 .hh-work .st i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--led); margin-right: 5px; vertical-align: 1px; }
-
-/* 허브 · 더 알아보기 — 작품 페이지의 LEAVE A TRACE 창과 같은 결 (종이 팔레트) */
-.hh-howto .hm { max-width: 640px; }
-.hm-eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 12px; }
-.hm-eyebrow .pp { color: var(--led); }
-.hm-title { font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.3; margin: 0 0 6px; color: var(--ink); }
-.hm-lede { font-family: var(--sans); font-size: 13.5px; color: var(--ink-dim); margin: 0 0 18px; word-break: keep-all; }
-.hm-opt { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: baseline; padding: 13px 0; border-top: 1px solid var(--rule); color: var(--ink); }
-.hm-opt .on { font-family: var(--mono); font-size: 10.5px; color: var(--led); letter-spacing: 0.1em; }
-.hm-opt .ot { font-family: var(--sans); font-size: 15px; }
-.hm-opt .od { display: block; font-size: 12.5px; color: var(--ink-dim); margin-top: 3px; line-height: 1.65; word-break: keep-all; }
-.hm-rule { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: 12.5px; color: var(--ink-dim); display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline; line-height: 1.65; word-break: keep-all; }
-.hm-rule .rk { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--led); white-space: nowrap; }
-.hm-rule b { color: var(--ink); font-weight: 600; }
-.hm-rule small { font-size: 11.5px; }
-.hm-rule + .hm-rule { margin-top: 0; padding-top: 8px; border-top: 0; }
-@media (max-width: 640px) { .hm-title { font-size: 22px; } .hm-rule { grid-template-columns: 1fr; gap: 4px; } }
