@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /limits/assets/
+Allow: /limits/assets/poster-hero.jpg
+Allow: /limits/assets/poster.jpg
+Allow: /limits/assets/poster-portrait.jpg
+Disallow: /supabase/
+Disallow: /docs/
+
+Sitemap: https://no-alibi.com/sitemap.xml

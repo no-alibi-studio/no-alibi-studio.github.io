@@ -1412,3 +1412,6 @@ details.row-fold[open] > summary .chip { color: var(--led); border-color: var(--
   letter-spacing:.02em;
 }
 .foot-privacy{white-space:nowrap}
+
+/* ── 저장 방지(마찰용) — protect.js 와 짝. 포스터(.allow-save)는 제외 ── */
+img:not(.allow-save), video, audio { -webkit-touch-callout: none; -webkit-user-drag: none; }

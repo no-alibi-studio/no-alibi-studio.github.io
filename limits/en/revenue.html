@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, noimageindex">
 <title>Revenue — The Limits of My World</title>
 <meta name="description" content="The Limits of My World revenue ledger — every won this work earns, published transparently.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪦</text></svg>">
@@ -146,5 +147,6 @@
 (function(){document.querySelectorAll('.ig-copy').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.ig||'';var done=function(){var t=b.textContent;b.textContent='Copied!';b.classList.add('ok');setTimeout(function(){b.textContent=t;b.classList.remove('ok');},1500);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(done,function(){});}else{var ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}});});})();
 </script>
 <script type="module" src="../auth.js"></script>
+<script src="../protect.js" defer></script>
 </body>
 </html>

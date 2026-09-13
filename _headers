@@ -1,0 +1,14 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/limits/assets/*
+  X-Robots-Tag: noindex, noimageindex
+  Cache-Control: public, max-age=86400
+
+/limits/assets/poster-hero.jpg
+  ! X-Robots-Tag
+/limits/assets/poster.jpg
+  ! X-Robots-Tag
+/limits/assets/poster-portrait.jpg
+  ! X-Robots-Tag
