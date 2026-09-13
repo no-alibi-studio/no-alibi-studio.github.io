@@ -251,7 +251,7 @@
     allRows.forEach(function (r) {
       var who = whoName(r);
       if (all.indexOf(who) === -1) all.push(who);
-      if (r.node && rev.indexOf(who) === -1) rev.push(who);
+      if (r.adopted && rev.indexOf(who) === -1) rev.push(who);  // 채택된 기여만 — 장면에 피드백을 남긴 것(node)과 채택은 다르다
     });
     renderNameList(revisersEl, rev, KO ? '— 아직 없습니다 —' : '— none yet —');
     renderNameList(thanks, all, KO ? '— 첫 이름을 기다리고 있습니다 —' : '— waiting for the first name —');
@@ -293,7 +293,7 @@
 
   async function load() {
     if (!supa) return;
-    var fb = await supa.from('feedback').select('id, body, node, created_at, user_id, guest_name')
+    var fb = await supa.from('feedback').select('id, body, node, created_at, user_id, guest_name, adopted')
       .eq('work_id', WORK_ID).eq('approved', true).order('created_at', { ascending: false });
     if (fb.error) { console.error('[gb] load feedback', fb.error); return; }
     allRows = fb.data || [];
