@@ -13,8 +13,25 @@
 /limits/assets/poster-portrait.jpg
   ! X-Robots-Tag
 
-/*.css
+# css/js: 매번 재검증 (수정 즉시 반영)
+/style.css
   Cache-Control: public, max-age=0, must-revalidate
 
-/*.js
+/limits/style.css
   Cache-Control: public, max-age=0, must-revalidate
+
+/limits/auth.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/limits/protect.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/limits/gb-feedback.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/limits/gb-config.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/limits/ebook.js
+  Cache-Control: public, max-age=0, must-revalidate
+
