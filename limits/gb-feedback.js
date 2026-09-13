@@ -19,10 +19,18 @@
     if (!window.GB_API) { btn.classList.add('disabled'); status.textContent = T.wait; }
 
     // 로그인 상태에 따라 게이트/폼 토글
+    function prefill() {
+      var u = window.NOALIBI && window.NOALIBI.user; if (!u) return;
+      var p = window.NOALIBI.profile || {};
+      var meta = u.user_metadata || {};
+      var nm = p.display_name || meta.full_name || meta.name || (u.email || '').split('@')[0];
+      if (form.name && !form.name.value) form.name.value = nm;
+      if (form.email && u.email) { form.email.value = u.email; form.email.readOnly = true; }
+    }
     function syncAuth() {
       if (!gate) return;
-      if (loggedIn()) { gate.hidden = true; form.style.display = ''; }
-      else { gate.hidden = false; form.style.display = 'none'; }
+      if (loggedIn()) { gate.hidden = true; form.style.display = ''; prefill(); }
+      else { gate.hidden = false; form.style.display = 'none'; if (form.email) form.email.readOnly = false; }
     }
     if (gateBtn) gateBtn.addEventListener('click', function () { if (window.NOALIBI && window.NOALIBI.login) window.NOALIBI.login(); });
     syncAuth();
