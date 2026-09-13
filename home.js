@@ -63,3 +63,32 @@
 
   go(0);
 })();
+
+// 허브 상단 소개글 — 본문 너비를 에피그래프("존재에는 알리바이가 없다.") 한 줄 폭에 맞춘다.
+// 오른쪽 정렬이라, 인용문 아래에 같은 폭의 글 기둥이 서는 모양이 된다. 폰처럼 인용문이 화면을 다 쓰면 제한 없음.
+(function () {
+  var ep = document.querySelector('.hub-mast .epigraph');
+  var body = document.querySelector('.hub-mast .mi-body');
+  var last = document.querySelector('.hub-mast .mi-last');
+  if (!ep || !body) return;
+  function fit() {
+    var t = ep.firstChild;
+    while (t && (t.nodeType !== 3 || !t.textContent.trim())) t = t.nextSibling;   // 첫 텍스트 노드 = 인용문
+    if (!t) return;
+    var r = document.createRange(); r.selectNodeContents(t);
+    var rects = r.getClientRects(), w = 0;
+    for (var i = 0; i < rects.length; i++) w = Math.max(w, rects[i].width);
+    var max = ep.getBoundingClientRect().width;
+    if (w > 40 && w < max - 8) {
+      body.style.width = Math.ceil(w) + 'px'; body.style.maxWidth = 'none';
+      if (last) last.style.width = Math.ceil(w) + 'px';
+    } else {
+      body.style.width = ''; body.style.maxWidth = '';
+      if (last) last.style.width = '';
+    }
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('load', fit);
+})();
