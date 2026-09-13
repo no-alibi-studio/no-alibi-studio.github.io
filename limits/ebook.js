@@ -50,6 +50,27 @@
       return '<span class="sent" data-act="' + act + '" data-i="' + i + '">' + line + '</span>';
     }).join('\n');
   }
+  // 엔딩 크레딧: 줄마다 <b>역할</b> 이름 → 역할(모노·붉은색) | 이름(명조) 두 칸. ' / ' 로 이어진 역할은 나눈다.
+  function credits(html) {
+    var box = document.createElement('div'); box.className = 'eb-credits';
+    var firstPlain = true;
+    html.split('\n').forEach(function (line) {
+      line = line.trim(); if (!line) return;
+      var segs = /^<b>/.test(line) ? line.split(/ \/ (?=<b>)/) : [line];
+      segs.forEach(function (seg) {
+        var m = /^<b>([\s\S]*?)<\/b>\s*(?:—\s*)?([\s\S]*)$/.exec(seg);
+        if (m) {
+          var row = document.createElement('div'); row.className = 'eb-cr';
+          row.innerHTML = '<span class="eb-cr-role">' + m[1] + '</span><span class="eb-cr-name">' + (m[2] || '') + '</span>';
+          box.appendChild(row);
+        } else {
+          var ln = document.createElement('div'); ln.className = 'eb-cr-line' + (firstPlain ? ' eb-cr-title' : ''); firstPlain = false;
+          ln.innerHTML = seg; box.appendChild(ln);
+        }
+      });
+    });
+    return box;
+  }
   function fig(im) {
     var f = document.createElement('figure'); f.className = 'eb-fig';
     var img = document.createElement('img'); img.src = im.src; img.alt = im.alt; img.loading = 'lazy'; img.draggable = false; f.appendChild(img);
@@ -79,7 +100,8 @@
       ch.appendChild(h);
       var ops = [];
       if (script) Array.prototype.forEach.call(script.children, function (el) {
-        if (el.tagName === 'H5') ops.push({ t: 'scene', text: el.textContent.trim() });
+        if (el.tagName === 'H5') ops.push({ t: 'scene', text: el.textContent.trim(), credits: el.classList.contains('credits-h') });
+        else if (el.tagName === 'P' && el.classList.contains('credits')) ops.push({ t: 'credits', html: el.innerHTML });
         else if (el.tagName === 'P') ops.push({ t: 'p', html: el.innerHTML });
         else if (el.tagName === 'FIGURE') {
           var fim = el.querySelector('img'), fcp = el.querySelector('figcaption');
@@ -87,7 +109,8 @@
         }
       });
       function renderOp(op) {
-        if (op.t === 'scene') { var s = document.createElement('h3'); s.className = 'eb-scene'; s.textContent = op.text; ch.appendChild(s); }
+        if (op.t === 'scene') { var s = document.createElement('h3'); s.className = 'eb-scene' + (op.credits ? ' credits' : ''); s.textContent = op.text; ch.appendChild(s); }
+        else if (op.t === 'credits') { ch.appendChild(credits(op.html)); }
         else if (op.t === 'fig') { ch.appendChild(fig(op.im)); }
         else { var p = document.createElement('p'); p.className = 'eb-p'; p.innerHTML = sentencize(fmtPara(op.html), actN, counter); ch.appendChild(p); }
       }
