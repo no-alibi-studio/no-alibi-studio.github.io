@@ -360,9 +360,18 @@
   if (F && pageList) F.renderList(pageList, { channel: 'story', chips: storyChips, onRows: paintBadges });
   else if (F) F.whenReady(async function () { var rows = await F.fetchRows('story'); if (rows) paintBadges(rows); });
 
-  // ── 로그인 왕복(#actN / #read) 뒤 리더 복귀 ──
-  var hm = /^#act(\d+)$/.exec(location.hash);
-  if (hm) open({ startAct: Math.max(0, +hm[1] - 1), theme: 'dark' });
-  else if (location.hash === '#read') open({ theme: 'cream' });
-  else if (location.hash === '#participate') open({ startAct: 0, theme: 'dark', participate: true });
+  // ── 해시로 리더 열기: 처음 로드 + 로그인 왕복 뒤 auth.js 가 ?r= 에서 해시를 복원할 때(hashchange) ──
+  function openFromHash() {
+    var hm = /^#act(\d+)$/.exec(location.hash);
+    var isOpen = overlay && !overlay.hidden;
+    if (hm) {
+      var i = Math.max(0, +hm[1] - 1);
+      if (isOpen) { var chs = bookEl.querySelectorAll('.eb-ch'); var t = chs[Math.min(chs.length - 1, i)]; if (t) t.scrollIntoView({ block: 'start' }); }
+      else open({ startAct: i, theme: 'dark' });
+    }
+    else if (location.hash === '#read') { if (!isOpen) open({ theme: 'cream' }); }
+    else if (location.hash === '#participate') { if (isOpen) toggleSheet(true); else open({ startAct: 0, theme: 'dark', participate: true }); }
+  }
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 })();

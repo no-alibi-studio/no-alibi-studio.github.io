@@ -467,7 +467,7 @@
   function hashCrew() {
     if (location.hash !== '#crew') return;
     if (user()) { openProfile({ focus: 'crew' }); history.replaceState(null, '', location.pathname + location.search); }
-    else login();   // OAuth 는 같은 주소(#crew 포함)로 돌아오므로 로그인 뒤 다시 이 함수가 돈다
+    else login();   // 로그인 왕복은 auth.js 가 #crew 를 ?r=crew 로 옮겨 다녀온 뒤 해시를 복원(hashchange)하므로 로그인 뒤 다시 이 함수가 돈다
   }
   var crewChecked = false;
   document.addEventListener('noalibi-auth', function () { if (!crewChecked || location.hash === '#crew') { crewChecked = true; hashCrew(); } });
